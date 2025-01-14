@@ -66,31 +66,35 @@ export default async function PropertyListingsPage({
     return (
         <div className="min-h-screen">
             <div className="container">
-                <div className="py-8">
-                    <h1 className="text-3xl font-bold tracking-tight">Property Listings</h1>
-                    <p className="mt-2 text-muted-foreground">
-                        Browse through our curated selection of properties across the UAE.
-                        Use the filters above to find your perfect home.
-                    </p>
+                <div className="py-16 md:py-24">
+                    <div className="max-w-[90%] mx-auto text-center space-y-6">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+                            Property Listings
+                        </h1>
+                        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+                            Connect with quality property owners and clients looking to sell or rent their properties across the UAE.
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <div
-                className="sticky top-[68px] z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="sticky top-[54px] z-10 border-y bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <div className="container py-4">
                     <PropertyListingFilters/>
                 </div>
                 <PropertyListingSelections/>
             </div>
 
-            <div className="container py-8">
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="container py-12 md:py-16">
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                     {filteredListings.map((listing) => (
                         <PropertyListingCard key={listing.id} listing={listing}/>
                     ))}
                     {filteredListings.length === 0 && (
-                        <div className="col-span-full py-12 text-center text-muted-foreground">
-                            No properties found matching your filters.
+                        <div className="col-span-full py-16 text-center">
+                            <p className="text-lg text-muted-foreground">
+                                No properties found matching your filters.
+                            </p>
                         </div>
                     )}
                 </div>
