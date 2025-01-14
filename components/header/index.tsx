@@ -3,6 +3,7 @@ import Logo from "@/components/logo";
 import MobileNav from "@/components/header/mobile-nav";
 import DesktopNav from "@/components/header/desktop-nav";
 import { ModeToggle } from "@/components/menu-toggle";
+import { Button } from "@/components/ui/button";
 
 const navItems = [
   {
@@ -11,8 +12,18 @@ const navItems = [
     target: false,
   },
   {
-    label: "Blog",
-    href: "/blog",
+    label: "For Agents",
+    href: "/agent",
+    target: false,
+  },
+  {
+    label: "For Clients",
+    href: "/client",
+    target: false,
+  },
+  {
+    label: "Property Listings",
+    href: "/property-listings",
     target: false,
   },
   {
@@ -31,11 +42,16 @@ export default function Header() {
         </Link>
         <div className="hidden xl:flex gap-7 items-center justify-between">
           <DesktopNav navItems={navItems} />
-          <ModeToggle />
+          <div className="flex items-center gap-4">
+            <Button variant="outline" size="sm" asChild>
+              <Link href="/auth/login">Login</Link>
+            </Button>
+            <ModeToggle />
+          </div>
         </div>
         <div className="flex items-center xl:hidden">
           <ModeToggle />
-          <MobileNav navItems={navItems} />
+          <MobileNav navItems={[...navItems, { label: "Login", href: "/auth/login", target: false }]} />
         </div>
       </div>
     </header>

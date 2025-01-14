@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 
@@ -53,7 +54,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <NuqsAdapter>
+            {children}
+          </NuqsAdapter>
         </ThemeProvider>
         <Toaster position="top-center" richColors />
       </body>
