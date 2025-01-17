@@ -11,6 +11,7 @@ import { cta1Query } from "./cta/cta-1";
 import { logoCloud1Query } from "./logo-cloud/logo-cloud-1";
 import { faqsQuery } from "./faqs";
 import { formNewsletterQuery } from "./forms/newsletter";
+import { carousel3Query } from "./carousel/carousel-3";
 
 export const PAGE_QUERY = groq`
   *[_type == "page" && slug.current == $slug][0]{
@@ -22,6 +23,7 @@ export const PAGE_QUERY = groq`
       ${gridRowQuery}
       ${carousel1Query}
       ${carousel2Query}
+      ${carousel3Query}
       ${timelineQuery}
       ${cta1Query}
       ${logoCloud1Query}

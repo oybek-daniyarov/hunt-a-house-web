@@ -66,3 +66,33 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 2rem));
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration) linear infinite;
+  animation-direction: var(--direction);
+  will-change: transform;
+}
+
+@media (min-width: 768px) {
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - 4rem));
+    }
+  }
+}
+
+.animation-play-state-paused {
+  animation-play-state: paused;
+}

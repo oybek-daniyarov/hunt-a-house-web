@@ -10,6 +10,7 @@ import Cta1 from "@/components/ui/cta/cta-1";
 import LogoCloud1 from "@/components/ui/logo-cloud/logo-cloud-1";
 import FAQs from "@/components/ui/faqs";
 import FormNewsletter from "@/components/ui/forms/newsletter";
+import Carousel3 from "@/components/ui/carousel/carousel-3";
 
 const componentMap: { [key: string]: React.ComponentType<any> } = {
   "hero-1": Hero1,
@@ -19,6 +20,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   "grid-row": GridRow,
   "carousel-1": Carousel1,
   "carousel-2": Carousel2,
+  "carousel-3": Carousel3,
   "timeline-row": TimelineRow,
   "cta-1": Cta1,
   "logo-cloud-1": LogoCloud1,

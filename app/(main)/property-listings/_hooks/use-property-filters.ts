@@ -1,7 +1,6 @@
 'use client'
 
-import { useQueryStates } from 'nuqs'
-import { parseAsString, parseAsInteger } from 'nuqs'
+import {parseAsInteger, parseAsString, useQueryStates} from 'nuqs'
 
 export const filterParsers = {
     search: parseAsString.withDefault(''),
@@ -14,7 +13,8 @@ export const filterParsers = {
     maxBudget: parseAsInteger.withDefault(10000000),
     minSize: parseAsInteger.withDefault(0),
     maxSize: parseAsInteger.withDefault(7000),
-    sort: parseAsString.withDefault('newest')
+    sort: parseAsString.withDefault('newest'),
+    page: parseAsInteger.withDefault(1)
 }
 
 export function usePropertyFilters() {

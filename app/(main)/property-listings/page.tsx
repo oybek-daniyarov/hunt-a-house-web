@@ -1,7 +1,9 @@
 import {PropertyListingCard} from "./_components/property-listing-card"
-import {PropertyListingFilters} from "./_components/property-listing-filters"
-import {PropertyListingSelections} from "./_components/property-listing-selections"
-import {mockListings} from "./_data/mock-listings"
+import {PropertyListingFiltersServer} from "./_components/filters/property-listing-filters-server"
+import {PropertyListingSelections} from "./_components/filters/property-listing-selections"
+import {getLeads, type LeadFilterParams} from "@/lib/data/laravel/lead/lead.api"
+import type {PaginatedResponse} from "@/lib/client/laravel/types"
+import {LaravelPagination} from "@/components/laravel/pagination"
 
 interface PropertyListingsPageProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -18,50 +20,32 @@ export default async function PropertyListingsPage({
         activityType,
         bedrooms,
         bathrooms,
-        minPrice,
-        maxPrice,
+        minPrice: minBudget,
+        maxPrice: maxBudget,
         minSize,
         maxSize,
-        sort = "newest"
+        sort = "newest",
+        page = "1"
     } = searchParamsStore
 
-    // First filter the listings
-    const filteredListings = mockListings.filter((listing) => {
-        const matchesSearch = !search ||
-            listing.area.toLowerCase().includes(search.toString().toLowerCase()) ||
-            listing.city.toLowerCase().includes(search.toString().toLowerCase())
+    // Convert search params to API params
+    const params: LeadFilterParams = {
+        search: search?.toString(),
+        emirate: emirate?.toString(),
+        propertyType: propertyType?.toString(),
+        activityType: activityType?.toString(),
+        bedrooms: bedrooms?.toString(),
+        bathrooms: bathrooms?.toString(),
+        minBudget: minBudget?.toString(),
+        maxBudget: maxBudget?.toString(),
+        minSize: minSize?.toString(),
+        maxSize: maxSize?.toString(),
+        sort: sort?.toString(),
+        page: page?.toString()
+    }
 
-        const matchesEmirate = !emirate ||
-            listing.emirate.toLowerCase() === emirate.toString().toLowerCase()
-
-        const matchesPropertyType = !propertyType ||
-            listing.propertyType.toLowerCase() === propertyType.toString().toLowerCase()
-
-        const matchesActivityType = !activityType ||
-            listing.activityType === activityType.toString()
-
-        const matchesBedrooms = !bedrooms ||
-            listing.bedrooms >= parseInt(bedrooms.toString())
-
-        const matchesBathrooms = !bathrooms ||
-            listing.bathrooms >= parseInt(bathrooms.toString())
-
-        const matchesPrice = (!minPrice || listing.minBudget >= parseInt(minPrice.toString())) &&
-            (!maxPrice || listing.maxBudget <= parseInt(maxPrice.toString()))
-
-        const matchesSize = (!minSize || (listing.minSize || 0) >= parseInt(minSize.toString())) &&
-            (!maxSize || (listing.maxSize || 0) <= parseInt(maxSize.toString()))
-
-        return matchesSearch &&
-            matchesEmirate &&
-            matchesPropertyType &&
-            matchesActivityType &&
-            matchesBedrooms &&
-            matchesBathrooms &&
-            matchesPrice &&
-            matchesSize
-    })
-
+    // Fetch leads with filters and sorting
+    const response = await getLeads(params) as PaginatedResponse<App.Data.LeadListResponse>
 
     return (
         <div className="min-h-screen">
@@ -72,25 +56,27 @@ export default async function PropertyListingsPage({
                             Property Listings
                         </h1>
                         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-                            Connect with quality property owners and clients looking to sell or rent their properties across the UAE.
+                            Connect with quality property owners and clients looking to sell or rent their properties
+                            across the UAE.
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div className="sticky top-[54px] z-10 border-y bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div
+                className="sticky top-[54px] z-10 border-y bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <div className="container py-4">
-                    <PropertyListingFilters/>
+                    <PropertyListingFiltersServer/>
                 </div>
                 <PropertyListingSelections/>
             </div>
 
             <div className="container py-12 md:py-16">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {filteredListings.map((listing) => (
+                    {response.data.map((listing) => (
                         <PropertyListingCard key={listing.id} listing={listing}/>
                     ))}
-                    {filteredListings.length === 0 && (
+                    {response.data.length === 0 && (
                         <div className="col-span-full py-16 text-center">
                             <p className="text-lg text-muted-foreground">
                                 No properties found matching your filters.
@@ -98,6 +84,16 @@ export default async function PropertyListingsPage({
                         </div>
                     )}
                 </div>
+
+                {response.data.length > 0 && (
+                    <div className="mt-8 flex justify-center">
+                        <LaravelPagination
+                            currentPage={response.current_page}
+                            lastPage={response.last_page}
+                            total={response.total}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     )
