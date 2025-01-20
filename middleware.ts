@@ -17,6 +17,8 @@ export async function middleware(request: NextRequest) {
     const isAuthPath = authRoutes.includes(pathname);
     const isProtectedPath = protectedRoutes.includes(pathname);
 
+    console.log(token);
+
     // Check if token exists and has a value
     const hasValidToken = token && token.value && token.value.length > 0;
 
