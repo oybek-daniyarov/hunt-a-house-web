@@ -13,6 +13,14 @@ const nextConfig = {
         // Warning: This allows production builds to successfully complete even if
         // your project has ESLint errors.
         ignoreDuringBuilds: true,
+    },
+    logging: {
+        warn: true,
+        error: true,
+        info: true,
+        fetches: {
+            fullUrl: true,
+        }
     }
 };
 

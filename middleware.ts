@@ -12,10 +12,10 @@ export async function middleware(request: NextRequest) {
     const isAuthPath = authRoutes.includes(pathname);
     const isProtectedPath = protectedRoutes.includes(pathname);
 
-    console.log('token', token);
-    console.log('isAuthPath', isAuthPath);
-    console.log('isProtectedPath', isProtectedPath);
-    console.log('pathname', pathname);
+    console.warn('token', token);
+    console.warn('isAuthPath', isAuthPath);
+    console.warn('isProtectedPath', isProtectedPath);
+    console.warn('pathname', pathname);
 
     // If no token and auth path, clear token
     /*if (token && isAuthPath) {
