@@ -1,3 +1,5 @@
+import "server-only"
+
 import { revalidateTag } from 'next/cache'
 import type { LaravelValidationError, NextRequestInit, PaginatedResponse, ListOptions, Filter, SortOption } from './types'
 import { getToken } from './cookies'
@@ -32,15 +34,17 @@ export class LaravelClient {
   ): Promise<Response> {
     const headers = await this.getHeaders()
     const url = `${this.baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
-    
-    const response = await fetch(url, {
+
+    const fetchOptions: RequestInit = {
       ...options,
       headers: {
         ...headers,
         ...options.headers,
       },
       credentials: 'include',
-    })
+    }
+    
+    const response = await fetch(url, fetchOptions)
 
     if (!response.ok) {
       const error = await response.json() as LaravelValidationError

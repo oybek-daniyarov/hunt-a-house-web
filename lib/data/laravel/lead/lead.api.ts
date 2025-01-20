@@ -10,7 +10,7 @@ export async function getLeads(params: LeadFilterParams = {}) {
     sort: buildLeadSorting(params.sort)
   }
 
-  return client.list<App.Data.LeadListResponse>(
+  return client.list<App.Data.Lead.LeadListResponse>(
     '/leads',
     options,
     ['leads']
@@ -18,7 +18,7 @@ export async function getLeads(params: LeadFilterParams = {}) {
 }
 
 export async function getLeadFilters() {
-  return client.get<App.Data.LeadFiltersData>(
+  return client.get<App.Data.Lead.LeadFiltersData>(
     '/leads/filters'
   )
 }

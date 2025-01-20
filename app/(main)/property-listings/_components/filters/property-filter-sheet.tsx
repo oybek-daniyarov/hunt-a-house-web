@@ -8,13 +8,12 @@ import {Separator} from "@/components/ui/separator"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
 import {usePropertyFilters} from "../../_hooks/use-property-filters"
 
-const bedroomOptions = ["Any", "1", "2", "3", "4", "5", "6+"]
-const bathroomOptions = ["Any", "1", "2", "3", "4", "5", "6", "7+"]
+
 
 type PropertyFilterSheetProps = {
     open: boolean
     onOpenChange: (open: boolean) => void
-    filterData: App.Data.LeadFiltersData
+    filterData: App.Data.Lead.LeadFiltersData
 }
 
 export function PropertyFilterSheet({open, onOpenChange, filterData}: PropertyFilterSheetProps) {
@@ -102,7 +101,6 @@ export function PropertyFilterSheet({open, onOpenChange, filterData}: PropertyFi
                         <Separator/>
                     </div>
 
-                    {/* Bedrooms and Bathrooms Row */}
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-4">
                             <Label>Bedrooms</Label>
@@ -114,9 +112,9 @@ export function PropertyFilterSheet({open, onOpenChange, filterData}: PropertyFi
                                     <SelectValue placeholder="Select bedrooms"/>
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {bedroomOptions.map(option => (
-                                        <SelectItem key={option} value={option}>
-                                            {option} {option !== "Any" && "bedrooms"}
+                                    {filterData?.bedrooms?.map(option => (
+                                        <SelectItem key={option.id} value={option.id.toString()}>
+                                            {option.name}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -133,14 +131,16 @@ export function PropertyFilterSheet({open, onOpenChange, filterData}: PropertyFi
                                     <SelectValue placeholder="Select bathrooms"/>
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {bathroomOptions.map(option => (
-                                        <SelectItem key={option} value={option}>
-                                            {option} {option !== "Any" && "bathrooms"}
+                                    {filterData?.bathrooms?.map(option => (
+                                        <SelectItem key={option.id} value={option.id.toString()}>
+                                            {option.name}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
                             </Select>
                         </div>
+
+                        
                     </div>
 
                     <Separator/>

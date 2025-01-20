@@ -18,7 +18,7 @@ const sortOptions = [
 ]
 
 type PropertyListingFiltersProps = {
-    filterData: App.Data.LeadFiltersData
+    filterData: App.Data.Lead.LeadFiltersData
 }
 
 export function PropertyListingFilters({filterData}: PropertyListingFiltersProps) {

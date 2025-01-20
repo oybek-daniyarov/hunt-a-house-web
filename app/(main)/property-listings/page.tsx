@@ -1,9 +1,9 @@
 import {PropertyListingCard} from "./_components/property-listing-card"
-import {PropertyListingFiltersServer} from "./_components/filters/property-listing-filters-server"
-import {PropertyListingSelections} from "./_components/filters/property-listing-selections"
 import {getLeads, type LeadFilterParams} from "@/lib/data/laravel/lead/lead.api"
 import type {PaginatedResponse} from "@/lib/client/laravel/types"
 import {LaravelPagination} from "@/components/laravel/pagination"
+import Filters from "./_components/filters"
+import ContactModal from "./_components/contact-modal"
 
 interface PropertyListingsPageProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -41,13 +41,16 @@ export default async function PropertyListingsPage({
         minSize: minSize?.toString(),
         maxSize: maxSize?.toString(),
         sort: sort?.toString(),
-        page: page?.toString()
+        page: page?.toString(),
+        leadId: searchParamsStore.leadId?.toString()
     }
 
     // Fetch leads with filters and sorting
-    const response = await getLeads(params) as PaginatedResponse<App.Data.LeadListResponse>
+    const response = await getLeads(params) as PaginatedResponse<App.Data.Lead.LeadListResponse>
+
 
     return (
+        <>
         <div className="min-h-screen">
             <div className="container">
                 <div className="py-16 md:py-24">
@@ -63,18 +66,21 @@ export default async function PropertyListingsPage({
                 </div>
             </div>
 
-            <div
-                className="sticky top-[54px] z-10 border-y bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <div className="container py-4">
-                    <PropertyListingFiltersServer/>
-                </div>
-                <PropertyListingSelections/>
-            </div>
+            <Filters />
+            
 
             <div className="container py-12 md:py-16">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                     {response.data.map((listing) => (
-                        <PropertyListingCard key={listing.id} listing={listing}/>
+                        <PropertyListingCard 
+                            key={listing.id} 
+                            listing={listing}
+                            searchParams={new URLSearchParams(
+                                Object.entries(searchParamsStore)
+                                    .filter(([_, value]) => value !== undefined)
+                                    .map(([key, value]) => [key, value!.toString()])
+                            )}
+                        />
                     ))}
                     {response.data.length === 0 && (
                         <div className="col-span-full py-16 text-center">
@@ -96,5 +102,7 @@ export default async function PropertyListingsPage({
                 )}
             </div>
         </div>
+        <ContactModal listings={response.data} />
+        </>
     )
 } 
