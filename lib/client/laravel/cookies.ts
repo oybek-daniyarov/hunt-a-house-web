@@ -1,58 +1,51 @@
 import 'server-only'
 
-import { cookies } from 'next/headers'
-import { encrypt, decrypt } from './crypto'
-import { env } from '@/lib/env'
+import {cookies} from 'next/headers'
+import {decrypt, encrypt} from './crypto'
+import {env} from "@/lib/env";
 
-const TOKEN_COOKIE = 'auth_token'
-const COOKIE_OPTIONS = {
-  httpOnly: true,
-  sameSite: 'lax',
-  path: '/',
-  maxAge: 30 * 24 * 60 * 60, // 30 days
-} as const
+const COOKIE_OPTIONS = {} as const
 
 export async function getToken({
-  encryptionKey,
-}: {
-  encryptionKey: string
+                                   encryptionKey,
+                               }: {
+    encryptionKey: string
 }): Promise<string | undefined> {
-  try {
-    const cookieStore = await cookies()
-    const encryptedToken = cookieStore.get(TOKEN_COOKIE)?.value
-    
-    if (!encryptedToken) {
-      return undefined
-    }
+    try {
+        const cookieStore = await cookies()
+        const encryptedToken = cookieStore.get(env.AUTH_COOKIE_NAME)?.value
 
-    return decrypt(encryptedToken, encryptionKey)
-  } catch (error) {
-    console.log(error)
-    return undefined
-  }
+        if (!encryptedToken) {
+            return undefined
+        }
+
+        return decrypt(encryptedToken, encryptionKey)
+    } catch (error) {
+        console.log(error)
+        return undefined
+    }
 }
 
 export async function setToken({
-  token,
-  encryptionKey,
-}: {
-  token: string
-  encryptionKey: string
+                                   token,
+                                   encryptionKey,
+                               }: {
+    token: string
+    encryptionKey: string
 }): Promise<void> {
-  try {
-    const cookieStore = await cookies()
-    const encryptedToken = encrypt(token, encryptionKey)
-    cookieStore.set(TOKEN_COOKIE, encryptedToken, {
-        ...COOKIE_OPTIONS,
-        secure: env.NODE_ENV === 'production',
-    })
-  } catch (error) {
-    console.log(error)
-    throw new Error('Failed to set authentication token')
-  }
+    try {
+        const cookieStore = await cookies()
+        const encryptedToken = encrypt(token, encryptionKey)
+        cookieStore.set(env.AUTH_COOKIE_NAME, encryptedToken, {
+            ...COOKIE_OPTIONS,
+        })
+    } catch (error) {
+        console.log(error)
+        throw new Error('Failed to set authentication token')
+    }
 }
 
 export async function deleteToken(): Promise<void> {
-  const cookieStore = await cookies()
-  cookieStore.delete(TOKEN_COOKIE)
+    const cookieStore = await cookies()
+    cookieStore.delete(env.AUTH_COOKIE_NAME)
 } 
