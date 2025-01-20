@@ -1,64 +1,58 @@
-import type {NextRequest} from "next/server";
-import {NextResponse} from "next/server";
-import {env} from "./lib/env";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { env } from "./lib/env";
 
-// Define auth routes that don't require authentication
-const authRoutes = ['/auth/login', '/auth/register'];
+// Define protected routes that require authentication
 const protectedRoutes = ['/dashboard'];
-
-type CookieToken = {
-    name: string;
-    value: string;
-}
+// Define auth routes that should redirect to dashboard if authenticated
+const authRoutes = ['/auth/login', '/auth/register'];
 
 export async function middleware(request: NextRequest) {
-    const {pathname} = request.nextUrl;
-    const token = request.cookies.get(env.AUTH_COOKIE_NAME) as CookieToken | undefined;
-    const isAuthPath = authRoutes.includes(pathname);
-    const isProtectedPath = protectedRoutes.includes(pathname);
+    const { pathname } = request.nextUrl;
 
-    // Production debugging
-    if (process.env.NODE_ENV === 'production') {
-        console.log('Production Debug:', {
-            pathname,
-            hasToken: !!token,
-            tokenValue: token?.value ? 'exists' : 'missing',
-            isAuthPath,
-            isProtectedPath,
-            cookies: request.cookies.getAll(),
-        });
-    }
+    // Check if the current path is protected or auth-related
+    const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
+    const isAuthRoute = authRoutes.includes(pathname);
 
-    // Check if token exists and has a value
-    const hasValidToken = token && token.value && token.value.length > 0;
+    try {
+        const token = request.cookies.get(env.AUTH_COOKIE_NAME);
+        const isAuthenticated = token !== undefined && token.value !== '';
 
-    // If we have a valid token and trying to access auth paths, redirect to dashboard
-    if (hasValidToken && isAuthPath) {
-        const dashboardUrl = new URL('/dashboard', request.url);
-        return NextResponse.redirect(dashboardUrl);
-    }
+        // Debug info in development
+        if (process.env.NODE_ENV === 'development') {
+            console.log('Auth Middleware:', {
+                pathname,
+                isProtectedRoute,
+                isAuthRoute,
+                isAuthenticated,
+                hasToken: !!token
+            });
+        }
 
-    // If we have a valid token and accessing protected paths, allow access
-    if (hasValidToken && isProtectedPath) {
+        // If accessing protected route without auth, redirect to login
+        if (isProtectedRoute && !isAuthenticated) {
+            const loginUrl = new URL('/auth/login', request.url);
+            loginUrl.searchParams.set('from', pathname);
+            return NextResponse.redirect(loginUrl);
+        }
+
+        // If accessing auth routes while authenticated, redirect to dashboard
+        if (isAuthRoute && isAuthenticated) {
+            return NextResponse.redirect(new URL('/dashboard', request.url));
+        }
+
+        return NextResponse.next();
+    } catch (error) {
+        console.error('Middleware Error:', error);
+        // On error, redirect to login for protected routes
+        if (isProtectedRoute) {
+            return NextResponse.redirect(new URL('/auth/login', request.url));
+        }
         return NextResponse.next();
     }
-
-    // If no valid token and trying to access protected paths, redirect to login
-    if (!hasValidToken && isProtectedPath) {
-        const loginUrl = new URL('/auth/login', request.url);
-        return NextResponse.redirect(loginUrl);
-    }
-
-    // Allow access to auth paths when no token
-    if (!hasValidToken && isAuthPath) {
-        return NextResponse.next();
-    }
-
-    // For all other routes, continue with request
-    return NextResponse.next();
 }
 
 export const config = {
     // Matcher ignoring api routes and static files
     matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
-}
+};
