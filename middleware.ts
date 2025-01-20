@@ -6,43 +6,39 @@ import {env} from "./lib/env";
 const authRoutes = ['/auth/login', '/auth/register'];
 const protectedRoutes = ['/dashboard'];
 
+type CookieToken = {
+    name: string;
+    value: string;
+}
+
 export async function middleware(request: NextRequest) {
     const {pathname} = request.nextUrl;
-    const token = request.cookies.get(env.AUTH_COOKIE_NAME);
+    const token = request.cookies.get(env.AUTH_COOKIE_NAME) as CookieToken | undefined;
     const isAuthPath = authRoutes.includes(pathname);
     const isProtectedPath = protectedRoutes.includes(pathname);
 
-    console.warn('token', token);
-    console.warn('isAuthPath', isAuthPath);
-    console.warn('isProtectedPath', isProtectedPath);
-    console.warn('pathname', pathname);
+    // Check if token exists and has a value
+    const hasValidToken = token && token.value && token.value.length > 0;
 
-    // If no token and auth path, clear token
-    /*if (token && isAuthPath) {
-      await deleteToken();
-      return NextResponse.next();
-    }*/
-
-    // If token and auth path, redirect to dashboard
-    if (token && isAuthPath) {
+    // If we have a valid token and trying to access auth paths, redirect to dashboard
+    if (hasValidToken && isAuthPath) {
         const dashboardUrl = new URL('/dashboard', request.url);
         return NextResponse.redirect(dashboardUrl);
     }
 
-    // If token and protected path, continue with request
-    if (token && isProtectedPath) {
+    // If we have a valid token and accessing protected paths, allow access
+    if (hasValidToken && isProtectedPath) {
         return NextResponse.next();
     }
 
-    // If no token and protected path, redirect to login
-    if (!token && isProtectedPath) {
+    // If no valid token and trying to access protected paths, redirect to login
+    if (!hasValidToken && isProtectedPath) {
         const loginUrl = new URL('/auth/login', request.url);
         return NextResponse.redirect(loginUrl);
     }
 
-
-    // If no token and auth path, do nothing
-    if (!token && isAuthPath) {
+    // Allow access to auth paths when no token
+    if (!hasValidToken && isAuthPath) {
         return NextResponse.next();
     }
 
