@@ -8,7 +8,7 @@ import { setToken } from "@/lib/client/laravel/cookies"
 import { env } from "@/lib/env"
 
 
-export async function registerAction(data: App.Data.Auth.Requests.RegisterRequest): Promise<ActionResponse<App.Data.Auth.Requests.RegisterRequest>> {
+export async function registerAction(data: App.Data.Auth.Requests.RegisterRequest): Promise<ActionResponse<App.Data.User.UserData>> {
     try {
       const response = await authApi.register(data)
       
