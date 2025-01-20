@@ -11,6 +11,17 @@ const COOKIE_OPTIONS = {
     path: '/',
 } as const
 
+export async function isAuthenticated(): Promise<boolean> {
+    try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get(env.AUTH_COOKIE_NAME);
+        return token !== undefined && token.value !== '';
+    } catch (error) {
+        console.error('Error checking authentication:', error);
+        return false;
+    }
+}
+
 export async function getToken({
                                    encryptionKey,
                                }: {
