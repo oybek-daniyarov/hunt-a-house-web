@@ -2,6 +2,7 @@ import 'server-only'
 
 import { cookies } from 'next/headers'
 import { encrypt, decrypt } from './crypto'
+import { env } from '@/lib/env'
 
 const TOKEN_COOKIE = 'auth_token'
 const COOKIE_OPTIONS = {
@@ -34,18 +35,16 @@ export async function getToken({
 export async function setToken({
   token,
   encryptionKey,
-  isSecure,
 }: {
   token: string
   encryptionKey: string
-  isSecure: boolean
 }): Promise<void> {
   try {
     const cookieStore = await cookies()
     const encryptedToken = encrypt(token, encryptionKey)
     cookieStore.set(TOKEN_COOKIE, encryptedToken, {
         ...COOKIE_OPTIONS,
-        secure: isSecure,
+        secure: env.NODE_ENV === 'production',
     })
   } catch (error) {
     console.log(error)

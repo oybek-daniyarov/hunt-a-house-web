@@ -13,6 +13,7 @@ export type LeadFilterParams = {
   maxSize?: string | number
   sort?: string
   page?: string | number
+  leadId?: string | number
 }
 
 export const LEAD_FILTER_MAPPINGS = {
@@ -25,7 +26,7 @@ export const LEAD_FILTER_MAPPINGS = {
   minBudget: 'min_price',
   maxBudget: 'max_price',
   minSize: 'min_size',
-  maxSize: 'max_size'
+  maxSize: 'max_size',
 } as const
 
 export const LEAD_SORT_MAPPINGS = {

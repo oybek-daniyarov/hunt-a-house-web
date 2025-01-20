@@ -1,36 +1,22 @@
-"use client"
-
 import {Card, CardContent} from "@/components/ui/card"
 import {Badge} from "@/components/ui/badge"
 import {BanknoteIcon, Clock, MapPin, SquareStack} from "lucide-react"
 import {formatCurrency, formatSize} from "@/lib/utils/format-number"
 import {ContactButton} from "./contact-button"
+import { useSearchParams } from "next/navigation"
 
 interface PropertyListingCardProps {
-    listing: App.Data.LeadListResponse
+    listing: App.Data.Lead.LeadListResponse
+    searchParams: URLSearchParams
 }
 
-const activityTypeConfig: Record<App.Enums.ActivityType, { label: string; className: string }> = {
-    buy: {
-        label: "Buy",
-        className: "bg-green-500/10 text-green-500 hover:bg-green-500/20"
-    },
-    long_term_rent: {
-        label: "Long Term",
-        className: "bg-blue-500/10 text-blue-500 hover:bg-blue-500/20"
-    },
-    short_term_rent: {
-        label: "Short Term",
-        className: "bg-orange-500/10 text-orange-500 hover:bg-orange-500/20"
+export function PropertyListingCard({listing, searchParams}: PropertyListingCardProps) {
+    const formatBedrooms = (beds: string | null) => {
+        if (!beds) return 'N/A'
+        return beds === '0' ? 'Studio' : beds
     }
-}
 
-function getActivityTypeConfig(type: string): { label: string; className: string } {
-    return activityTypeConfig[type as App.Enums.ActivityType] || activityTypeConfig.long_term_rent
-}
-
-export function PropertyListingCard({listing}: PropertyListingCardProps) {
-    const activityType = getActivityTypeConfig(listing.activity_type_name.toLowerCase())
+    const isStudio = listing.bedrooms === '0'
 
     return (
         <Card className="group relative flex h-full flex-col overflow-hidden border-none bg-gradient-to-b from-muted/80 to-muted/40 transition-all hover:shadow-lg dark:from-muted/20 dark:to-muted/10 dark:hover:from-muted/30 dark:hover:to-muted/20">
@@ -40,8 +26,8 @@ export function PropertyListingCard({listing}: PropertyListingCardProps) {
                         <Badge variant="secondary" className="px-2 py-0.5 text-xs font-medium">
                             {listing.property_type_name}
                         </Badge>
-                        <Badge className={`${activityType.className} px-2 py-0.5 text-xs font-medium`}>
-                            {activityType.label}
+                        <Badge className={`bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 px-2 py-0.5 text-xs font-medium`}>
+                            {listing.activity_type_name}
                         </Badge>
                     </div>
 
@@ -61,8 +47,8 @@ export function PropertyListingCard({listing}: PropertyListingCardProps) {
                 <div className="flex-1 space-y-6">
                     <div className="inline-flex items-center gap-4 rounded-lg bg-muted/50 px-4 py-2 text-sm">
                         <div className="flex items-center gap-1">
-                            <span className="font-medium">{listing.bedrooms || 'N/A'}</span>
-                            <span className="text-muted-foreground">Beds</span>
+                            <span className="font-medium">{formatBedrooms(listing.bedrooms)}</span>
+                            {!isStudio && <span className="text-muted-foreground">Beds</span>}
                         </div>
                         <div className="h-4 w-px bg-border/60"/>
                         <div className="flex items-center gap-1">
@@ -108,7 +94,7 @@ export function PropertyListingCard({listing}: PropertyListingCardProps) {
                 </div>
 
                 <div className="mt-5 border-t pt-5">
-                    <ContactButton className="w-full bg-foreground text-background hover:bg-foreground/90"/>
+                    <ContactButton className="w-full bg-foreground text-background hover:bg-foreground/90" listing={listing} searchParams={searchParams}/>
                 </div>
             </CardContent>
         </Card>
