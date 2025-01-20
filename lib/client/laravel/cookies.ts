@@ -4,7 +4,12 @@ import {cookies} from 'next/headers'
 import {decrypt, encrypt} from './crypto'
 import {env} from "@/lib/env";
 
-const COOKIE_OPTIONS = {} as const
+const COOKIE_OPTIONS = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax' as const,
+    path: '/',
+} as const
 
 export async function getToken({
                                    encryptionKey,

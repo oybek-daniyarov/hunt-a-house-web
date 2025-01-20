@@ -17,7 +17,17 @@ export async function middleware(request: NextRequest) {
     const isAuthPath = authRoutes.includes(pathname);
     const isProtectedPath = protectedRoutes.includes(pathname);
 
-    console.log(token);
+    // Production debugging
+    if (process.env.NODE_ENV === 'production') {
+        console.log('Production Debug:', {
+            pathname,
+            hasToken: !!token,
+            tokenValue: token?.value ? 'exists' : 'missing',
+            isAuthPath,
+            isProtectedPath,
+            cookies: request.cookies.getAll(),
+        });
+    }
 
     // Check if token exists and has a value
     const hasValidToken = token && token.value && token.value.length > 0;
