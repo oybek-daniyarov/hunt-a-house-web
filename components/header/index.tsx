@@ -22,6 +22,11 @@ const navItems = [
     target: false,
   },
   {
+    label: "For Clients V2",
+    href: "/clients-v2",
+    target: false,
+  },
+  {
     label: "Property Listings",
     href: "/property-listings",
     target: false,
