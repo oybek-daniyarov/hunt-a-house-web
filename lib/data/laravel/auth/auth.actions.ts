@@ -8,7 +8,7 @@ import {deleteToken, setToken} from "@/lib/client/laravel/cookies"
 import {env} from "@/lib/env"
 
 
-export async function registerAction(data: App.Data.Auth.Requests.RegisterRequest): Promise<ActionResponse<App.Data.User.UserData>> {
+export async function registerAction(data: App.Data.Auth.RegisterData): Promise<ActionResponse<App.Data.User.UserData>> {
     try {
         const response = await authApi.register(data)
 
@@ -32,7 +32,7 @@ export async function registerAction(data: App.Data.Auth.Requests.RegisterReques
     }
 }
 
-export async function loginAction(data: App.Data.Auth.Requests.LoginRequest) {
+export async function loginAction(data: App.Data.Auth.Payload.LoginPayloadData) {
     const response = await authApi.login(data)
     if (!response.success) {
         return createErrorResponse(
@@ -49,7 +49,7 @@ export async function loginAction(data: App.Data.Auth.Requests.LoginRequest) {
     return createSuccessResponse(response.data?.user, '/dashboard')
 }
 
-export async function forgotPasswordAction(data: App.Data.Auth.ForgotPasswordData) {
+export async function forgotPasswordAction(data: App.Data.Auth.Payload.ForgotPasswordPayloadData) {
     const response = await authApi.forgotPassword(data)
     if (!response.success) {
         return createErrorResponse(
@@ -62,7 +62,7 @@ export async function forgotPasswordAction(data: App.Data.Auth.ForgotPasswordDat
 }
 
 
-export async function resetPasswordAction(data: App.Data.Auth.Requests.ResetPasswordRequest) {
+export async function resetPasswordAction(data: App.Data.Auth.ResetPasswordData) {
     const response = await authApi.resetPassword(data)
     if (!response.success) {
         return createErrorResponse(

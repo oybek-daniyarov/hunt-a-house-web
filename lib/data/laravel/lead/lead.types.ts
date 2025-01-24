@@ -1,4 +1,3 @@
-import type { Filter, SortOption } from "@/lib/client/laravel/types"
 
 export type LeadFilterParams = {
   search?: string

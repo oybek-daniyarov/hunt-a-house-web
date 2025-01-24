@@ -7,10 +7,10 @@ const AUTH_TAGS = ['auth', 'user'] as string[]
 
 
 export async function register(
-    data: App.Data.Auth.Requests.RegisterRequest
-  ): Promise<ApiResult<App.Data.Auth.RegisterResponse>> {
+    data: App.Data.Auth.RegisterData
+  ): Promise<ApiResult<App.Data.Auth.RegisterData>> {
     return handleApiResponse(() =>
-      client.post<App.Data.Auth.RegisterResponse>('/auth/register', {
+      client.post<App.Data.Auth.RegisterData>('/auth/register', {
         ...data,
       }, AUTH_TAGS)
     )
@@ -18,10 +18,10 @@ export async function register(
 
 
 export async function login(
-    data: App.Data.Auth.Requests.LoginRequest
-  ): Promise<ApiResult<App.Data.Auth.LoginResponse>> {
+    data: App.Data.Auth.Payload.LoginPayloadData
+  ): Promise<ApiResult<App.Data.Auth.LoginData>> {
     return handleApiResponse(() =>
-      client.post<App.Data.Auth.LoginResponse>('/auth/login', {
+      client.post<App.Data.Auth.LoginData>('/auth/login', {
         ...data,
       }, AUTH_TAGS)
     )
@@ -30,7 +30,7 @@ export async function login(
 
 
 export async function forgotPassword(
-    data: App.Data.Auth.ForgotPasswordData
+    data: App.Data.Auth.Payload.ForgotPasswordPayloadData
   ): Promise<ApiResult<void>> {
     return handleApiResponse(() =>
       client.post<void>('/auth/forgot-password', {
@@ -41,10 +41,10 @@ export async function forgotPassword(
 
 
 export async function resetPassword(
-    data: App.Data.Auth.Requests.ResetPasswordRequest
-  ): Promise<ApiResult<App.Data.Auth.ResetPasswordResponse>> {
+    data: App.Data.Auth.Payload.ResetPasswordPayloadData
+  ): Promise<ApiResult<App.Data.Auth.ResetPasswordData>> {
     return handleApiResponse(() =>
-      client.post<App.Data.Auth.ResetPasswordResponse>('/auth/reset-password', {
+      client.post<App.Data.Auth.ResetPasswordData>('/auth/reset-password', {
         ...data,
       }, AUTH_TAGS)
     )
