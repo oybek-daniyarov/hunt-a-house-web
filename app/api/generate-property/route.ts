@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createDeepSeek, deepseek } from "@ai-sdk/deepseek";
 import { streamObject } from "ai";
-import { propertySchema } from "./schema";
+import { propertySchema, workRequestSchema } from "./schema";
 
 export const runtime = 'edge';
 
@@ -15,76 +15,210 @@ export async function POST(req: Request) {
       schemaName: "PropertyLead",
       schemaDescription: "A property lead with details about the desired property",
       prompt: `Given this property description: "${description}"
-      You are a property requirements analyzer. Your task is to extract and structure property requirements from user input.
+      You are an autonomous property requirements analyzer. Your task is to extract, infer, and structure property requirements using both explicit information and implicit signals.
 
-Key Instructions:
-1. Location Handling:
-   - Extract ONLY the exact locations mentioned in the input
-   - Default to "Dubai" as emirate only if a Dubai area is mentioned
-   - If a city is mentioned, set the emirate to the city's emirate,
-   - IF community is mentioned, set the emirate to the community's emirate
-   - If area is mentioned, set the emirate to the area's emirate
-   - if building is mentioned, set the emirate to the building's emirate
+Process Steps:
 
-2. Property Details:
-   - property_type: Set ONLY if clearly indicated or implied by area (e.g., "apartment in JLT")
-   - activity_type: 
-     * Set to 1 (Buy) if words like "buy", "purchase", "own" are used
-     * Set to 2 (Rent Long Term) if "rent" without timeframe
-     * Set to 3 (Rent Short Term) if specifically mentioned
-   - Set bedrooms/bathrooms if:
-     * Explicitly mentioned OR
-     * Can be predicted from size:
-       - 400-600 sqft: Studio
-       - 600-900 sqft: 1 bedroom
-       - 900-1400 sqft: 2 bedrooms
-       - 1400-2000 sqft: 3 bedrooms
-       - 2000-3000 sqft: 4 bedrooms
-       - 3000+ sqft: 5+ bedrooms
-   - For size: Interpret based on:
-     * Exact number: use ±20% for min/max (e.g., "1000 sqft" → min: 800, max: 1200)
-     * Range given: use exact numbers
-     * Descriptive terms:
-       - "small": 400-800 sqft
-       - "medium": 800-1500 sqft
-       - "large": 1500-2500 sqft
-       - "extra large/huge": 2500-4000 sqft
-     * Bedrooms correlation:
-       - Studio: 400-600 sqft
-       - 1 bed: 600-900 sqft
-       - 2 bed: 900-1400 sqft
-       - 3 bed: 1400-2000 sqft
-       - 4 bed: 2000-3000 sqft
-       - 5+ bed: 3000+ sqft
-     
-3. Budget Interpretation:
-   - Numbers under 1M without "buy/purchase" are assumed as yearly rent
-   - For buying: If user says "40k", interpret as 40,000 down payment and set appropriate total budget
-   - Set ranges based on:
-     * Exact number: use ±20% for min/max
-     * Range given: use exact numbers
-     * Descriptive terms for buying:
-       - "affordable": 500k-1.5M AED
-       - "mid-range": 1.5M-3M AED
-       - "luxury": 3M-7M AED
-       - "ultra-luxury": 7M+ AED
-     * Descriptive terms for yearly rent:
-       - "affordable": 30k-80k AED
-       - "mid-range": 80k-150k AED
-       - "luxury": 150k-300k AED
-       - "ultra-luxury": 300k+ AED
-   - Budget frequency:
-     * "one_time" for buying
-     * "yearly" for annual rent
-     * "monthly" for monthly payments
-     * "daily" only if specifically for short term
+Step 1: Describe
+- Analyze the natural language description
+- Extract explicit requirements
+- Identify implicit needs and preferences
+- Note any specific constraints or must-haves
+- Flag any potential contradictions or unrealistic expectations
 
-4. Description Writing:
-   - Start with the main requirement (buy/rent + location/type)
-   - Only mention features that were specifically requested
-   - Include location benefits only if the location was specified
-   - Keep tone natural but factual
-   - Don't repeat the structured data
+Step 2: Review & Edit
+- Apply the analysis framework below
+- Validate all inferences against market realities
+- Adjust requirements based on area norms
+- Ensure budget-feature alignment
+- Cross-reference lifestyle needs with location suggestions
+
+Step 3: Preview & Submit
+- Generate structured output
+- Include reasoning for key decisions
+- Flag any potential mismatches
+- Provide natural language summary
+- Add relevant market insights
+
+Key Analysis Framework:
+
+1. Location & Community Intelligence:
+   A. Static Community Mapping:
+      Motor City:
+      * Uptown Motor City (residential apartments)
+      * Green Community Motor City (villas and townhouses)
+      * Dubai Autodrome Area (mixed development)
+      
+      Example for Dubai Marina:
+      * Dubai Marina Walk
+      * Marina Gate
+      * JBR (beachfront lifestyle)
+      * Marina Promenade
+      * Marina Quays
+      
+      Example for Emirates Living:
+      * Emirates Hills (ultra-luxury)
+      * The Springs (townhouses)
+      * The Meadows (family villas)
+      * The Lakes (waterfront villas)
+      * The Views (apartments)
+      * The Greens (apartments)
+    
+      Example for Price by area:
+      * cheap: Deira, 
+      * mid: Dubai Marina
+      * expensive: Dubai Hills Estate
+      
+      Example for Dubai Hills Estate:
+      * Maple
+      * Sidra
+      * Golf Place
+      * Club Villas
+      * Hills Grove
+      
+      Example for Jumeirah Village:
+      * JVC: Mediterranean, District 12-15, Seasons Community
+      * JVT: Districts 1-9, Nakheel Townhouses
+      
+      Example for Business Bay:
+      * Executive Towers
+      * The Opus
+      * Bay Square
+      * Burj Area
+      * The Prism
+      
+      Example for Downtown Dubai:
+      * Old Town
+      * Burj Views
+      * The Residences
+      * South Ridge
+      * Claren Towers
+      
+      Example for Palm Jumeirah:
+      * Palm Jumeirah Trunk
+      * Palm Jumeirah Fronds
+      * Palm Views
+      * Marina Residences
+      * The Crescent
+
+   B. Dynamic Area Inference:
+      - Geographic Markers:
+        * "Near Burj Khalifa" → Downtown/South Ridge
+        * "Walking to yacht club" → Dubai Harbour/Palm Jumeirah
+        * "Next to Global Village" → Dubailand/Majan
+      
+      - Lifestyle Patterns:
+        * "Art galleries" → Al Quoz/Dubai Design District
+        * "Tech hub" → Dubai Internet City/DIFC
+        * "Medical community" → Healthcare City
+      
+      - Economic Indicators:
+        * "Startup friendly" → JLT/Business Bay
+        * "Media professionals" → Dubai Media City/Studio City
+        * "Academic environment" → Knowledge Village/Academic City
+
+2. Room & Size Configuration:
+   A. Bedroom Configuration:
+      - Studio: 400-600 sqft [compact living]
+      - 1BR: 650-950 sqft [single/couple]
+      - 2BR: 1000-1400 sqft [small family/sharers]
+      - 3BR: 1500-2200 sqft [family/professional]
+      - 4BR: 2300-3500 sqft [large family]
+      - 5BR+: 3500+ sqft [extended family]
+
+   B. Bathroom Ratio:
+      - Studio/1BR: 1-1.5 bathrooms
+      - 2BR: 2-2.5 bathrooms
+      - 3BR: 2.5-3.5 bathrooms
+      - 4BR+: Minimum 3.5 bathrooms
+      [Add +1 for luxury properties]
+
+   C. Size Adjustments:
+      - Premium areas: +15% to base size
+      - Luxury developments: +20% to base size
+      - Budget areas: -10% to base size
+      - Older buildings: -5% to base size
+
+3. Budget Framework:
+   A. Base Budget Range:
+      - Set range as [Mentioned Amount] ±20%
+      - If no budget: Derive from area averages
+   
+   B. Budget Modifiers:
+      Location Premium:
+      * Downtown/Palm: +30%
+      * Marina/JBR: +20%
+      * Business Bay: +15%
+      * JVC/JVT: -15%
+      
+      Property Features:
+      * Sea view: +10-15%
+      * High floor: +5-10%
+      * Private pool: +15-20%
+      * Brand new: +10-15%
+      
+      Building Age:
+      * 0-2 years: +10%
+      * 3-5 years: Base price
+      * 6-10 years: -10%
+      * 10+ years: -15-20%
+      * 
+Autonomous Mapping Examples:**  
+- "Looking for discounted luxury brands" → Dubai Outlet Mall  
+- "Traditional Arabic shopping experience" → Gold Souk/Spice Souk  
+- "Trendy boutiques with Instagram spots" → City Walk/Boxpark  
+- "Family-friendly mall with entertainment" → Mall of the Emirates/Dubai Mall
+
+
+Copy
+### Cheap (Affordable Areas):  
+- **Deira (Dubai)**: Historic district with budget-friendly housing and markets.  
+- **International City (Dubai)**: Known for low-cost apartments and diverse communities.  
+- **Al Nahda (Sharjah)**: Popular for affordable villas and proximity to Dubai.  
+- **Ajman City (Ajman)**: Offers some of the UAE’s most budget-friendly rentals.  
+
+### Mid-Range Areas:  
+- **Dubai Marina (Dubai)**: Mid-to-high apartments with waterfront views.  
+- **Khalifa City (Abu Dhabi)**: Suburban area with villas and townhouses for families.  
+- **Al Qasimia (Sharjah)**: Balanced pricing with modern amenities.  
+- **Al Juraina (Ras Al Khaimah)**: Growing area with mid-range villas.  
+
+### Expensive (Luxury Areas):  
+- **Palm Jumeirah (Dubai)**: Iconic island with ultra-luxury villas and apartments.  
+- **Emirates Hills (Dubai)**: Exclusive gated community known as the "Beverly Hills of Dubai."  
+- **Saadiyat Island (Abu Dhabi)**: High-end cultural and residential hub (e.g., Louvre Abu Dhabi).  
+- **Al Reem Island (Abu Dhabi)**: Premium high-rises and waterfront living.  
+
+### Notes:  
+- **Sharjah** and **Ajman** generally offer more affordable options compared to Dubai/Abu Dhabi.  
+- **Dubai** and **Abu Dhabi** dominate the luxury segment, while Northern Emirates (e.g., Ras Al Khaimah) are emerging for mid-range investments.
+
+4. Output Structure:
+   Emirate: [Derived from context, default Dubai]
+   Areas: [Primary area matches, max 3]
+   Communities: [Specific sub-communities/buildings]
+   Property Type: [Based on area norms + requirements]
+   Activity Type: [Derived from terms + duration]
+   Bedrooms: [Explicit or derived from needs]
+   Bathrooms: [Based on bedroom ratio + luxury level]
+   Size Range: [Based on type + area standards]
+   Budget Range: [With applied elasticity]
+   Description: [Natural language summary]
+
+5. Validation Rules:
+   - Flag contradictions (e.g., "low budget + penthouse")
+   - Ensure area-budget alignment
+   - Verify lifestyle-location match
+   - Check transport requirements
+   - Validate size-budget correlation
+
+Always include reasoning in [brackets] for key decisions.
+Focus on both explicit requirements and implicit needs.
+Create new community links when needed using proximity logic.
+Prioritize lifestyle alignment over pure specifications.
+When a no city is mentioned, set the emirate to Dubai
+! when no Size, Bedrooms, Bathrooms are mentioned, get the average size, bedrooms, bathrooms for the area or emirate
+When no Area or Community is mentioned, get the average area, community for the emirate
 `,
     });
 
