@@ -1,39 +1,44 @@
-import { Button } from "@/components/ui/button"
-import { Phone } from "lucide-react"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
+import Link from 'next/link';
+import { Phone } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface ContactButtonProps {
-  className?: string
-  listing: App.Data.Lead.LeadListResponse
-  searchParams: URLSearchParams
+  className?: string;
+  listing: App.Data.Lead.LeadListResponse;
+  searchParams: URLSearchParams;
 }
 
-export function ContactButton({ className, listing, searchParams }: ContactButtonProps) {
+export function ContactButton({
+  className,
+  listing,
+  searchParams,
+}: ContactButtonProps) {
   // Create a new URLSearchParams to avoid mutating the original
-  const params = new URLSearchParams()
-  
+  const params = new URLSearchParams();
+
   // Copy all existing params except 'contact'
   searchParams.forEach((value, key) => {
     if (key !== 'contact') {
-      params.append(key, value)
+      params.append(key, value);
     }
-  })
-  
+  });
+
   // Add the contact param
-  params.set("contact", listing.id.toString())
+  params.set('contact', listing.id.toString());
 
   return (
-    <Button 
+    <Button
       asChild
-      variant="default" 
-      size="lg" 
-      className={cn("gap-2", className)}
+      variant="default"
+      size="lg"
+      className={cn('gap-2', className)}
     >
       <Link href={`?${params.toString()}`} scroll={false} prefetch>
         <Phone className="h-4 w-4" />
         View Contact Details
       </Link>
     </Button>
-  )
-} 
+  );
+}

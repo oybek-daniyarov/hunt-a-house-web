@@ -1,9 +1,10 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Image from "next/image";
-import { urlFor } from "@/sanity/lib/image";
-import { stegaClean } from "next-sanity";
-import PortableTextRenderer from "@/components/portable-text-renderer";
+import Image from 'next/image';
+import Link from 'next/link';
+import { stegaClean } from 'next-sanity';
+
+import PortableTextRenderer from '@/components/portable-text-renderer';
+import { Button } from '@/components/ui/button';
+import { urlFor } from '@/sanity/lib/image';
 
 export default function Hero1({
   tagLine,
@@ -21,12 +22,12 @@ export default function Hero1({
     href: string;
     target?: boolean;
     buttonVariant:
-      | "default"
-      | "secondary"
-      | "link"
-      | "destructive"
-      | "outline"
-      | "ghost"
+      | 'default'
+      | 'secondary'
+      | 'link'
+      | 'destructive'
+      | 'outline'
+      | 'ghost'
       | null
       | undefined;
   }[];
@@ -56,8 +57,8 @@ export default function Hero1({
                 >
                   <Link
                     href={link.href as string}
-                    target={link.target ? "_blank" : undefined}
-                    rel={link.target ? "noopener" : undefined}
+                    target={link.target ? '_blank' : undefined}
+                    rel={link.target ? 'noopener' : undefined}
                   >
                     {link.title}
                   </Link>
@@ -71,11 +72,11 @@ export default function Hero1({
             <Image
               className="rounded-xl"
               src={urlFor(image.asset).url()}
-              alt={image.alt || ""}
+              alt={image.alt || ''}
               width={image.asset?.metadata?.dimensions?.width || 800}
               height={image.asset?.metadata?.dimensions?.height || 800}
-              placeholder={image?.asset?.metadata?.lqip ? "blur" : undefined}
-              blurDataURL={image?.asset?.metadata?.lqip || ""}
+              placeholder={image?.asset?.metadata?.lqip ? 'blur' : undefined}
+              blurDataURL={image?.asset?.metadata?.lqip || ''}
               quality={100}
             />
           )}

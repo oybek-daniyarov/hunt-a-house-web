@@ -1,25 +1,36 @@
-"use client";
+'use client';
 
-import { useFormContext } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { useFormContext } from 'react-hook-form';
+
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
 const CONTACT_METHODS = [
-  { id: "whatsapp", label: "WhatsApp" },
-  { id: "phone", label: "Phone Call" },
-  { id: "email", label: "Email" },
+  { id: 'whatsapp', label: 'WhatsApp' },
+  { id: 'phone', label: 'Phone Call' },
+  { id: 'email', label: 'Email' },
 ];
 
 export function ContactDetailsForm() {
   const { control, watch } = useFormContext();
-  const contactMethods = watch("contactMethods") || [];
+  const contactMethods = watch('contactMethods') || [];
 
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold tracking-tight">Contact Details</h2>
-        <p className="text-muted-foreground">How should we get in touch with you?</p>
+        <h2 className="text-2xl font-semibold tracking-tight">
+          Contact Details
+        </h2>
+        <p className="text-muted-foreground">
+          How should we get in touch with you?
+        </p>
       </div>
 
       <div className="grid gap-6">
@@ -58,7 +69,11 @@ export function ContactDetailsForm() {
             <FormItem>
               <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input type="tel" placeholder="Enter your phone number" {...field} />
+                <Input
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -88,7 +103,10 @@ export function ContactDetailsForm() {
                               checked={field.value?.includes(method.id)}
                               onCheckedChange={(checked) => {
                                 return checked
-                                  ? field.onChange([...field.value || [], method.id])
+                                  ? field.onChange([
+                                      ...(field.value || []),
+                                      method.id,
+                                    ])
                                   : field.onChange(
                                       field.value?.filter(
                                         (value: string) => value !== method.id
@@ -113,4 +131,4 @@ export function ContactDetailsForm() {
       </div>
     </div>
   );
-} 
+}

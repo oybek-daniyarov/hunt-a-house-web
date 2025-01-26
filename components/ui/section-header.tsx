@@ -1,28 +1,29 @@
-import { cn } from "@/lib/utils";
+import { stegaClean } from 'next-sanity';
+
 import SectionContainer, {
   ISectionContainer,
   ISectionPadding,
-} from "@/components/ui/section-container";
-import { stegaClean } from "next-sanity";
+} from '@/components/ui/section-container';
+import { cn } from '@/lib/utils';
 
 export default function SectionHeader({
   padding,
   colorVariant,
-  sectionWidth = "default",
-  stackAlign = "left",
+  sectionWidth = 'default',
+  stackAlign = 'left',
   tagLine,
   title,
   description,
 }: Partial<{
   padding: ISectionPadding;
-  colorVariant: ISectionContainer["color"];
-  stackAlign: "left" | "center";
-  sectionWidth: "default" | "narrow";
+  colorVariant: ISectionContainer['color'];
+  stackAlign: 'left' | 'center';
+  sectionWidth: 'default' | 'narrow';
   tagLine: string;
   title: string;
   description: string;
 }>) {
-  const isNarrow = stegaClean(sectionWidth) === "narrow";
+  const isNarrow = stegaClean(sectionWidth) === 'narrow';
   const align = stegaClean(stackAlign);
   const color = stegaClean(colorVariant);
 
@@ -30,12 +31,12 @@ export default function SectionHeader({
     <SectionContainer color={color} padding={padding}>
       <div
         className={cn(
-          align === "center" ? "max-w-[48rem] text-center mx-auto" : undefined,
-          isNarrow ? "max-w-[48rem] mx-auto" : undefined
+          align === 'center' ? 'max-w-[48rem] text-center mx-auto' : undefined,
+          isNarrow ? 'max-w-[48rem] mx-auto' : undefined
         )}
       >
         <div
-          className={cn(color === "primary" ? "text-background" : undefined)}
+          className={cn(color === 'primary' ? 'text-background' : undefined)}
         >
           {tagLine && (
             <h1 className="leading-[0] mb-4">

@@ -1,26 +1,27 @@
-import Blocks from "@/components/blocks";
-import SectionContainer from "@/components/ui/section-container";
-import Link from "next/link";
-import PostCard from "@/components/ui/post-card";
-import { fetchSanityPosts } from "./actions";
-import { fetchSanityPageBySlug } from "../actions";
-import { generatePageMetadata } from "@/lib/metadata";
-import MissingSanityPage from "@/components/ui/missing-sanity-page";
+import Link from 'next/link';
 
-export const dynamic = "force-static";
+import Blocks from '@/components/blocks';
+import MissingSanityPage from '@/components/ui/missing-sanity-page';
+import PostCard from '@/components/ui/post-card';
+import SectionContainer from '@/components/ui/section-container';
+import { generatePageMetadata } from '@/lib/metadata';
+import { fetchSanityPageBySlug } from '../actions';
+import { fetchSanityPosts } from './actions';
+
+export const dynamic = 'force-static';
 
 export async function generateMetadata() {
-  const page = await fetchSanityPageBySlug({ slug: "blog" });
+  const page = await fetchSanityPageBySlug({ slug: 'blog' });
 
-  return generatePageMetadata({ page, slug: "blog" });
+  return generatePageMetadata({ page, slug: 'blog' });
 }
 
 export default async function BlogPage() {
-  const page = await fetchSanityPageBySlug({ slug: "blog" });
+  const page = await fetchSanityPageBySlug({ slug: 'blog' });
   const posts = await fetchSanityPosts();
 
   if (!page) {
-    return MissingSanityPage({ document: "page", slug: "blog" });
+    return MissingSanityPage({ document: 'page', slug: 'blog' });
   }
 
   return (

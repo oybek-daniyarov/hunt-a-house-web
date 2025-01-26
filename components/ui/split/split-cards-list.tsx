@@ -1,9 +1,10 @@
-import { ISectionContainer } from "@/components/ui/section-container";
-import { stegaClean } from "next-sanity";
-import SplitCardsItem from "@/components/ui/split/split-cards-item";
+import { stegaClean } from 'next-sanity';
+
+import { ISectionContainer } from '@/components/ui/section-container';
+import SplitCardsItem from '@/components/ui/split/split-cards-item';
 
 interface SplitCardsListProps {
-  color: ISectionContainer["color"];
+  color: ISectionContainer['color'];
   list: {
     tagLine: string;
     title: any;

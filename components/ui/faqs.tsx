@@ -1,12 +1,13 @@
-import SectionContainer from "@/components/ui/section-container";
-import { stegaClean } from "next-sanity";
+import { stegaClean } from 'next-sanity';
+
+import PortableTextRenderer from '@/components/portable-text-renderer';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import PortableTextRenderer from "@/components/portable-text-renderer";
+} from '@/components/ui/accordion';
+import SectionContainer from '@/components/ui/section-container';
 
 interface FAQProps {
   padding: {
@@ -14,13 +15,13 @@ interface FAQProps {
     bottom: boolean;
   };
   colorVariant:
-    | "primary"
-    | "secondary"
-    | "card"
-    | "accent"
-    | "destructive"
-    | "background"
-    | "transparent";
+    | 'primary'
+    | 'secondary'
+    | 'card'
+    | 'accent'
+    | 'destructive'
+    | 'background'
+    | 'transparent';
   title: string;
   faqs: {
     _id: string;

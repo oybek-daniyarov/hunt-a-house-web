@@ -1,26 +1,27 @@
-import { Button } from "@/components/ui/button"
-import * as motion from "motion/react-client"
-import Link from "next/link"
-import { featureIcons, type FeatureIconType } from "./feature-icons"
+import Link from 'next/link';
+import * as motion from 'motion/react-client';
+
+import { Button } from '@/components/ui/button';
+import { featureIcons, type FeatureIconType } from './feature-icons';
 
 interface Feature {
-  icon: FeatureIconType
-  text: string
+  icon: FeatureIconType;
+  text: string;
 }
 
 interface FeaturesSectionProps {
-  title: string
-  description: string
-  features: Feature[]
+  title: string;
+  description: string;
+  features: Feature[];
   primaryCta: {
-    text: string
-    href: string
-  }
+    text: string;
+    href: string;
+  };
   secondaryCta: {
-    text: string
-    href: string
-  }
-  children?: React.ReactNode
+    text: string;
+    href: string;
+  };
+  children?: React.ReactNode;
 }
 
 export function FeaturesSection({
@@ -29,20 +30,20 @@ export function FeaturesSection({
   features,
   primaryCta,
   secondaryCta,
-  children
+  children,
 }: FeaturesSectionProps) {
   return (
     <div className="container">
       <div className="py-20 lg:py-32">
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="flex flex-col justify-center space-y-8"
           >
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -52,11 +53,9 @@ export function FeaturesSection({
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
                 {title}
               </h1>
-              <p className="text-lg text-muted-foreground">
-                {description}
-              </p>
+              <p className="text-lg text-muted-foreground">{description}</p>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
@@ -64,19 +63,15 @@ export function FeaturesSection({
               className="flex flex-col gap-4 min-[400px]:flex-row"
             >
               <Button size="lg" asChild>
-                <Link href={primaryCta.href}>
-                  {primaryCta.text}
-                </Link>
+                <Link href={primaryCta.href}>{primaryCta.text}</Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <Link href={secondaryCta.href}>
-                  {secondaryCta.text}
-                </Link>
+                <Link href={secondaryCta.href}>{secondaryCta.text}</Link>
               </Button>
             </motion.div>
             <div className="space-y-4">
               {features.map((feature, index) => {
-                const Icon = featureIcons[feature.icon]
+                const Icon = featureIcons[feature.icon];
                 return (
                   <motion.div
                     key={index}
@@ -91,19 +86,19 @@ export function FeaturesSection({
                       {feature.text}
                     </p>
                   </motion.div>
-                )
+                );
               })}
             </div>
           </motion.div>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ 
-              duration: 0.5, 
+            transition={{
+              duration: 0.5,
               delay: 0.3,
-              type: "spring",
+              type: 'spring',
               stiffness: 100,
-              damping: 20
+              damping: 20,
             }}
             viewport={{ once: true }}
             className="flex items-center justify-center"
@@ -115,5 +110,5 @@ export function FeaturesSection({
         </div>
       </div>
     </div>
-  )
-} 
+  );
+}

@@ -1,10 +1,12 @@
-"use client";
-import SectionContainer from "@/components/ui/section-container";
-import { stegaClean } from "next-sanity";
-import Image from "next/image";
-import { urlFor } from "@/sanity/lib/image";
-import { Fragment } from "react";
-import { motion } from "motion/react";
+'use client';
+
+import { Fragment } from 'react';
+import Image from 'next/image';
+import { motion } from 'motion/react';
+import { stegaClean } from 'next-sanity';
+
+import SectionContainer from '@/components/ui/section-container';
+import { urlFor } from '@/sanity/lib/image';
 
 interface LogoCloud1Props {
   padding: {
@@ -12,13 +14,13 @@ interface LogoCloud1Props {
     bottom: boolean;
   };
   colorVariant:
-    | "primary"
-    | "secondary"
-    | "card"
-    | "accent"
-    | "destructive"
-    | "background"
-    | "transparent";
+    | 'primary'
+    | 'secondary'
+    | 'card'
+    | 'accent'
+    | 'destructive'
+    | 'background'
+    | 'transparent';
   title: string;
   images: Sanity.Image[];
 }
@@ -52,11 +54,11 @@ export default function LogoCloud1({
         <motion.div
           transition={{
             duration: 20,
-            ease: "linear",
+            ease: 'linear',
             repeat: Infinity,
           }}
           animate={{
-            x: ["0%", "-50%"],
+            x: ['0%', '-50%'],
           }}
           className="flex w-max gap-24 pr-24"
         >
@@ -69,11 +71,11 @@ export default function LogoCloud1({
                 >
                   <Image
                     src={urlFor(image.asset).url()}
-                    alt={image.alt || ""}
+                    alt={image.alt || ''}
                     placeholder={
-                      image?.asset?.metadata?.lqip ? "blur" : undefined
+                      image?.asset?.metadata?.lqip ? 'blur' : undefined
                     }
-                    blurDataURL={image?.asset?.metadata?.lqip || ""}
+                    blurDataURL={image?.asset?.metadata?.lqip || ''}
                     width={image.asset?.metadata?.dimensions?.width || 220}
                     height={image?.asset?.metadata?.dimensions?.height || 90}
                   />

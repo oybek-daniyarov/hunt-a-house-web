@@ -1,9 +1,10 @@
-import Blocks from "@/components/blocks";
-import { fetchSanityPageBySlug } from "../actions";
-import { notFound } from "next/navigation";
-import { generatePageMetadata } from "@/lib/metadata";
+import { notFound } from 'next/navigation';
 
-export const dynamic = "force-static";
+import Blocks from '@/components/blocks';
+import { generatePageMetadata } from '@/lib/metadata';
+import { fetchSanityPageBySlug } from '../actions';
+
+export const dynamic = 'force-static';
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;

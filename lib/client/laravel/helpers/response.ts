@@ -1,4 +1,4 @@
-import { LaravelValidationError, ResponseError } from "../types";
+import { LaravelValidationError, ResponseError } from '../types';
 
 export function createErrorResponse(
   message: string,
@@ -10,9 +10,9 @@ export function createErrorResponse(
     error: {
       message,
       status,
-      errors
-    }
-  }
+      errors,
+    },
+  };
 }
 
 export function createSuccessResponse<T>(
@@ -22,6 +22,6 @@ export function createSuccessResponse<T>(
   return {
     success: true,
     ...(data && { data }),
-    ...(redirect && { redirect })
-  }
-} 
+    ...(redirect && { redirect }),
+  };
+}

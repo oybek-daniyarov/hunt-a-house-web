@@ -1,34 +1,25 @@
 'use client';
 
-import { AnimatedStep } from "./animated-step";
-import { DescribeStep } from "../describe-step";
-import { ReviewStep } from "../review-step";
-import { PreviewStep } from "../preview-step";
-import { LoadingState } from "../loading-state";
-import { usePropertyGeneratorContext } from "../property-generator-provider";
+import { usePropertyGenerator } from '@/components/property-generator-ai/providers/property-generator-provider';
+import { DescribeStep } from '../steps/describe-step';
+import { LoadingState } from '../steps/loading-state';
+import { PreviewStep } from '../steps/preview-step';
+import { ReviewStep } from '../steps/review-step';
+import { AnimatedStep } from './animated-step';
 
 export function StepRenderer() {
   const {
-    currentStep,
-    description,
     propertyData,
-    isLoading,
-    setDescription,
-    handleDescribeSubmit,
+    currentStep,
     handleReviewSubmit,
     handlePreviewBack,
     handleStartOver,
-  } = usePropertyGeneratorContext();
+  } = usePropertyGenerator();
 
   if (currentStep === 'describe') {
     return (
       <AnimatedStep stepKey="describe" className="w-full mt-4">
-        <DescribeStep
-          description={description}
-          setDescription={setDescription}
-          handleSubmit={handleDescribeSubmit}
-          isLoading={isLoading}
-        />
+        <DescribeStep />
       </AnimatedStep>
     );
   }
@@ -45,7 +36,6 @@ export function StepRenderer() {
     return (
       <AnimatedStep stepKey="review" className="w-full">
         <ReviewStep
-          propertyData={propertyData}
           handleNewDescription={handleStartOver}
           handleSubmitClick={handleReviewSubmit}
         />
@@ -56,13 +46,10 @@ export function StepRenderer() {
   if (currentStep === 'preview') {
     return (
       <AnimatedStep stepKey="preview" className="w-full">
-        <PreviewStep
-          propertyData={propertyData}
-          onBack={handlePreviewBack}
-        />
+        <PreviewStep onBack={handlePreviewBack} />
       </AnimatedStep>
     );
   }
 
   return null;
-} 
+}

@@ -1,15 +1,16 @@
-import { notFound } from "next/navigation";
-import Breadcrumbs from "@/components/ui/breadcrumbs";
-import PostHero from "@/components/ui/post/hero";
-import { BreadcrumbLink } from "@/types";
-import PortableTextRenderer from "@/components/portable-text-renderer";
+import { notFound } from 'next/navigation';
+
+import PortableTextRenderer from '@/components/portable-text-renderer';
+import Breadcrumbs from '@/components/ui/breadcrumbs';
+import PostHero from '@/components/ui/post/hero';
+import { generatePageMetadata } from '@/lib/metadata';
+import { BreadcrumbLink } from '@/types';
 import {
   fetchSanityPostBySlug,
   fetchSanityPostsStaticParams,
-} from "../actions";
-import { generatePageMetadata } from "@/lib/metadata";
+} from '../actions';
 
-export const dynamic = "force-static";
+export const dynamic = 'force-static';
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
@@ -45,16 +46,16 @@ export default async function PostPage(props: {
   const links: BreadcrumbLink[] = post
     ? [
         {
-          label: "Home",
-          href: "/",
+          label: 'Home',
+          href: '/',
         },
         {
-          label: "Blog",
-          href: "/blog",
+          label: 'Blog',
+          href: '/blog',
         },
         {
           label: post.title as string,
-          href: "#",
+          href: '#',
         },
       ]
     : [];

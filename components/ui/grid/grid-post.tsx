@@ -1,21 +1,22 @@
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import Image from "next/image";
-import { urlFor } from "@/sanity/lib/image";
-import { ChevronRight } from "lucide-react";
-import { Badge } from "../badge";
+import Image from 'next/image';
+import Link from 'next/link';
+import { ChevronRight } from 'lucide-react';
+
+import { cn } from '@/lib/utils';
+import { urlFor } from '@/sanity/lib/image';
+import { Badge } from '../badge';
 
 interface GridPostProps {
   color:
-    | "primary"
-    | "secondary"
-    | "card"
-    | "accent"
-    | "destructive"
-    | "background"
-    | "transparent";
+    | 'primary'
+    | 'secondary'
+    | 'card'
+    | 'accent'
+    | 'destructive'
+    | 'background'
+    | 'transparent';
   title: string;
-  slug: Sanity.Post["slug"];
+  slug: Sanity.Post['slug'];
   categories: Sanity.Category[];
   excerpt: string;
   image: Sanity.Image;
@@ -33,14 +34,14 @@ export default function GridPost({
     <Link
       key={title}
       className="flex w-full rounded-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 group"
-      href={slug.current ? `/blog/${slug.current}` : "#"}
+      href={slug.current ? `/blog/${slug.current}` : '#'}
     >
       <div
         className={cn(
-          "flex w-full flex-col justify-between overflow-hidden transition ease-in-out group border rounded-3xl p-4 hover:border-primary",
-          color === "primary"
-            ? "group-hover:border-primary-foreground/50"
-            : "group-hover:border-primary"
+          'flex w-full flex-col justify-between overflow-hidden transition ease-in-out group border rounded-3xl p-4 hover:border-primary',
+          color === 'primary'
+            ? 'group-hover:border-primary-foreground/50'
+            : 'group-hover:border-primary'
         )}
       >
         <div className="flex flex-col">
@@ -48,12 +49,12 @@ export default function GridPost({
             <div className="mb-4 relative h-[15rem] sm:h-[20rem] md:h-[25rem] lg:h-[9.5rem] xl:h-[12rem] rounded-2xl overflow-hidden">
               <Image
                 src={urlFor(image.asset).url()}
-                alt={image.alt || ""}
-                placeholder={image?.asset?.metadata?.lqip ? "blur" : undefined}
-                blurDataURL={image?.asset?.metadata?.lqip || ""}
+                alt={image.alt || ''}
+                placeholder={image?.asset?.metadata?.lqip ? 'blur' : undefined}
+                blurDataURL={image?.asset?.metadata?.lqip || ''}
                 fill
                 style={{
-                  objectFit: "cover",
+                  objectFit: 'cover',
                 }}
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 quality={100}

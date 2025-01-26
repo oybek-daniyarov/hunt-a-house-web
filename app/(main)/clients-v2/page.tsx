@@ -1,7 +1,12 @@
-"use client";
+'use client';
 
-import { LeadForm } from "../../../components/forms/lead/lead-form";
-import { HeroSection, HowItWorksSection, StatsSection, TestimonialsSection } from "../client/_components/sections";
+import { LeadForm } from '../../../components/forms/lead/lead-form';
+import {
+  HeroSection,
+  HowItWorksSection,
+  StatsSection,
+  TestimonialsSection,
+} from '../client/_components/sections';
 
 export default function ClientLandingPageV2() {
   return (
@@ -26,4 +31,4 @@ export default function ClientLandingPageV2() {
       </div>
     </div>
   );
-} 
+}

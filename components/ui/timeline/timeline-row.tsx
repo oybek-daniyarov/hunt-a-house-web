@@ -1,9 +1,10 @@
+import { stegaClean } from 'next-sanity';
+
 import SectionContainer, {
   ISectionContainer,
   ISectionPadding,
-} from "@/components/ui/section-container";
-import { stegaClean } from "next-sanity";
-import Timeline1, { Timeline1Props } from "@/components/ui/timeline/timeline-1";
+} from '@/components/ui/section-container';
+import Timeline1, { Timeline1Props } from '@/components/ui/timeline/timeline-1';
 
 export default function TimelineRow({
   padding,
@@ -11,7 +12,7 @@ export default function TimelineRow({
   timelines,
 }: Partial<{
   padding: ISectionPadding;
-  colorVariant: ISectionContainer["color"];
+  colorVariant: ISectionContainer['color'];
   timelines: Timeline1Props[];
 }>) {
   const color = stegaClean(colorVariant);

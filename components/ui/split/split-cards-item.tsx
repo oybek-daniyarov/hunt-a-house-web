@@ -1,12 +1,14 @@
-"use client";
-import PortableTextRenderer from "@/components/portable-text-renderer";
-import { cn } from "@/lib/utils";
-import { ISectionContainer } from "@/components/ui/section-container";
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
+'use client';
+
+import { useRef } from 'react';
+import { motion, useInView } from 'motion/react';
+
+import PortableTextRenderer from '@/components/portable-text-renderer';
+import { ISectionContainer } from '@/components/ui/section-container';
+import { cn } from '@/lib/utils';
 
 interface SplitCardsItemProps {
-  color: ISectionContainer["color"];
+  color: ISectionContainer['color'];
   tagLine: string;
   title: string;
   body: any;
@@ -27,17 +29,17 @@ export default function SplitCardsItem({
     <motion.div
       ref={ref}
       className={cn(
-        "flex flex-col items-start border border-primary rounded-3xl px-6 lg:px-8 py-6 lg:py-8 transition-colors duration-1000 ease-in-out",
-        isInView ? "bg-foreground/85" : "bg-background",
-        color === "primary" ? "text-background" : undefined
+        'flex flex-col items-start border border-primary rounded-3xl px-6 lg:px-8 py-6 lg:py-8 transition-colors duration-1000 ease-in-out',
+        isInView ? 'bg-foreground/85' : 'bg-background',
+        color === 'primary' ? 'text-background' : undefined
       )}
     >
       {tagLine && (
         <div
           className={cn(
-            "font-bold text-2xl lg:text-3xl transition-colors duration-1000 ease-in-out",
-            isInView ? "text-background" : "text-foreground",
-            color === "primary" ? "text-background" : undefined
+            'font-bold text-2xl lg:text-3xl transition-colors duration-1000 ease-in-out',
+            isInView ? 'text-background' : 'text-foreground',
+            color === 'primary' ? 'text-background' : undefined
           )}
         >
           {tagLine}
@@ -46,9 +48,9 @@ export default function SplitCardsItem({
       {title && (
         <div
           className={cn(
-            "my-2 font-semibold text-xl transition-colors duration-1000 ease-in-out",
-            isInView ? "text-background" : "text-foreground",
-            color === "primary" ? "text-background" : undefined
+            'my-2 font-semibold text-xl transition-colors duration-1000 ease-in-out',
+            isInView ? 'text-background' : 'text-foreground',
+            color === 'primary' ? 'text-background' : undefined
           )}
         >
           {title}
@@ -57,8 +59,8 @@ export default function SplitCardsItem({
       {body && (
         <div
           className={cn(
-            "transition-colors duration-1000 ease-in-out",
-            isInView ? "text-background" : "text-foreground"
+            'transition-colors duration-1000 ease-in-out',
+            isInView ? 'text-background' : 'text-foreground'
           )}
         >
           <PortableTextRenderer value={body} />

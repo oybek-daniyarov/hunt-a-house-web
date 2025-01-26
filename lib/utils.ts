@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -8,11 +8,11 @@ export function cn(...inputs: ClassValue[]) {
 export const formatDate = (date: string): string => {
   const dateObj = new Date(date);
   const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   };
-  return dateObj.toLocaleDateString("en-US", options);
+  return dateObj.toLocaleDateString('en-US', options);
 };
 
 // Define the types for block content and children
@@ -29,10 +29,10 @@ export const extractPlainText = (blocks: BlockContent): string | null => {
 
   return blocks
     .map((block) => {
-      if (block._type === "block" && Array.isArray(block.children)) {
-        return block.children.map((child) => child.text).join("");
+      if (block._type === 'block' && Array.isArray(block.children)) {
+        return block.children.map((child) => child.text).join('');
       }
-      return "";
+      return '';
     })
-    .join(" ");
+    .join(' ');
 };

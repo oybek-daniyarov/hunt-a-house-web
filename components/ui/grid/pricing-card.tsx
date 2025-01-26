@@ -1,19 +1,20 @@
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { stegaClean } from "next-sanity";
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { Check } from "lucide-react";
+import Link from 'next/link';
+import { Check } from 'lucide-react';
+import { stegaClean } from 'next-sanity';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface PricingCardProps {
   color:
-    | "primary"
-    | "secondary"
-    | "card"
-    | "accent"
-    | "destructive"
-    | "background"
-    | "transparent";
+    | 'primary'
+    | 'secondary'
+    | 'card'
+    | 'accent'
+    | 'destructive'
+    | 'background'
+    | 'transparent';
   title: string;
   tagLine: string;
   excerpt: string;
@@ -28,12 +29,12 @@ interface PricingCardProps {
     href: string;
     target?: boolean;
     buttonVariant:
-      | "default"
-      | "secondary"
-      | "link"
-      | "destructive"
-      | "outline"
-      | "ghost"
+      | 'default'
+      | 'secondary'
+      | 'link'
+      | 'destructive'
+      | 'outline'
+      | 'ghost'
       | null
       | undefined;
   };
@@ -55,7 +56,7 @@ export default function PricingCard({
     >
       <div className="flex w-full flex-col justify-between border rounded-3xl p-8">
         <div
-          className={cn(color === "primary" ? "text-background" : undefined)}
+          className={cn(color === 'primary' ? 'text-background' : undefined)}
         >
           {title && (
             <div className="flex justify-between items-center">
@@ -90,8 +91,8 @@ export default function PricingCard({
           asChild
         >
           <Link
-            href={link?.href ? link.href : "#"}
-            target={link.target ? "_blank" : undefined}
+            href={link?.href ? link.href : '#'}
+            target={link.target ? '_blank' : undefined}
           >
             {link.title}
           </Link>

@@ -1,4 +1,6 @@
-import { AppSidebar } from "@/components/app-sidebar"
+import { redirect } from 'next/navigation';
+
+import { AppSidebar } from '@/components/app-sidebar';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,27 +8,25 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
+} from '@/components/ui/breadcrumb';
+import { Separator } from '@/components/ui/separator';
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { getCurrentUser } from "@/lib/data/laravel/auth/auth.api"
-import { redirect } from "next/navigation"
+} from '@/components/ui/sidebar';
+import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
 
 export default async function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const user = await getCurrentUser()
+  const user = await getCurrentUser();
 
   if (!user.data) {
-    console.error("User not found");
+    console.error('User not found');
   }
-
 
   return (
     <SidebarProvider>
@@ -51,10 +51,8 @@ export default async function DashboardLayout({
             </Breadcrumb>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          {children}
-        </div>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
       </SidebarInset>
     </SidebarProvider>
-  )
-} 
+  );
+}

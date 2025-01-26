@@ -1,39 +1,40 @@
-import Link from "next/link";
-import Logo from "@/components/logo";
-import MobileNav from "@/components/header/mobile-nav";
-import DesktopNav from "@/components/header/desktop-nav";
-import { ModeToggle } from "@/components/menu-toggle";
-import AuthButton from "./auth-button";
+import Link from 'next/link';
+
+import DesktopNav from '@/components/header/desktop-nav';
+import MobileNav from '@/components/header/mobile-nav';
+import Logo from '@/components/logo';
+import { ModeToggle } from '@/components/menu-toggle';
+import AuthButton from './auth-button';
 
 const navItems = [
   {
-    label: "Home",
-    href: "/",
+    label: 'Home',
+    href: '/',
     target: false,
   },
   {
-    label: "For Agents",
-    href: "/agent",
+    label: 'For Agents',
+    href: '/agent',
     target: false,
   },
   {
-    label: "For Clients",
-    href: "/client",
+    label: 'For Clients',
+    href: '/client',
     target: false,
   },
   {
-    label: "For Clients V2",
-    href: "/clients-v2",
+    label: 'For Clients V2',
+    href: '/clients-v2',
     target: false,
   },
   {
-    label: "Property Listings",
-    href: "/property-listings",
+    label: 'Property Listings',
+    href: '/property-listings',
     target: false,
   },
   {
-    label: "About",
-    href: "/about",
+    label: 'About',
+    href: '/about',
     target: false,
   },
 ];
@@ -54,7 +55,12 @@ export default function Header() {
         </div>
         <div className="flex items-center xl:hidden">
           <ModeToggle />
-          <MobileNav navItems={[...navItems, { label: "Login", href: "/auth/login", target: false }]} />
+          <MobileNav
+            navItems={[
+              ...navItems,
+              { label: 'Login', href: '/auth/login', target: false },
+            ]}
+          />
         </div>
       </div>
     </header>

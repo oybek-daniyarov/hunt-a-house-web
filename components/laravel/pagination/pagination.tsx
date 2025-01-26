@@ -1,13 +1,14 @@
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 import {
   Pagination,
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
-} from "@/components/ui/pagination"
-import { getVisiblePages } from "./utils"
-import { PaginationLink } from "./pagination-link"
-import type { LaravelPaginationProps } from "./types"
+} from '@/components/ui/pagination';
+import { PaginationLink } from './pagination-link';
+import type { LaravelPaginationProps } from './types';
+import { getVisiblePages } from './utils';
 
 /**
  * A pagination component that follows Laravel's pagination structure
@@ -21,16 +22,16 @@ export default function LaravelPagination({
   className,
 }: LaravelPaginationProps) {
   // Don't render pagination if there's only one page
-  if (lastPage <= 1) return null
+  if (lastPage <= 1) return null;
 
-  const visiblePages = getVisiblePages(currentPage, lastPage, delta)
+  const visiblePages = getVisiblePages(currentPage, lastPage, delta);
 
   return (
     <Pagination className={className}>
       <PaginationContent>
         {/* Previous Page Button */}
         <PaginationItem>
-          <PaginationLink 
+          <PaginationLink
             page={currentPage - 1}
             isDisabled={currentPage === 1}
             ariaLabel="Go to previous page"
@@ -43,10 +44,10 @@ export default function LaravelPagination({
         {/* Page Numbers */}
         {visiblePages.map((page: number | string, index: number) => (
           <PaginationItem key={`${page}-${index}`}>
-            {page === "..." ? (
+            {page === '...' ? (
               <PaginationEllipsis />
             ) : (
-              <PaginationLink 
+              <PaginationLink
                 page={page}
                 isActive={currentPage === page}
                 isDisabled={currentPage === page}
@@ -60,7 +61,7 @@ export default function LaravelPagination({
 
         {/* Next Page Button */}
         <PaginationItem>
-          <PaginationLink 
+          <PaginationLink
             page={currentPage + 1}
             isDisabled={currentPage === lastPage}
             ariaLabel="Go to next page"
@@ -71,5 +72,5 @@ export default function LaravelPagination({
         </PaginationItem>
       </PaginationContent>
     </Pagination>
-  )
-} 
+  );
+}

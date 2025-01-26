@@ -1,51 +1,54 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Loader2, Sparkles, Building, Home, Building2, MapPin } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import {
+  Building,
+  Building2,
+  Home,
+  Loader2,
+  MapPin,
+  Sparkles,
+} from 'lucide-react';
 
-interface DescribeStepProps {
-  description: string;
-  setDescription: (value: string) => void;
-  handleSubmit: () => void;
-  isLoading: boolean;
-}
+import { usePropertyGenerator } from '@/components/property-generator-ai/providers/property-generator-provider';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
 
 const examples = [
   {
     icon: Building,
-    title: "Luxury Apartment",
-    tags: ["Dubai Marina", "Rent", "2BR"],
-    text: "Looking for a 2-bedroom luxury apartment in Dubai Marina for rent. Budget around 150k per year. Must have a balcony with marina view and parking."
+    title: 'Luxury Apartment',
+    tags: ['Dubai Marina', 'Rent', '2BR'],
+    text: 'Looking for a 2-bedroom luxury apartment in Dubai Marina for rent. Budget around 150k per year. Must have a balcony with marina view and parking.',
   },
   {
     icon: Home,
-    title: "Family Villa",
-    tags: ["Arabian Ranches", "Buy", "4BR"],
-    text: "Want to buy a 4-bedroom villa in Arabian Ranches. Budget up to 5M AED. Need a maid's room and private garden. Type 2 or larger preferred."
+    title: 'Family Villa',
+    tags: ['Arabian Ranches', 'Buy', '4BR'],
+    text: "Want to buy a 4-bedroom villa in Arabian Ranches. Budget up to 5M AED. Need a maid's room and private garden. Type 2 or larger preferred.",
   },
   {
     icon: Building2,
-    title: "Studio Apartment",
-    tags: ["Business Bay", "Rent", "Studio"],
-    text: "Need a furnished studio apartment in Business Bay for short-term rental. Monthly budget 8k-12k. Must be close to metro and have gym access."
+    title: 'Studio Apartment',
+    tags: ['Business Bay', 'Rent', 'Studio'],
+    text: 'Need a furnished studio apartment in Business Bay for short-term rental. Monthly budget 8k-12k. Must be close to metro and have gym access.',
   },
   {
     icon: MapPin,
-    title: "Investment Property",
-    tags: ["JVC", "Buy", "ROI"],
-    text: "Looking to buy a 1-bedroom apartment in JVC for investment. Budget around 800k. Good rental yield is important. Prefer newer buildings with good facilities."
-  }
+    title: 'Investment Property',
+    tags: ['JVC', 'Buy', 'ROI'],
+    text: 'Looking to buy a 1-bedroom apartment in JVC for investment. Budget around 800k. Good rental yield is important. Prefer newer buildings with good facilities.',
+  },
 ];
 
-export function DescribeStep({ description, setDescription, handleSubmit, isLoading }: DescribeStepProps) {
+export function DescribeStep() {
+  const { description, isLoading, setDescription, handleDescribeSubmit } =
+    usePropertyGenerator();
+
   return (
-    <div
-      className="space-y-8"
-    >
+    <div className="space-y-8">
       <div className="relative mx-auto">
         <div className="group relative">
           <Textarea
@@ -58,12 +61,12 @@ export function DescribeStep({ description, setDescription, handleSubmit, isLoad
             <div className="absolute inset-0 border-2 border-primary/20 rounded-xl" />
           </div>
         </div>
-        <Button 
-          onClick={handleSubmit} 
+        <Button
+          onClick={handleDescribeSubmit}
           size="lg"
           className={cn(
-            "absolute bottom-4 right-4 shadow-sm",
-            isLoading && "bg-primary/80"
+            'absolute bottom-4 right-4 shadow-sm',
+            isLoading && 'bg-primary/80'
           )}
           disabled={isLoading || !description.trim()}
         >
@@ -94,7 +97,6 @@ export function DescribeStep({ description, setDescription, handleSubmit, isLoad
                 transition={{ delay: i * 0.1 }}
                 onClick={() => {
                   setDescription(example.text);
-                  setTimeout(() => handleSubmit(), 100);
                 }}
                 className="group relative bg-card hover:bg-accent transition-colors p-4 rounded-xl border border-border/50 cursor-pointer"
               >
@@ -106,9 +108,9 @@ export function DescribeStep({ description, setDescription, handleSubmit, isLoad
                     <div className="font-medium text-sm">{example.title}</div>
                     <div className="flex flex-wrap gap-1.5">
                       {example.tags.map((tag, j) => (
-                        <Badge 
+                        <Badge
                           key={j}
-                          variant="secondary" 
+                          variant="secondary"
                           className="text-xs bg-secondary/50"
                         >
                           {tag}
@@ -128,4 +130,4 @@ export function DescribeStep({ description, setDescription, handleSubmit, isLoad
       </div>
     </div>
   );
-} 
+}

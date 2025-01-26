@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
 
 const LOADING_STEPS = [
-  "Preparing your data...",
-  "Setting up AI models...",
-  "Initializing property engine...",
-  "Getting everything ready..."
+  'Preparing your data...',
+  'Setting up AI models...',
+  'Initializing property engine...',
+  'Getting everything ready...',
 ];
 
 export function LoadingState() {
@@ -16,7 +16,9 @@ export function LoadingState() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentStep(prev => prev < LOADING_STEPS.length - 1 ? prev + 1 : prev);
+      setCurrentStep((prev) =>
+        prev < LOADING_STEPS.length - 1 ? prev + 1 : prev
+      );
     }, 1200);
 
     return () => clearInterval(interval);
@@ -31,13 +33,13 @@ export function LoadingState() {
       transition={{ duration: 0.3 }}
       className="flex flex-col items-center justify-center p-8 space-y-4"
     >
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ 
+        transition={{
           duration: 0.5,
           repeat: Infinity,
-          repeatType: "reverse",
+          repeatType: 'reverse',
         }}
         className="relative h-12 w-12"
       >
@@ -93,8 +95,8 @@ export function LoadingState() {
           <Sparkles className="h-4 w-4 text-primary/60" />
         </motion.div>
       </motion.div>
-      
-      <motion.div 
+
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
@@ -120,4 +122,4 @@ export function LoadingState() {
       </motion.div>
     </motion.div>
   );
-} 
+}

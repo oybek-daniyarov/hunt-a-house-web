@@ -1,7 +1,8 @@
-"use server";
-import { POST_QUERY } from "@/sanity/queries/post";
-import { POSTS_QUERY, POSTS_SLUGS_QUERY } from "@/sanity/queries/posts";
-import { sanityFetch } from "@/sanity/lib/live";
+'use server';
+
+import { sanityFetch } from '@/sanity/lib/live';
+import { POST_QUERY } from '@/sanity/queries/post';
+import { POSTS_QUERY, POSTS_SLUGS_QUERY } from '@/sanity/queries/posts';
 
 export const fetchSanityPosts = async (): Promise<Sanity.Post[]> => {
   const { data } = await sanityFetch({
@@ -16,7 +17,7 @@ export const fetchSanityPostsStaticParams = async (): Promise<
 > => {
   const { data } = await sanityFetch({
     query: POSTS_SLUGS_QUERY,
-    perspective: "published",
+    perspective: 'published',
     stega: false,
   });
 

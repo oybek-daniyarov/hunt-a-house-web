@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 export function HeroSection() {
   return (
     <section className="relative min-h-[90vh] w-full flex items-center justify-center">
       <div className="w-full max-w-[90%] mx-auto">
         {/* Hero Content */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
@@ -27,27 +27,27 @@ export function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ 
-            duration: 0.8, 
+          transition={{
+            duration: 0.8,
             delay: 1,
             repeat: Infinity,
-            repeatType: "reverse",
-            repeatDelay: 0.5
+            repeatType: 'reverse',
+            repeatDelay: 0.5,
           }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
           <div className="flex flex-col items-center gap-2">
             <p className="text-sm text-muted-foreground">Scroll to explore</p>
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="text-muted-foreground animate-bounce"
             >
               <path d="M12 5v14" />
@@ -58,4 +58,4 @@ export function HeroSection() {
       </div>
     </section>
   );
-} 
+}

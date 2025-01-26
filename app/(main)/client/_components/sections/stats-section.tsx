@@ -1,4 +1,4 @@
-import * as motion from "motion/react-client"
+import * as motion from 'motion/react-client';
 
 export function StatsSection() {
   return (
@@ -43,4 +43,4 @@ export function StatsSection() {
       </div>
     </section>
   );
-} 
+}

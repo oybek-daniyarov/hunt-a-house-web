@@ -1,6 +1,7 @@
-import { MetadataRoute } from "next";
-import { groq } from "next-sanity";
-import { sanityFetch } from "@/sanity/lib/live";
+import { MetadataRoute } from 'next';
+import { groq } from 'next-sanity';
+
+import { sanityFetch } from '@/sanity/lib/live';
 
 async function getPagesSitemap(): Promise<MetadataRoute.Sitemap[]> {
   const query = groq`

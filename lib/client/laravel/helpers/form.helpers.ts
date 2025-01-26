@@ -1,6 +1,7 @@
-import { FieldValues, Path, UseFormReturn } from "react-hook-form";
-import {toast} from "sonner";
-import { ResponseError } from "@/lib/client/laravel/types";
+import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
+import { toast } from 'sonner';
+
+import { ResponseError } from '@/lib/client/laravel/types';
 
 export function handleFormError<T extends FieldValues>(
   form: UseFormReturn<T>,
@@ -25,4 +26,4 @@ export function handleFormSuccess(message: string) {
   toast.success('Success', {
     description: message,
   });
-} 
+}

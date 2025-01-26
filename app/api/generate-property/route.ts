@@ -1,22 +1,52 @@
-import { NextResponse } from "next/server";
-import { createDeepSeek, deepseek } from "@ai-sdk/deepseek";
-import { streamObject } from "ai";
-import { propertySchema } from "./schema";
+import { NextResponse } from 'next/server';
+import { deepseek } from '@ai-sdk/deepseek';
+import { streamObject } from 'ai';
 
-export const runtime = 'edge';
+import { propertySchema } from '@/components/property-generator-ai/schema';
+import { getLeadFilters } from '@/lib/data/laravel/lead/lead.api';
 
 export async function POST(req: Request) {
   try {
     const { description } = await req.json();
+    const filters = await getLeadFilters();
 
     const result = streamObject({
-      model: deepseek("deepseek-chat"),
+      model: deepseek('deepseek-chat'),
       schema: propertySchema,
-      schemaName: "PropertyResponse",
-      schemaDescription: "A property lead with structured requirements and content",
+      schemaName: 'PropertyResponse',
+      schemaDescription:
+        'A property lead with structured requirements and content',
       prompt: `You are an advanced AI real estate analyst specializing in UAE property market intelligence. Your core function is to analyze property requirements and generate data-driven recommendations based on current market conditions, seasonal factors, and location-specific insights.
 
 Given this property requirement: "${description}"
+
+Use the following property.activity: ${filters.activityTypes.map(
+        (activity) => `${activity.id}|${activity.name}`
+      )}
+
+Use the following property.type: ${filters.propertyTypes.map(
+        (propertyType) => `${propertyType.id}|${propertyType.name}`
+      )}
+
+use the following bedrooms: ${filters.bedrooms.map(
+        (bedroom) => `${bedroom.id}|${bedroom.name}`
+      )}
+
+use the following bathrooms: ${filters.bathrooms.map(
+        (bathroom) => `${bathroom.id}|${bathroom.name}`
+      )}
+
+use the following emirates: ${filters.emirates.map(
+        (emirate) => `${emirate.id}|${emirate.name}`
+      )}
+
+use the following areas: ${filters.cities.map(
+        (city) => `${city.id}|${city.name}`
+      )}
+
+use the following communities: ${filters.areas.map(
+        (area) => `${area.id}|${area.name}`
+      )}
 
 Analyze using this intelligence framework:
 
@@ -492,10 +522,10 @@ Base all analysis on:
 
     return result.toTextStreamResponse();
   } catch (error) {
-    console.error("Error generating property data:", error);
+    console.error('Error generating property data:', error);
     return NextResponse.json(
-      { error: "Failed to generate property data" },
+      { error: 'Failed to generate property data' },
       { status: 500 }
     );
   }
-} 
+}

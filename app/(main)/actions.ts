@@ -1,6 +1,7 @@
-"use server";
-import { PAGE_QUERY } from "@/sanity/queries/page";
-import { sanityFetch } from "@/sanity/lib/live";
+'use server';
+
+import { sanityFetch } from '@/sanity/lib/live';
+import { PAGE_QUERY } from '@/sanity/queries/page';
 
 export const fetchSanityPageBySlug = async ({
   slug,

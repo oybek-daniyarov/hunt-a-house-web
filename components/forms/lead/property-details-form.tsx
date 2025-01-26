@@ -1,10 +1,23 @@
-"use client";
+'use client';
 
-import { useFormContext } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { useFormContext } from 'react-hook-form';
+
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 
 export function PropertyDetailsForm() {
   const { control } = useFormContext();
@@ -12,19 +25,26 @@ export function PropertyDetailsForm() {
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold tracking-tight">Property Details</h2>
-        <p className="text-muted-foreground">Tell us about the property you're looking for</p>
+        <h2 className="text-2xl font-semibold tracking-tight">
+          Property Details
+        </h2>
+        <p className="text-muted-foreground">
+          Tell us about the property you're looking for
+        </p>
       </div>
 
       <div className="grid gap-6">
-      <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <FormField
             control={control}
             name="propertyType"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Property Type</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select property type" />
@@ -48,7 +68,10 @@ export function PropertyDetailsForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Activity Type</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select activity type" />
@@ -71,7 +94,10 @@ export function PropertyDetailsForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Bedrooms</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select bedrooms" />
@@ -97,7 +123,10 @@ export function PropertyDetailsForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Bathrooms</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select bathrooms" />
@@ -221,4 +250,4 @@ export function PropertyDetailsForm() {
       </div>
     </div>
   );
-} 
+}

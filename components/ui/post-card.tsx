@@ -1,7 +1,8 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { urlFor } from "@/sanity/lib/image";
-import { ChevronRight } from "lucide-react";
+import Image from 'next/image';
+import { ChevronRight } from 'lucide-react';
+
+import { cn } from '@/lib/utils';
+import { urlFor } from '@/sanity/lib/image';
 
 export default function PostCard({
   className,
@@ -17,7 +18,7 @@ export default function PostCard({
   return (
     <div
       className={cn(
-        "flex w-full flex-col justify-between overflow-hidden transition ease-in-out group border rounded-3xl p-4 hover:border-primary",
+        'flex w-full flex-col justify-between overflow-hidden transition ease-in-out group border rounded-3xl p-4 hover:border-primary',
         className
       )}
     >
@@ -26,12 +27,12 @@ export default function PostCard({
           <div className="mb-4 relative h-[15rem] sm:h-[20rem] md:h-[25rem] lg:h-[9.5rem] xl:h-[12rem] rounded-2xl overflow-hidden">
             <Image
               src={urlFor(image.asset).url()}
-              alt={image.alt || ""}
-              placeholder={image?.asset?.metadata?.lqip ? "blur" : undefined}
-              blurDataURL={image?.asset?.metadata?.lqip || ""}
+              alt={image.alt || ''}
+              placeholder={image?.asset?.metadata?.lqip ? 'blur' : undefined}
+              blurDataURL={image?.asset?.metadata?.lqip || ''}
               fill
               style={{
-                objectFit: "cover",
+                objectFit: 'cover',
               }}
               sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
               quality={100}

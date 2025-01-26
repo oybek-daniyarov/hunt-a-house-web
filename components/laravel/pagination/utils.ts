@@ -1,4 +1,4 @@
-import type { ReadonlyURLSearchParams } from "next/navigation"
+import type { ReadonlyURLSearchParams } from 'next/navigation';
 
 /**
  * Create a URL with updated page parameter
@@ -7,9 +7,9 @@ export function createPageURL(
   searchParams: ReadonlyURLSearchParams,
   pageNumber: number | string
 ): string {
-  const params = new URLSearchParams(searchParams)
-  params.set("page", pageNumber.toString())
-  return `?${params.toString()}`
+  const params = new URLSearchParams(searchParams);
+  params.set('page', pageNumber.toString());
+  return `?${params.toString()}`;
 }
 
 /**
@@ -24,9 +24,9 @@ export function getVisiblePages(
   lastPage: number,
   delta: number
 ): (number | string)[] {
-  const range: number[] = []
-  const rangeWithDots: (number | string)[] = []
-  let lastNumber: number | undefined
+  const range: number[] = [];
+  const rangeWithDots: (number | string)[] = [];
+  let lastNumber: number | undefined;
 
   // Calculate the range of pages to show
   for (let i = 1; i <= lastPage; i++) {
@@ -35,7 +35,7 @@ export function getVisiblePages(
       i === lastPage ||
       (i >= currentPage - delta && i <= currentPage + delta)
     ) {
-      range.push(i)
+      range.push(i);
     }
   }
 
@@ -43,14 +43,14 @@ export function getVisiblePages(
   for (const i of range) {
     if (lastNumber) {
       if (i - lastNumber === 2) {
-        rangeWithDots.push(lastNumber + 1)
+        rangeWithDots.push(lastNumber + 1);
       } else if (i - lastNumber !== 1) {
-        rangeWithDots.push("...")
+        rangeWithDots.push('...');
       }
     }
-    rangeWithDots.push(i)
-    lastNumber = i
+    rangeWithDots.push(i);
+    lastNumber = i;
   }
 
-  return rangeWithDots
-} 
+  return rangeWithDots;
+}

@@ -1,21 +1,23 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+'use client';
+
+import { useCallback } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
+import { stegaClean } from 'next-sanity';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import * as z from 'zod';
+
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import SectionContainer from "@/components/ui/section-container";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { toast } from "sonner";
-import { useCallback } from "react";
-import { Loader2 } from "lucide-react";
-import { stegaClean } from "next-sanity";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import SectionContainer from '@/components/ui/section-container';
 
 interface FormNewsletterProps {
   padding: {
@@ -23,13 +25,13 @@ interface FormNewsletterProps {
     bottom: boolean;
   };
   colorVariant:
-    | "primary"
-    | "secondary"
-    | "card"
-    | "accent"
-    | "destructive"
-    | "background"
-    | "transparent";
+    | 'primary'
+    | 'secondary'
+    | 'card'
+    | 'accent'
+    | 'destructive'
+    | 'background'
+    | 'transparent';
   consentText: string;
   buttonText: string;
   successMessage: string;
@@ -47,17 +49,17 @@ export default function FormNewsletter({
     email: z
       .string()
       .min(1, {
-        message: "Please enter your email",
+        message: 'Please enter your email',
       })
       .email({
-        message: "Please enter a valid email",
+        message: 'Please enter a valid email',
       }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
   });
 
@@ -66,10 +68,10 @@ export default function FormNewsletter({
   const handleSend = useCallback(
     async ({ email }: { email: string }) => {
       try {
-        const response = await fetch("/api/newsletter", {
-          method: "POST",
+        const response = await fetch('/api/newsletter', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             email,

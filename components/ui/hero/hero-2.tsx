@@ -1,11 +1,13 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { stegaClean } from "next-sanity";
-import PortableTextRenderer from "@/components/portable-text-renderer";
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
+import { useRef } from 'react';
+import Link from 'next/link';
+import { motion, useInView } from 'motion/react';
+import { stegaClean } from 'next-sanity';
+
+import PortableTextRenderer from '@/components/portable-text-renderer';
+import { Button } from '@/components/ui/button';
+
 export default function Hero2({
   tagLine,
   title,
@@ -20,12 +22,12 @@ export default function Hero2({
     href: string;
     target?: boolean;
     buttonVariant:
-      | "default"
-      | "secondary"
-      | "link"
-      | "destructive"
-      | "outline"
-      | "ghost"
+      | 'default'
+      | 'secondary'
+      | 'link'
+      | 'destructive'
+      | 'outline'
+      | 'ghost'
       | null
       | undefined;
   }[];
@@ -111,8 +113,8 @@ export default function Hero2({
             >
               <Link
                 href={link.href as string}
-                target={link.target ? "_blank" : undefined}
-                rel={link.target ? "noopener" : undefined}
+                target={link.target ? '_blank' : undefined}
+                rel={link.target ? 'noopener' : undefined}
               >
                 {link.title}
               </Link>

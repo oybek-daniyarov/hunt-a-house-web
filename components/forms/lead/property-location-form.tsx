@@ -1,55 +1,89 @@
-"use client";
+'use client';
 
-import { useFormContext } from "react-hook-form";
-import { X } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { X } from 'lucide-react';
+import { useFormContext } from 'react-hook-form';
+
+import { Badge } from '@/components/ui/badge';
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const EMIRATES = [
-  "Dubai",
-  "Abu Dhabi",
-  "Sharjah",
-  "Ajman",
-  "Ras Al Khaimah",
-  "Fujairah",
-  "Umm Al Quwain",
+  'Dubai',
+  'Abu Dhabi',
+  'Sharjah',
+  'Ajman',
+  'Ras Al Khaimah',
+  'Fujairah',
+  'Umm Al Quwain',
 ];
 
 const CITIES = {
-  Dubai: ["Dubai Marina", "Downtown Dubai", "Palm Jumeirah", "JBR", "Business Bay"],
-  "Abu Dhabi": ["Al Reem Island", "Al Raha Beach", "Yas Island", "Saadiyat Island"],
-  Sharjah: ["Al Majaz", "Al Khan", "Al Nahda", "Al Taawun"],
+  Dubai: [
+    'Dubai Marina',
+    'Downtown Dubai',
+    'Palm Jumeirah',
+    'JBR',
+    'Business Bay',
+  ],
+  'Abu Dhabi': [
+    'Al Reem Island',
+    'Al Raha Beach',
+    'Yas Island',
+    'Saadiyat Island',
+  ],
+  Sharjah: ['Al Majaz', 'Al Khan', 'Al Nahda', 'Al Taawun'],
   // Add more cities as needed
 };
 
 const AREAS = {
-  "Dubai Marina": ["JBR Beach", "Marina Walk", "Marina Mall", "Bluewaters Island"],
-  "Downtown Dubai": ["Burj Khalifa", "Dubai Mall", "Business Bay", "DIFC"],
-  "Palm Jumeirah": ["Palm West Beach", "The Pointe", "Crescent", "The Trunk"],
+  'Dubai Marina': [
+    'JBR Beach',
+    'Marina Walk',
+    'Marina Mall',
+    'Bluewaters Island',
+  ],
+  'Downtown Dubai': ['Burj Khalifa', 'Dubai Mall', 'Business Bay', 'DIFC'],
+  'Palm Jumeirah': ['Palm West Beach', 'The Pointe', 'Crescent', 'The Trunk'],
   // Add more areas as needed
 };
 
 export function PropertyLocationForm() {
   const { control, watch, setValue } = useFormContext();
-  const selectedEmirate = watch("emirate");
-  const selectedCity = watch("city");
-  const selectedAreas = watch("areas") || [];
+  const selectedEmirate = watch('emirate');
+  const selectedCity = watch('city');
+  const selectedAreas = watch('areas') || [];
 
   const handleAreaAdd = (area: string) => {
     if (selectedAreas.length < 5 && !selectedAreas.includes(area)) {
-      setValue("areas", [...selectedAreas, area]);
+      setValue('areas', [...selectedAreas, area]);
     }
   };
 
   const handleAreaRemove = (area: string) => {
-    setValue("areas", selectedAreas.filter((a: string) => a !== area));
+    setValue(
+      'areas',
+      selectedAreas.filter((a: string) => a !== area)
+    );
   };
 
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold tracking-tight">Property Location</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">
+          Property Location
+        </h2>
         <p className="text-muted-foreground">Select your preferred locations</p>
       </div>
 
@@ -86,18 +120,23 @@ export function PropertyLocationForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>City</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select city" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {CITIES[selectedEmirate as keyof typeof CITIES]?.map((city) => (
-                      <SelectItem key={city} value={city}>
-                        {city}
-                      </SelectItem>
-                    ))}
+                    {CITIES[selectedEmirate as keyof typeof CITIES]?.map(
+                      (city) => (
+                        <SelectItem key={city} value={city}>
+                          {city}
+                        </SelectItem>
+                      )
+                    )}
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -153,4 +192,4 @@ export function PropertyLocationForm() {
       </div>
     </div>
   );
-} 
+}

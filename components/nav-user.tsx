@@ -1,15 +1,7 @@
-import {
-  BadgeCheck,
-  Bell,
-  LogOut,
-  Sparkles,
-} from "lucide-react"
+import { CaretSortIcon, ComponentPlaceholderIcon } from '@radix-ui/react-icons';
+import { BadgeCheck, Bell, LogOut, Sparkles } from 'lucide-react';
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,21 +10,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import { CaretSortIcon, ComponentPlaceholderIcon } from "@radix-ui/react-icons"
-import { getCurrentUser } from "@/lib/data/laravel/auth/auth.api"
-import { LogoutMenuItem } from "./logout-menu-item"
+} from '@/components/ui/sidebar';
+import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
+import { LogoutMenuItem } from './logout-menu-item';
 
 export async function NavUser() {
-  const {data: user} = await getCurrentUser()
+  const { data: user } = await getCurrentUser();
 
   if (!user) {
-    return null
+    return null;
   }
 
   return (
@@ -57,7 +48,7 @@ export async function NavUser() {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            side='right'
+            side="right"
             align="end"
             sideOffset={4}
           >
@@ -101,5 +92,5 @@ export async function NavUser() {
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

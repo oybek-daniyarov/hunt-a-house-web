@@ -1,19 +1,20 @@
-import { cn } from "@/lib/utils";
+import { stegaClean } from 'next-sanity';
+
 import SectionContainer, {
-  ISectionPadding,
   ISectionContainer,
-} from "@/components/ui/section-container";
-import { stegaClean } from "next-sanity";
-import SplitContent from "./split-content";
-import SplitCardsList from "./split-cards-list";
-import SplitImage from "./split-image";
-import SplitInfoList from "./split-info-list";
+  ISectionPadding,
+} from '@/components/ui/section-container';
+import { cn } from '@/lib/utils';
+import SplitCardsList from './split-cards-list';
+import SplitContent from './split-content';
+import SplitImage from './split-image';
+import SplitInfoList from './split-info-list';
 
 const componentMap: { [key: string]: React.ComponentType<any> } = {
-  "split-content": SplitContent,
-  "split-cards-list": SplitCardsList,
-  "split-image": SplitImage,
-  "split-info-list": SplitInfoList,
+  'split-content': SplitContent,
+  'split-cards-list': SplitCardsList,
+  'split-image': SplitImage,
+  'split-info-list': SplitInfoList,
 };
 
 export default function SplitRow({
@@ -23,7 +24,7 @@ export default function SplitRow({
   splitColumns,
 }: Partial<{
   padding: ISectionPadding;
-  colorVariant: ISectionContainer["color"];
+  colorVariant: ISectionContainer['color'];
   noGap: boolean;
   splitColumns: Sanity.Block[];
 }>) {
@@ -34,8 +35,8 @@ export default function SplitRow({
       {splitColumns && splitColumns?.length > 0 && (
         <div
           className={cn(
-            "grid grid-cols-1 lg:grid-cols-2",
-            noGap ? "gap-0" : "gap-12 lg:gap-20"
+            'grid grid-cols-1 lg:grid-cols-2',
+            noGap ? 'gap-0' : 'gap-12 lg:gap-20'
           )}
         >
           {splitColumns?.map((block: Sanity.Block) => {

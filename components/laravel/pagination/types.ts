@@ -2,22 +2,22 @@ export interface LaravelPaginationProps {
   /**
    * Current page number (1-based)
    */
-  currentPage: number
+  currentPage: number;
   /**
    * Total number of pages
    */
-  lastPage: number
+  lastPage: number;
   /**
    * Total number of items across all pages
    */
-  total: number
+  total: number;
   /**
    * Number of pages to show on each side of current page
    * @default 2
    */
-  delta?: number
+  delta?: number;
   /**
    * Class name for the pagination container
    */
-  className?: string
-} 
+  className?: string;
+}

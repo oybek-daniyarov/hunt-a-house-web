@@ -1,6 +1,6 @@
 'use client';
 
-import { type PropertyResponse } from "@/app/api/generate-property/schema";
+import { type PropertyResponse } from '@/components/property-generator-ai/schema';
 
 export const PROPERTY_TYPES = {
   1: 'Apartment',
@@ -25,34 +25,45 @@ export type ActivityType = keyof typeof ACTIVITY_TYPES;
 
 export function formatBudget(budget: PropertyResponse['budget'] | null) {
   if (!budget?.min && !budget?.max) return 'Not specified';
-  
-  const formatNumber = (num: number) => 
-    new Intl.NumberFormat('en-AE', { 
-      style: 'currency', 
+
+  const formatNumber = (num: number) =>
+    new Intl.NumberFormat('en-AE', {
+      style: 'currency',
       currency: 'AED',
-      maximumFractionDigits: 0 
+      maximumFractionDigits: 0,
     }).format(num);
 
-  const range = [budget.min && formatNumber(budget.min), budget.max && formatNumber(budget.max)]
+  const range = [
+    budget.min && formatNumber(budget.min),
+    budget.max && formatNumber(budget.max),
+  ]
     .filter(Boolean)
     .join(' - ');
 
-  const period = budget.frequency === 'one_time' ? '' 
-    : budget.frequency === 'yearly' ? ' per year'
-    : budget.frequency === 'monthly' ? ' per month'
-    : budget.frequency === 'daily' ? ' per day'
-    : '';
+  const period =
+    budget.frequency === 'one_time'
+      ? ''
+      : budget.frequency === 'yearly'
+        ? ' per year'
+        : budget.frequency === 'monthly'
+          ? ' per month'
+          : budget.frequency === 'daily'
+            ? ' per day'
+            : '';
 
   return `${range}${period}`;
 }
 
 export function formatSize(size: PropertyResponse['property']['size'] | null) {
   if (!size?.min && !size?.max) return 'Not specified';
-  
-  const formatNumber = (num: number) => 
+
+  const formatNumber = (num: number) =>
     new Intl.NumberFormat('en-AE', { maximumFractionDigits: 0 }).format(num);
 
-  return [size.min && `${formatNumber(size.min)} sqft`, size.max && `${formatNumber(size.max)} sqft`]
+  return [
+    size.min && `${formatNumber(size.min)} sqft`,
+    size.max && `${formatNumber(size.max)} sqft`,
+  ]
     .filter(Boolean)
     .join(' - ');
 }
@@ -63,7 +74,11 @@ interface PropertyDisplayProps {
   className?: string;
 }
 
-export function PropertyDisplay({ label, value, className = "" }: PropertyDisplayProps) {
+export function PropertyDisplay({
+  label,
+  value,
+  className = '',
+}: PropertyDisplayProps) {
   return (
     <div className={`flex items-start gap-2 ${className}`}>
       <span className="font-medium">{label}:</span>
@@ -78,13 +93,15 @@ interface PropertySectionDisplayProps {
   className?: string;
 }
 
-export function PropertySectionDisplay({ title, children, className = "" }: PropertySectionDisplayProps) {
+export function PropertySectionDisplay({
+  title,
+  children,
+  className = '',
+}: PropertySectionDisplayProps) {
   return (
     <div className={`space-y-2 ${className}`}>
       <h4 className="font-medium">{title}</h4>
-      <div className="space-y-2">
-        {children}
-      </div>
+      <div className="space-y-2">{children}</div>
     </div>
   );
-} 
+}

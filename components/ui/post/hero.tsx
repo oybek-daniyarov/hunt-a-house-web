@@ -1,7 +1,8 @@
-import Image from "next/image";
-import PostDate from "./date";
-import { Mail } from "lucide-react";
-import { urlFor } from "@/sanity/lib/image";
+import Image from 'next/image';
+import { Mail } from 'lucide-react';
+
+import { urlFor } from '@/sanity/lib/image';
+import PostDate from './date';
 
 export default function PostHero({
   title,
@@ -23,8 +24,8 @@ export default function PostHero({
       {image && image.asset?._id && (
         <div className="my-4 md:my-6 rounded-2xl overflow-hidden">
           <Image
-            src={urlFor(image).auto("format").fit("max").quality(100).url()}
-            alt={image.alt || ""}
+            src={urlFor(image).auto('format').fit('max').quality(100).url()}
+            alt={image.alt || ''}
             placeholder="blur"
             blurDataURL={image.asset?.metadata?.lqip || undefined}
             width={image.asset?.metadata?.dimensions?.width || 1200}
@@ -40,10 +41,10 @@ export default function PostHero({
               <div className="relative w-6 h-6 md:w-10 md:h-10">
                 <Image
                   src={urlFor(author.image).url()}
-                  alt={author.image.alt ? author.image.alt : ""}
+                  alt={author.image.alt ? author.image.alt : ''}
                   fill
                   style={{
-                    objectFit: "cover",
+                    objectFit: 'cover',
                   }}
                   placeholder="blur"
                   blurDataURL={author.image.asset?.metadata?.lqip || undefined}

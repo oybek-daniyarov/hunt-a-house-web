@@ -1,6 +1,7 @@
-import { stegaClean } from "next-sanity";
-import Marquee from "./marquee";
-import { cn } from "@/lib/utils";
+import { stegaClean } from 'next-sanity';
+
+import { cn } from '@/lib/utils';
+import Marquee from './marquee';
 
 interface Carousel3Props {
   padding: {
@@ -8,13 +9,13 @@ interface Carousel3Props {
     bottom: boolean;
   };
   colorVariant:
-    | "primary"
-    | "secondary"
-    | "card"
-    | "accent"
-    | "destructive"
-    | "background"
-    | "transparent";
+    | 'primary'
+    | 'secondary'
+    | 'card'
+    | 'accent'
+    | 'destructive'
+    | 'background'
+    | 'transparent';
   speed: number;
   pauseOnHover: boolean;
   rows?: {
@@ -39,11 +40,13 @@ export default function Carousel3({
   const color = stegaClean(colorVariant);
 
   return (
-    <div className={cn(
-      "w-full",
-      padding?.top && "pt-16 md:pt-24",
-      padding?.bottom && "pb-16 md:pb-24"
-    )}>
+    <div
+      className={cn(
+        'w-full',
+        padding?.top && 'pt-16 md:pt-24',
+        padding?.bottom && 'pb-16 md:pb-24'
+      )}
+    >
       {rows && rows.length > 0 && (
         <div className="space-y-16">
           {rows.map((row, index) => (
@@ -52,11 +55,11 @@ export default function Carousel3({
               testimonials={row.testimonials}
               speed={speed}
               pauseOnHover={pauseOnHover}
-              direction={index % 2 === 0 ? "ltr" : "rtl"}
+              direction={index % 2 === 0 ? 'ltr' : 'rtl'}
             />
           ))}
         </div>
       )}
     </div>
   );
-} 
+}

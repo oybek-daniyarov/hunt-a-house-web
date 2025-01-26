@@ -1,12 +1,12 @@
-import * as motion from "motion/react-client"
+import * as motion from 'motion/react-client';
 
 interface Stat {
-  value: string
-  label: string
+  value: string;
+  label: string;
 }
 
 interface StatsSectionProps {
-  stats: Stat[]
+  stats: Stat[];
 }
 
 export function StatsSection({ stats }: StatsSectionProps) {
@@ -29,5 +29,5 @@ export function StatsSection({ stats }: StatsSectionProps) {
         </div>
       </div>
     </section>
-  )
-} 
+  );
+}

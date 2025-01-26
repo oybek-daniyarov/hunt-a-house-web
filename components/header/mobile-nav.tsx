@@ -1,4 +1,11 @@
-"use client";
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { TextAlignRightIcon } from '@radix-ui/react-icons';
+
+import Logo from '@/components/logo';
+import { Button } from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
@@ -6,13 +13,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { NavItem } from "@/types";
-import Logo from "@/components/logo";
-import { useState } from "react";
-import { TextAlignRightIcon } from "@radix-ui/react-icons";
+} from '@/components/ui/sheet';
+import { NavItem } from '@/types';
 
 export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
   const [open, setOpen] = useState(false);
@@ -46,8 +48,8 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
                     <Link
                       onClick={() => setOpen(false)}
                       href={navItem.href}
-                      target={navItem.target ? "_blank" : undefined}
-                      rel={navItem.target ? "noopener noreferrer" : undefined}
+                      target={navItem.target ? '_blank' : undefined}
+                      rel={navItem.target ? 'noopener noreferrer' : undefined}
                       className="hover:text-decoration-none hover:opacity-50 text-lg"
                     >
                       {navItem.label}

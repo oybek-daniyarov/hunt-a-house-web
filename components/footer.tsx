@@ -1,20 +1,21 @@
-import Link from "next/link";
-import Logo from "@/components/logo";
+import Link from 'next/link';
+
+import Logo from '@/components/logo';
 
 const navItems = [
   {
-    label: "Home",
-    href: "/",
+    label: 'Home',
+    href: '/',
     target: false,
   },
   {
-    label: "Blog",
-    href: "/blog",
+    label: 'Blog',
+    href: '/blog',
     target: false,
   },
   {
-    label: "About",
-    href: "/about",
+    label: 'About',
+    href: '/about',
     target: false,
   },
 ];
@@ -39,8 +40,8 @@ export default function Footer() {
             <Link
               key={navItem.label}
               href={navItem.href}
-              target={navItem.target ? "_blank" : undefined}
-              rel={navItem.target ? "noopener noreferrer" : undefined}
+              target={navItem.target ? '_blank' : undefined}
+              rel={navItem.target ? 'noopener noreferrer' : undefined}
               className="transition-colors hover:text-foreground/80 text-foreground/60 text-sm"
             >
               {navItem.label}
@@ -49,7 +50,7 @@ export default function Footer() {
         </div>
         <div className="mt-8 flex flex-col lg:flex-row gap-6 justify-center text-center lg:mt-5 text-xs border-t pt-8">
           <p className="text-foreground/60">
-            &copy; {getCurrentYear()} Built by{" "}
+            &copy; {getCurrentYear()} Built by{' '}
             <Link href="https://x.com/serge_0v" target="_blank" rel="noopener">
               @serge_0v
             </Link>

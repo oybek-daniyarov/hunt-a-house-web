@@ -1,4 +1,4 @@
-import SplitInfoItem from "@/components/ui/split/split-info-item";
+import SplitInfoItem from '@/components/ui/split/split-info-item';
 
 interface SplitInfoListProps {
   list: {

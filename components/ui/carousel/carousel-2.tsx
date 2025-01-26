@@ -1,18 +1,19 @@
-import SectionContainer from "@/components/ui/section-container";
-import { stegaClean } from "next-sanity";
+import { stegaClean } from 'next-sanity';
+
+import PortableTextRenderer from '@/components/portable-text-renderer';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
+  CarouselDots,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  CarouselDots,
-} from "@/components/ui/carousel";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
-import { urlFor } from "@/sanity/lib/image";
-import { StarRating } from "@/components/ui/star-rating";
-import PortableTextRenderer from "@/components/portable-text-renderer";
+} from '@/components/ui/carousel';
+import SectionContainer from '@/components/ui/section-container';
+import { StarRating } from '@/components/ui/star-rating';
+import { urlFor } from '@/sanity/lib/image';
 
 interface Carousel2Props {
   padding: {
@@ -20,13 +21,13 @@ interface Carousel2Props {
     bottom: boolean;
   };
   colorVariant:
-    | "primary"
-    | "secondary"
-    | "card"
-    | "accent"
-    | "destructive"
-    | "background"
-    | "transparent";
+    | 'primary'
+    | 'secondary'
+    | 'card'
+    | 'accent'
+    | 'destructive'
+    | 'background'
+    | 'transparent';
   testimonial: {
     _id: string;
     name: string;

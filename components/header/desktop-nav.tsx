@@ -1,5 +1,6 @@
-import Link from "next/link";
-import { NavItem } from "@/types";
+import Link from 'next/link';
+
+import { NavItem } from '@/types';
 
 export default function DesktopNav({ navItems }: { navItems: NavItem[] }) {
   return (
@@ -8,8 +9,8 @@ export default function DesktopNav({ navItems }: { navItems: NavItem[] }) {
         <Link
           key={navItem.label}
           href={navItem.href}
-          target={navItem.target ? "_blank" : undefined}
-          rel={navItem.target ? "noopener noreferrer" : undefined}
+          target={navItem.target ? '_blank' : undefined}
+          rel={navItem.target ? 'noopener noreferrer' : undefined}
           className="transition-colors hover:text-foreground/80 text-foreground/60 text-sm"
         >
           {navItem.label}

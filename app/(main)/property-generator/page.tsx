@@ -1,17 +1,8 @@
-"use client";
+import { Sparkles } from 'lucide-react';
 
-import { Sparkles } from "lucide-react";
-import { z } from "zod";
-import { propertySchema } from "@/app/api/generate-property/schema";
-import { PropertyDescriptionGenerator } from "@/components/forms/property-description-generator";
-
-type PropertyResponse = z.infer<typeof propertySchema>;
+import { PropertyGeneratorAi } from '@/components/property-generator-ai';
 
 export default function PropertyGeneratorPage() {
-
-    const handleGenerate = (data: PropertyResponse) => {
-        console.log("Generated work request:", data);
-      };
   return (
     <div className="transition-colors duration-300 dark:bg-zinc-950">
       <div className="container mx-auto md:py-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
@@ -25,14 +16,14 @@ export default function PropertyGeneratorPage() {
               Connect with the Perfect Dubai Agent
             </h1>
             <p className="text-base md:text-lg text-muted-foreground/80 font-light mx-auto">
-              Simply describe your dream property in natural language, and our AI will structure your requirements 
-              and match you with the perfect agents in Dubai
+              Simply describe your dream property in natural language, and our
+              AI will structure your requirements and match you with the perfect
+              agents in Dubai
             </p>
           </div>
         </div>
-        <PropertyDescriptionGenerator handleGenerate={handleGenerate} />
-
+        <PropertyGeneratorAi />
       </div>
     </div>
   );
-} 
+}

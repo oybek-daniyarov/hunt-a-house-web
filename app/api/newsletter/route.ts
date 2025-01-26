@@ -1,4 +1,4 @@
-import { Resend } from "resend";
+import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -14,9 +14,9 @@ export const POST = async (request: Request) => {
     });
 
     return Response.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return Response.json(
-      { error: "Error subscribing to updates" },
+      { error: 'Error subscribing to updates', details: error },
       { status: 400 }
     );
   }

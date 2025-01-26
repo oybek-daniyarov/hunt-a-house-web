@@ -1,71 +1,70 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-
+import { useState } from 'react';
+import i18nIsoCountries from 'i18n-iso-countries';
+import enCountries from 'i18n-iso-countries/langs/en.json';
 import {
-  type CountryCallingCode,
-  type E164Number,
   getExampleNumber,
   isValidPhoneNumber as matchIsValidPhoneNumber,
   parsePhoneNumber,
-} from "libphonenumber-js"
-import i18nIsoCountries from "i18n-iso-countries"
-import enCountries from "i18n-iso-countries/langs/en.json"
-import  PhoneInput from "react-phone-number-input/input"
-import { type Country } from "react-phone-number-input/input"
-import examples from "libphonenumber-js/mobile/examples"
-import { Input } from "@/components/ui/input"
+  type CountryCallingCode,
+  type E164Number,
+} from 'libphonenumber-js';
+import examples from 'libphonenumber-js/mobile/examples';
+import PhoneInput, { type Country } from 'react-phone-number-input/input';
 
-import { ComboboxCountryInput } from "./combobox"
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import { ComboboxCountryInput } from './combobox';
 import {
   getCountriesOptions,
   isoToEmoji,
   replaceNumbersWithZeros,
-} from "./helpers"
-import { cn } from "@/lib/utils"
+} from './helpers';
 
 type CountryOption = {
-  value: Country
-  label: string
-  indicatif: CountryCallingCode
+  value: Country;
+  label: string;
+  indicatif: CountryCallingCode;
+};
+
+i18nIsoCountries.registerLocale(enCountries);
+
+interface PhoneInputWithCountryProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  onValueChange?: (value: string, isValid: boolean) => void;
 }
 
-i18nIsoCountries.registerLocale(enCountries)
-
-interface PhoneInputWithCountryProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  onValueChange?: (value: string, isValid: boolean) => void
-}
-
-export const PhoneInputWithCountry = ({ 
+export const PhoneInputWithCountry = ({
   className,
   onValueChange,
-  ...props 
+  ...props
 }: PhoneInputWithCountryProps) => {
-  const options = getCountriesOptions()
-  const defaultCountry = parsePhoneNumber("+33606060606")?.country
+  const options = getCountriesOptions();
+  const defaultCountry = parsePhoneNumber('+33606060606')?.country;
   const defaultCountryOption = options.find(
-    (option) => option.value === defaultCountry,
-  )
+    (option) => option.value === defaultCountry
+  );
 
   const [country, setCountry] = useState<CountryOption>(
-    defaultCountryOption || options[0]!,
-  )
-  const [phoneNumber, setPhoneNumber] = useState<E164Number>()
+    defaultCountryOption || options[0]!
+  );
+  const [phoneNumber, setPhoneNumber] = useState<E164Number>();
 
   const placeholder = replaceNumbersWithZeros(
-    getExampleNumber(country.value, examples)!.formatInternational(),
-  )
+    getExampleNumber(country.value, examples)!.formatInternational()
+  );
 
   const onCountryChange = (value: CountryOption) => {
-    setPhoneNumber(undefined)
-    setCountry(value)
-    onValueChange?.("", false)
-  }
+    setPhoneNumber(undefined);
+    setCountry(value);
+    onValueChange?.('', false);
+  };
 
-  const isValidPhoneNumber = matchIsValidPhoneNumber(phoneNumber ?? "")
+  const isValidPhoneNumber = matchIsValidPhoneNumber(phoneNumber ?? '');
 
   return (
-    <div className={cn("flex gap-2", className)}>
+    <div className={cn('flex gap-2', className)}>
       <ComboboxCountryInput
         value={country}
         onValueChange={onCountryChange}
@@ -86,10 +85,13 @@ export const PhoneInputWithCountry = ({
         inputComponent={Input}
         placeholder={placeholder}
         onChange={(value) => {
-          setPhoneNumber(value)
-          onValueChange?.(value || "", !!value && matchIsValidPhoneNumber(value))
+          setPhoneNumber(value);
+          onValueChange?.(
+            value || '',
+            !!value && matchIsValidPhoneNumber(value)
+          );
         }}
       />
     </div>
-  )
-}
+  );
+};

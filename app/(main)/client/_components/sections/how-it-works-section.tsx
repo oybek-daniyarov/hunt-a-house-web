@@ -1,4 +1,4 @@
-import * as motion from "motion/react-client"
+import * as motion from 'motion/react-client';
 
 export function HowItWorksSection() {
   return (
@@ -9,8 +9,12 @@ export function HowItWorksSection() {
         transition={{ duration: 0.5 }}
         className="text-center mb-24"
       >
-        <h2 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">How It Works</h2>
-        <p className="text-xl text-muted-foreground">Simple steps to connect with quality agents</p>
+        <h2 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">
+          How It Works
+        </h2>
+        <p className="text-xl text-muted-foreground">
+          Simple steps to connect with quality agents
+        </p>
       </motion.div>
       <div className="grid gap-16 md:grid-cols-3">
         <motion.div
@@ -58,4 +62,4 @@ export function HowItWorksSection() {
       </div>
     </section>
   );
-} 
+}
