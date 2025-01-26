@@ -1,9 +1,27 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const LOADING_STEPS = [
+  "Preparing your data...",
+  "Setting up AI models...",
+  "Initializing property engine...",
+  "Getting everything ready..."
+];
 
 export function LoadingState() {
+  const [currentStep, setCurrentStep] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentStep(prev => prev < LOADING_STEPS.length - 1 ? prev + 1 : prev);
+    }, 1200);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <motion.div
       key="loading"
@@ -82,9 +100,22 @@ export function LoadingState() {
         transition={{ delay: 0.2 }}
         className="flex flex-col items-center gap-2 text-center"
       >
-        <div className="text-base font-medium text-primary">Analyzing your requirements...</div>
+        <div className="h-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-base font-medium text-primary"
+            >
+              {LOADING_STEPS[currentStep]}
+            </motion.div>
+          </AnimatePresence>
+        </div>
         <div className="text-sm text-muted-foreground">
-          Our AI is helping to structure your requirements
+          Please wait while we prepare everything
         </div>
       </motion.div>
     </motion.div>

@@ -46,7 +46,7 @@ export function DescribeStep({ description, setDescription, handleSubmit, isLoad
     <div
       className="space-y-8"
     >
-      <div className="relative max-w-4xl mx-auto">
+      <div className="relative mx-auto">
         <div className="group relative">
           <Textarea
             placeholder="Describe your dream property... (e.g., 'Looking for a 2-bedroom luxury apartment in Dubai Marina with marina view, budget around 150k per year for a long-term rental')"
@@ -81,7 +81,7 @@ export function DescribeStep({ description, setDescription, handleSubmit, isLoad
         </Button>
       </div>
 
-      <div className="max-w-4xl mx-auto">
+      <div className="mx-auto">
         <div className="text-sm font-medium mb-4">Try these examples:</div>
         <div className="grid sm:grid-cols-2 gap-4">
           {examples.map((example, i) => {

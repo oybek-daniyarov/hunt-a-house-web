@@ -3,21 +3,22 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { usePropertyGeneratorContext } from "./property-generator-provider";
 
-interface StepIndicatorProps {
-  showResults: boolean;
-  hasPartialData: boolean;
-  isPreviewStep: boolean;
-}
+export function StepIndicator() {
+  const { currentStep, isLoading } = usePropertyGeneratorContext();
 
-export function StepIndicator({ showResults, hasPartialData, isPreviewStep }: StepIndicatorProps) {
+  const showResults = currentStep === 'review' || currentStep === 'preview';
+  const hasPartialData = currentStep === 'loading';
+  const isPreviewStep = currentStep === 'preview';
+
   return (
     <motion.div 
       className="mb-8"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <div className="flex items-center justify-between max-w-3xl mx-auto">
+      <div className="flex items-center justify-between mx-auto">
         <div className="flex flex-col items-center gap-2">
           <div className={cn(
             "w-10 h-10 rounded-full border-2 flex items-center justify-center text-sm font-medium shadow-sm",
@@ -34,7 +35,7 @@ export function StepIndicator({ showResults, hasPartialData, isPreviewStep }: St
         <div className="w-32 h-[2px] bg-border/30 relative top-[-12px]">
           <div className={cn(
             "h-full bg-primary transition-all duration-500",
-            hasPartialData ? "w-full" : showResults ? "w-1/2" : "w-0"
+            hasPartialData ? "w-1/2" : showResults ? "w-full" : "w-0"
           )} />
         </div>
 

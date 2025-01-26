@@ -1,81 +1,41 @@
+'use client';
+
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import type { z } from "zod";
-import { propertySchema } from "@/app/api/generate-property/schema";
-
-type PropertyResponse = z.infer<typeof propertySchema>;
+import { type PropertyResponse } from "@/app/api/generate-property/schema";
+import { 
+  PropertyDisplay, 
+  PropertySectionDisplay,
+  PROPERTY_TYPES,
+  ACTIVITY_TYPES,
+  type PropertyType,
+  type ActivityType,
+  formatBudget,
+  formatSize
+} from "./shared/property-display";
+import { usePropertyForm } from "./property-form-provider";
+import { Badge } from "@/components/ui/badge";
 
 interface PreviewStepProps {
-  propertyData: PropertyResponse | null;
-  handleBackClick: () => void;
-  handleSubmit: () => void;
+  propertyData: PropertyResponse;
+  onBack: () => void;
 }
 
-const propertyTypes = {
-  1: 'Apartment',
-  2: 'Villa',
-  3: 'Townhouse'
-} as const;
+export function PreviewStep({ propertyData, onBack }: PreviewStepProps) {
+  const { getValue } = usePropertyForm();
 
-const activityTypes = {
-  1: 'Buy',
-  2: 'Rent Long Term',
-  3: 'Rent Short Term'
-} as const;
-
-function formatBudget(min: number | null, max: number | null, frequency: string | null) {
-  if (!min && !max) return 'Not specified';
-  
-  const formatNumber = (num: number) => 
-    new Intl.NumberFormat('en-AE', { 
-      style: 'currency', 
-      currency: 'AED',
-      maximumFractionDigits: 0 
-    }).format(num);
-
-  const range = [min && formatNumber(min), max && formatNumber(max)]
-    .filter(Boolean)
-    .join(' - ');
-
-  const period = frequency === 'one_time' ? '' 
-    : frequency === 'yearly' ? ' per year'
-    : frequency === 'monthly' ? ' per month'
-    : frequency === 'daily' ? ' per day'
-    : '';
-
-  return `${range}${period}`;
-}
-
-function formatSize(min: number | null, max: number | null) {
-  if (!min && !max) return 'Not specified';
-  
-  const formatNumber = (num: number) => `${num.toLocaleString()} sqft`;
-  
-  return [min && formatNumber(min), max && formatNumber(max)]
-    .filter(Boolean)
-    .join(' - ');
-}
-
-export function PreviewStep({ propertyData, handleBackClick, handleSubmit }: PreviewStepProps) {
   return (
-    <div  className="space-y-8">
-      <div className="flex items-center justify-between max-w-4xl mx-auto">
+    <div className="space-y-8">
+      <div className="flex items-center justify-between mx-auto">
         <h2 className="text-xl font-medium">Preview Requirements</h2>
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
             size="sm"
-            onClick={handleBackClick}
+            onClick={onBack}
             className="text-xs"
           >
             Back to Review
-          </Button>
-          <Button
-            size="sm"
-            className="text-xs"
-            onClick={handleSubmit}
-          >
-            Submit Requirements
           </Button>
         </div>
       </div>
@@ -84,61 +44,65 @@ export function PreviewStep({ propertyData, handleBackClick, handleSubmit }: Pre
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="bg-background border border-border/50 p-8 rounded-xl shadow-sm max-w-4xl mx-auto"
+        className="bg-background border border-border/50 p-8 rounded-xl shadow-sm mx-auto"
       >
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-6">
             <div className="relative">
-              <h3 className="font-semibold mb-2">Location</h3>
-              <p className="text-sm text-muted-foreground mb-1">Emirate: {propertyData?.emirate_name || 'Not specified'}</p>
-              {propertyData?.areas && Array.isArray(propertyData.areas) && propertyData.areas.length > 0 && (
-                <p className="text-sm text-muted-foreground mb-1">
-                  Areas: {propertyData.areas.join(', ')}
-                </p>
-              )}
-              {propertyData?.communities && Array.isArray(propertyData.communities) && propertyData.communities.length > 0 && (
-                <p className="text-sm text-muted-foreground">
-                  Communities: {propertyData.communities.join(', ')}
-                </p>
-              )}
+              <h4 className="font-semibold mb-2">Location</h4>
+              <div className="text-sm text-muted-foreground space-y-1">
+                <PropertyDisplay label="Emirate" value={getValue('location.emirate', '')} />
+                <PropertyDisplay label="Areas" value={getValue('location.areas', []).join(', ')} />
+                <PropertyDisplay label="Communities" value={getValue('location.communities', []).join(', ')} />
+              </div>
             </div>
+
             <div className="relative">
-              <h3 className="font-semibold mb-2">Property Details</h3>
-              <p className="text-sm text-muted-foreground mb-1">
-                Type: {propertyData?.property_type ? propertyTypes[propertyData.property_type as keyof typeof propertyTypes] : 'Not specified'}
-              </p>
-              <p className="text-sm text-muted-foreground mb-1">
-                Activity: {propertyData?.activity_type ? activityTypes[propertyData.activity_type as keyof typeof activityTypes] : 'Not specified'}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Size: {formatSize(propertyData?.min_size || null, propertyData?.max_size || null)}
-              </p>
+              <h4 className="font-semibold mb-2">Property Details</h4>
+              <div className="text-sm text-muted-foreground space-y-1">
+                <PropertyDisplay label="Type" value={PROPERTY_TYPES[getValue('property.type', 1 as PropertyType) as PropertyType]} />
+                <PropertyDisplay label="Activity" value={ACTIVITY_TYPES[getValue('property.activity', 1 as ActivityType) as ActivityType]} />
+                <PropertyDisplay label="Size" value={formatSize(getValue('property.size', null))} />
+              </div>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-6">
             <div className="relative">
-              <h3 className="font-semibold mb-2">Specifications</h3>
-              <p className="text-sm text-muted-foreground mb-1">
-                Bedrooms: {propertyData?.bedrooms || 'Not specified'}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Bathrooms: {propertyData?.bathrooms || 'Not specified'}
-              </p>
+              <h4 className="font-semibold mb-2">Specifications</h4>
+              <div className="text-sm text-muted-foreground space-y-1">
+                <PropertyDisplay 
+                  label="Bedrooms" 
+                  value={getValue<PropertyResponse['specifications']['bedrooms']>('specifications.bedrooms', 0).toString()} 
+                />
+                <PropertyDisplay 
+                  label="Bathrooms" 
+                  value={getValue<PropertyResponse['specifications']['bathrooms']>('specifications.bathrooms', 0).toString()} 
+                />
+              </div>
             </div>
+
             <div className="relative">
-              <h3 className="font-semibold mb-2">Budget</h3>
-              <p className="text-sm text-muted-foreground">
-                {formatBudget(propertyData?.min_budget || null, propertyData?.max_budget || null, propertyData?.budget_frequency || null)}
-              </p>
+              <h4 className="font-semibold mb-2">Budget</h4>
+              <div className="text-sm text-muted-foreground">
+                <PropertyDisplay label="Budget Range" value={formatBudget(getValue('budget', null))} />
+              </div>
             </div>
           </div>
 
           <div className="relative">
-            <h3 className="font-semibold mb-2">Summary</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {propertyData?.description || 'Generating description...'}
-            </p>
+            <h4 className="font-semibold mb-2">Summary</h4>
+            <div className="space-y-4">
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <PropertyDisplay label="Title" value={getValue('content.title', '')} />
+                <PropertyDisplay label="Description" value={getValue('content.description', '')} />
+                <div className="flex flex-wrap gap-2">
+                  {getValue('content.tags', []).map((tag) => (
+                    <Badge key={tag} variant="secondary">{tag}</Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </motion.div>

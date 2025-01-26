@@ -171,7 +171,7 @@ export function PropertyDescriptionGenerator2({ handleGenerate }: PropertyDescri
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <div className="flex items-center justify-between max-w-3xl mx-auto">
+      <div className="flex items-center justify-between mx-auto">
         <div className="flex flex-col items-center gap-2">
           <div className={cn(
             "w-10 h-10 rounded-full border-2 flex items-center justify-center text-sm font-medium shadow-sm",
@@ -243,7 +243,7 @@ export function PropertyDescriptionGenerator2({ handleGenerate }: PropertyDescri
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="space-y-8"
           >
-            <div className="relative max-w-4xl mx-auto">
+            <div className="relative mx-auto">
               <div className="group relative">
                 <Textarea
                   placeholder="Describe your dream property... (e.g., 'Looking for a 2-bedroom luxury apartment in Dubai Marina with marina view, budget around 150k per year for a long-term rental')"

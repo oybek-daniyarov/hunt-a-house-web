@@ -4,7 +4,6 @@ import { UseFormReturn } from "react-hook-form";
 import { type PropertyResponse } from "@/app/api/generate-property/schema";
 import { EditSection } from "../ui/edit-section";
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -18,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { usePropertyForm } from "../property-form-provider";
 
 interface SpecificationsSectionProps {
   form: UseFormReturn<PropertyResponse>;
@@ -29,6 +29,11 @@ interface SpecificationsSectionProps {
   isGenerating: boolean;
 }
 
+const BEDROOMS = Array.from({ length: 6 }, (_, i) => i + 1);
+const BATHROOMS = Array.from({ length: 6 }, (_, i) => i + 1);
+
+const TITLE = 'Specifications';
+
 export function SpecificationsSection({
   form,
   isEditing,
@@ -38,27 +43,34 @@ export function SpecificationsSection({
   onCancel,
   isGenerating
 }: SpecificationsSectionProps) {
+  const { handleSubmit } = usePropertyForm();
+
+  const handleSave = async () => {
+    const isValid = await handleSubmit();
+    if (isValid) {
+      onSave();
+    }
+  };
+
   const renderForm = () => (
-    <Form {...form}>
-      <form className="space-y-4">
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
         <FormField
           control={form.control}
-          name="bedrooms"
+          name="specifications.bedrooms"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Bedrooms</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value?.toString()}>
+              <Select onValueChange={value => field.onChange(Number(value))} defaultValue={field.value?.toString()}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select number of bedrooms" />
+                    <SelectValue placeholder="Select bedrooms" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="0">Studio</SelectItem>
-                  {[1, 2, 3, 4, 5, 6].map((num) => (
-                    <SelectItem key={num} value={num.toString()}>{num} {num === 1 ? 'Bedroom' : 'Bedrooms'}</SelectItem>
+                  {BEDROOMS.map(value => (
+                    <SelectItem key={value} value={value.toString()}>{value}</SelectItem>
                   ))}
-                  <SelectItem value="7">7+ Bedrooms</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -68,49 +80,56 @@ export function SpecificationsSection({
 
         <FormField
           control={form.control}
-          name="bathrooms"
+          name="specifications.bathrooms"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Bathrooms</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value?.toString()}>
+              <Select onValueChange={value => field.onChange(Number(value))} defaultValue={field.value?.toString()}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select number of bathrooms" />
+                    <SelectValue placeholder="Select bathrooms" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {[1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5].map((num) => (
-                    <SelectItem key={num} value={num.toString()}>{num} {num === 1 ? 'Bathroom' : 'Bathrooms'}</SelectItem>
+                  {BATHROOMS.map(value => (
+                    <SelectItem key={value} value={value.toString()}>{value}</SelectItem>
                   ))}
-                  <SelectItem value="6">6+ Bathrooms</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
             </FormItem>
           )}
         />
-      </form>
-    </Form>
+      </div>
+    </div>
   );
 
-  const renderContent = () => (
-    <>
-      <p className="text-sm text-muted-foreground mb-1">
-        Bedrooms: {propertyData?.bedrooms || 'Not specified'}
-      </p>
-      <p className="text-sm text-muted-foreground">
-        Bathrooms: {propertyData?.bathrooms || 'Not specified'}
-      </p>
-    </>
-  );
+  const renderContent = () => {
+    const { getValue } = usePropertyForm();
+    const bedrooms = getValue('specifications.bedrooms', 1);
+    const bathrooms = getValue('specifications.bathrooms', 1);
+
+    return (
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <span className="font-medium">Bedrooms:</span>
+          <span>{bedrooms || 'Not specified'}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="font-medium">Bathrooms:</span>
+          <span>{bathrooms || 'Not specified'}</span>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <EditSection
-      title="Specifications"
+      title={TITLE}
       isEditing={isEditing}
       isDisabled={isGenerating}
       onEdit={onEdit}
-      onSave={onSave}
+      onSave={handleSave}
       onCancel={onCancel}
     >
       {isEditing ? renderForm() : renderContent()}

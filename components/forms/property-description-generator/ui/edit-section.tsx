@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Check, Pen, X } from "lucide-react";
 import { type ReactNode } from "react";
+import { usePropertyForm } from "../property-form-provider";
 
 interface EditSectionProps {
   title: string;
@@ -23,6 +24,14 @@ export function EditSection({
   onCancel,
   children
 }: EditSectionProps) {
+  const { form } = usePropertyForm();
+
+  const handleCancel = async () => {
+    const isValid = await form.trigger();
+    
+    isValid && onCancel();
+  };
+
   const renderEditButtons = () => {
     if (isEditing) {
       return (
@@ -31,7 +40,7 @@ export function EditSection({
             variant="ghost" 
             size="sm" 
             className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-            onClick={onCancel}
+            onClick={handleCancel}
           >
             <X className="h-4 w-4" />
             <span className="sr-only">Cancel Edit</span>

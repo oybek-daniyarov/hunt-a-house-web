@@ -19,9 +19,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { usePropertyForm } from "../property-form-provider";
 
-function formatBudget(min: number | null, max: number | null, frequency: string | null) {
-  if (!min && !max) return 'Not specified';
+function formatBudget(budget: PropertyResponse['budget'] | null) {
+  if (!budget?.min && !budget?.max) return 'Not specified';
   
   const formatNumber = (num: number) => 
     new Intl.NumberFormat('en-AE', { 
@@ -30,14 +31,14 @@ function formatBudget(min: number | null, max: number | null, frequency: string 
       maximumFractionDigits: 0 
     }).format(num);
 
-  const range = [min && formatNumber(min), max && formatNumber(max)]
+  const range = [budget.min && formatNumber(budget.min), budget.max && formatNumber(budget.max)]
     .filter(Boolean)
     .join(' - ');
 
-  const period = frequency === 'one_time' ? '' 
-    : frequency === 'yearly' ? ' per year'
-    : frequency === 'monthly' ? ' per month'
-    : frequency === 'daily' ? ' per day'
+  const period = budget.frequency === 'one_time' ? '' 
+    : budget.frequency === 'yearly' ? ' per year'
+    : budget.frequency === 'monthly' ? ' per month'
+    : budget.frequency === 'daily' ? ' per day'
     : '';
 
   return `${range}${period}`;
@@ -53,6 +54,8 @@ interface BudgetSectionProps {
   isGenerating: boolean;
 }
 
+const TITLE = 'Budget';
+
 export function BudgetSection({
   form,
   isEditing,
@@ -62,91 +65,110 @@ export function BudgetSection({
   onCancel,
   isGenerating
 }: BudgetSectionProps) {
+  const { handleSubmit } = usePropertyForm();
+
+  const handleSave = async () => {
+    const isValid = await handleSubmit();
+    if (isValid) {
+      onSave();
+    }
+  };
+
   const renderForm = () => (
-    <Form {...form}>
-      <form className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="min_budget"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Minimum Budget (AED)</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="number" 
-                    placeholder="Min budget" 
-                    {...field}
-                    value={field.value?.toString() || ''}
-                    onChange={e => field.onChange(e.target.value ? parseInt(e.target.value) : null)}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="max_budget"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Maximum Budget (AED)</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="number" 
-                    placeholder="Max budget" 
-                    {...field}
-                    value={field.value?.toString() || ''}
-                    onChange={e => field.onChange(e.target.value ? parseInt(e.target.value) : null)}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
         <FormField
           control={form.control}
-          name="budget_frequency"
+          name="budget.min"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Payment Frequency</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value || undefined}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select payment frequency" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="one_time">One Time</SelectItem>
-                  <SelectItem value="yearly">Yearly</SelectItem>
-                  <SelectItem value="monthly">Monthly</SelectItem>
-                  <SelectItem value="daily">Daily</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormLabel>Minimum Budget (AED)</FormLabel>
+              <FormControl>
+                <Input 
+                  type="number" 
+                  placeholder="Min budget" 
+                  {...field}
+                  value={field.value?.toString() || ''}
+                  onChange={e => field.onChange(e.target.value ? parseInt(e.target.value) : null)}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-      </form>
-    </Form>
+
+        <FormField
+          control={form.control}
+          name="budget.max"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Maximum Budget (AED)</FormLabel>
+              <FormControl>
+                <Input 
+                  type="number" 
+                  placeholder="Max budget" 
+                  {...field}
+                  value={field.value?.toString() || ''}
+                  onChange={e => field.onChange(e.target.value ? parseInt(e.target.value) : null)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <FormField
+        control={form.control}
+        name="budget.frequency"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Payment Frequency</FormLabel>
+            <Select onValueChange={field.onChange} defaultValue={field.value || undefined}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select payment frequency" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem value="one_time">One Time</SelectItem>
+                <SelectItem value="yearly">Yearly</SelectItem>
+                <SelectItem value="monthly">Monthly</SelectItem>
+                <SelectItem value="daily">Daily</SelectItem>
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>
   );
 
-  const renderContent = () => (
-    <p className="text-sm text-muted-foreground">
-      {formatBudget(propertyData?.min_budget || null, propertyData?.max_budget || null, propertyData?.budget_frequency || null)}
-    </p>
-  );
+  const renderContent = () => {
+    const { getValue } = usePropertyForm();
+    const budget = getValue('budget', {
+      min: 0,
+      max: 0,
+      frequency: null
+    });
+
+    return (
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <span className="font-medium">Budget:</span>
+          <span>{formatBudget(budget)}</span>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <EditSection
-      title="Budget"
+      title={TITLE}
       isEditing={isEditing}
       isDisabled={isGenerating}
       onEdit={onEdit}
-      onSave={onSave}
+      onSave={handleSave}
       onCancel={onCancel}
     >
       {isEditing ? renderForm() : renderContent()}
