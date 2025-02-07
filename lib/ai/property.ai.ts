@@ -1,7 +1,6 @@
 import { openai } from '@ai-sdk/openai';
 import { Output, smoothStream, streamText } from 'ai';
 
-import getSearchAiPrompt from '@/lib/ai/prompt';
 import jinaReaderTool from '@/lib/ai/tools/jina-reader.tool';
 import searxSearchTool from '@/lib/ai/tools/searx-search.tool';
 import { LocationSearchResponseSchema } from './types';
@@ -12,11 +11,8 @@ export function searchPropertiesAI(
   query: string,
   filters: App.Data.Lead.LeadFiltersData
 ) {
-  const system = getSearchAiPrompt(filters);
-
   return streamText({
     model,
-    system,
     tools: { searxSearchTool, jinaReaderTool },
     toolChoice: 'auto',
     messages: [
