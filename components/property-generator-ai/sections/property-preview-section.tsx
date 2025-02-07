@@ -14,15 +14,18 @@ function formatSize(min: number | null, max: number | null) {
 }
 
 const PropertyPreviewSection = () => {
-  const { getValue } = usePropertyForm();
-  const type = getValue('property.type', 'Not specified');
-  const activity = getValue('property.activity', 'Not specified');
-  const size = getValue('property.size', { min: null, max: null });
+  const { getValue, findName } = usePropertyForm();
+  const type = getValue('listing.type', 'Not specified');
+  const activity = getValue('listing.activity', 'Not specified');
+  const size = getValue('listing.size', { min: null, max: null });
 
   return (
     <Preview>
-      <Preview.Row title="Type" value={type} />
-      <Preview.Row title="Activity" value={activity} />
+      <Preview.Row title="Type" value={findName('propertyTypes', type)} />
+      <Preview.Row
+        title="Activity"
+        value={findName('activityTypes', activity)}
+      />
       <Preview.Row title="Size" value={formatSize(size.min, size.max)} />
     </Preview>
   );

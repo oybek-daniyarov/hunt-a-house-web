@@ -28,7 +28,7 @@ export function SpecificationsSection() {
         <div className="grid grid-cols-2 gap-4">
           <SelectField
             control={form.control}
-            name="specifications.bedrooms"
+            name="listing.bedrooms"
             label="Bedrooms"
             placeholder="Select bedrooms"
             options={bedroomsOptions}
@@ -36,7 +36,7 @@ export function SpecificationsSection() {
 
           <SelectField
             control={form.control}
-            name="specifications.bathrooms"
+            name="listing.bathrooms"
             label="Bathrooms"
             placeholder="Select bathrooms"
             options={bathroomsOptions}

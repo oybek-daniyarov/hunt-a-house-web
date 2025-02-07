@@ -1,67 +1,51 @@
 'use client';
 
-import { MultipleSelectorField } from '@/components/ui/multiple-selector-field';
+import { LocationSearchField } from '@/components/ui/location-search-field';
 import { SelectField } from '@/components/ui/select-field';
+import { searchLocations } from '@/lib/data/locations';
 import { EditSection } from '../components/edit-section';
 import { usePropertyForm } from '../providers/property-form-provider';
+import { usePropertyGenerator } from '../providers/property-generator-provider';
 import LocationPreviewSection from './location-preview-section';
 
-const TITLE = 'Location';
 const EDITING_SECTION = 'location';
 
 export function LocationSection() {
   const { form, isCurrentEditingSection, filters } = usePropertyForm();
+  const { propertyData } = usePropertyGenerator();
+  const isEditing = isCurrentEditingSection(EDITING_SECTION);
+
   const emiratesOptions = filters.emirates.map((emirate) => ({
     label: emirate.name,
     value: emirate.id.toString(),
   }));
 
-  const areasOptions = filters.cities.map((city) => ({
-    label: city.name,
-    value: city.id.toString(),
-  }));
-
-  const communitiesOptions = filters.areas.map((area) => ({
-    label: area.name,
-    value: area.id.toString(),
-  }));
-
-  const selectedAreas = form.watch('location.areas') || [];
-  const isEditing = isCurrentEditingSection(EDITING_SECTION);
-
+  const defaultLocations = propertyData?.location.materializedPath
+    ? [
+        {
+          value: propertyData.location.materializedPath,
+          label: propertyData.location.communityName,
+        },
+      ]
+    : [];
   return (
-    <EditSection title={TITLE} editingSection={EDITING_SECTION}>
+    <EditSection title="Location" editingSection={EDITING_SECTION}>
       {isEditing ? (
         <div className="space-y-4">
           <SelectField
+            name="location.emirateId"
             control={form.control}
-            name="location.emirate"
             label="Emirate"
             placeholder="Select emirate"
             options={emiratesOptions}
           />
-
-          <MultipleSelectorField
+          <LocationSearchField
+            name="location.materializedPath"
             control={form.control}
-            name="location.areas"
-            label="Areas"
-            placeholder="Select areas"
-            defaultOptions={areasOptions}
-            creatable
-          />
-
-          <MultipleSelectorField
-            control={form.control}
-            name="location.communities"
-            label="Communities"
-            placeholder="Select communities"
-            defaultOptions={communitiesOptions}
-            creatable
-            emptyIndicator={
-              selectedAreas.length === 0
-                ? 'Please select an area first'
-                : 'No communities found'
-            }
+            label="Location"
+            placeholder="Search for a location..."
+            onSearch={searchLocations}
+            defaultLocations={defaultLocations}
           />
         </div>
       ) : (

@@ -30,7 +30,7 @@ export function PropertySection() {
           <div className="grid grid-cols-2 gap-4">
             <SelectField
               control={form.control}
-              name="property.type"
+              name="listing.type"
               label="Property Type"
               placeholder="Select property type"
               options={propertyTypeOptions}
@@ -38,7 +38,7 @@ export function PropertySection() {
 
             <SelectField
               control={form.control}
-              name="property.activity"
+              name="listing.activity"
               label="Activity Type"
               placeholder="Select activity type"
               options={activityTypeOptions}
@@ -47,7 +47,7 @@ export function PropertySection() {
           <div className="grid grid-cols-2 gap-4">
             <InputField
               control={form.control}
-              name="property.size.min"
+              name="listing.size.min"
               label="Minimum Size (sqft)"
               type="number"
               placeholder="Min size"
@@ -56,7 +56,7 @@ export function PropertySection() {
 
             <InputField
               control={form.control}
-              name="property.size.max"
+              name="listing.size.max"
               label="Maximum Size (sqft)"
               type="number"
               placeholder="Max size"

@@ -1,7 +1,7 @@
 import Preview from '@/components/property-generator-ai/components/preview';
 import { usePropertyForm } from '@/components/property-generator-ai/providers/property-form-provider';
-import { PropertyResponse } from '@/components/property-generator-ai/schema';
 import { Badge } from '@/components/ui/badge';
+import { LocationSearchResponse } from '@/lib/ai/types';
 import { formatCurrency } from '@/lib/utils/format-number';
 
 const FREQUENCY_MAP = {
@@ -11,7 +11,7 @@ const FREQUENCY_MAP = {
   daily: 'Daily',
 };
 
-function formatBudget(budget: PropertyResponse['budget'] | null) {
+function formatBudget(budget: LocationSearchResponse['price'] | null) {
   if (!budget?.min && !budget?.max) return 'Not specified';
 
   const range = [
@@ -21,7 +21,7 @@ function formatBudget(budget: PropertyResponse['budget'] | null) {
     .filter(Boolean)
     .join(' - ');
 
-  const period = budget.frequency ? FREQUENCY_MAP[budget.frequency] : '';
+  const period = budget.term ? FREQUENCY_MAP[budget.term] : '';
 
   return (
     <span className="flex items-center gap-2">
@@ -35,7 +35,7 @@ function formatBudget(budget: PropertyResponse['budget'] | null) {
 
 const BudgetPreviewSection = () => {
   const { getValue } = usePropertyForm();
-  const budget = getValue('budget', null);
+  const budget = getValue('price', null);
 
   return (
     <Preview>

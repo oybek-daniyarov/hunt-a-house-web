@@ -1,4 +1,22 @@
+declare namespace App.Data.Ai {
+  export type AiResponseData = {
+    id: string;
+    object: string;
+    created: number;
+    model: string;
+    choices: Array<any>;
+    usage: Array<any>;
+    systemFingerprint: string | null;
+    content: string | null;
+  };
+}
 declare namespace App.Data.Auth {
+  export type CreateEmailAccountData = {
+    email: string;
+    name: string;
+    phone: string;
+    userType: App.Enums.UserType;
+  };
   export type LoginData = {
     user: App.Data.User.UserData;
     token: string;
@@ -42,6 +60,11 @@ declare namespace App.Data.Auth.Payload {
   };
 }
 declare namespace App.Data.Lead {
+  export type CreateLeadData = {
+    lead: App.Data.Lead.LeadData;
+    token: string | null;
+    user: App.Data.User.UserData | null;
+  };
   export type LeadData = {
     id: number | null;
     user_id: number;
@@ -108,24 +131,6 @@ declare namespace App.Data.Lead {
     name: string;
   };
 }
-declare namespace App.Data.Lead.Payload {
-  export type CreateLeadPayloadData = {
-    user: any;
-    property_type_id: number;
-    activity_type_id: number;
-    bedrooms: number;
-    bathrooms: number;
-    min_size: number;
-    max_size: number;
-    min_budget: number;
-    max_budget: number;
-    emirate_id: number;
-    city_id: number;
-    description: string;
-    max_agent_views: number;
-    areas: Array<any>;
-  };
-}
 declare namespace App.Data.Location {
   export type AreaData = {
     id: string;
@@ -143,6 +148,15 @@ declare namespace App.Data.Location {
     id: string;
     name: string;
     code: string | null;
+  };
+}
+declare namespace App.Data.Property {
+  export type SearchPropertyData = {
+    id: string;
+    name: string;
+    location_id: string;
+    path: string;
+    property_name: string;
   };
 }
 declare namespace App.Data.User {

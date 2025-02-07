@@ -3,8 +3,8 @@ import { usePropertyForm } from '../providers/property-form-provider';
 
 const SpecificationsPreviewSection = () => {
   const { getValue } = usePropertyForm();
-  const bedrooms = getValue('specifications.bedrooms', 1);
-  const bathrooms = getValue('specifications.bathrooms', 1);
+  const bedrooms = getValue('listing.bedrooms', 1);
+  const bathrooms = getValue('listing.bathrooms', 1);
 
   return (
     <Preview>

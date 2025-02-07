@@ -1,4 +1,4 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity';
 
 export const faqsQuery = groq`
   _type == "faqs" => {

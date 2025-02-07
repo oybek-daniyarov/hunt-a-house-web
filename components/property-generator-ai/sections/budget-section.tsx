@@ -21,7 +21,7 @@ export function BudgetSection() {
           <div className="grid grid-cols-2 gap-4">
             <InputField
               control={form.control}
-              name="budget.min"
+              name="price.min"
               label="Minimum Budget (AED)"
               type="number"
               placeholder="Min budget"
@@ -29,7 +29,7 @@ export function BudgetSection() {
             />
             <InputField
               control={form.control}
-              name="budget.max"
+              name="price.max"
               label="Maximum Budget (AED)"
               type="number"
               placeholder="Max budget"
@@ -38,7 +38,7 @@ export function BudgetSection() {
           </div>
           <SelectField
             control={form.control}
-            name="budget.frequency"
+            name="price.term"
             label="Payment Frequency"
             placeholder="Select payment frequency"
             options={PAYMENT_FREQUENCIES_OPTIONS}

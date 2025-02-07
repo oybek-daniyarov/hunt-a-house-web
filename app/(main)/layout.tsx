@@ -12,9 +12,9 @@ export default async function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="flex flex-col flex-1 min-h-0">
       <Header />
-      <main>{children}</main>
+      {children}
       <SanityLive />
       {(await draftMode()).isEnabled && (
         <>
@@ -23,6 +23,6 @@ export default async function MainLayout({
         </>
       )}
       <Footer />
-    </>
+    </div>
   );
 }

@@ -8,17 +8,21 @@ import {
   useState,
 } from 'react';
 import { experimental_useObject as useObject } from 'ai/react';
-import type { z } from 'zod';
+import { z } from 'zod';
 
 import { propertySchema } from '@/components/property-generator-ai/schema';
 import { StepType } from '@/components/property-generator-ai/types';
+import {
+  LocationSearchResponse,
+  LocationSearchResponseSchema,
+} from '@/lib/ai/types';
 
 type PropertyResponse = z.infer<typeof propertySchema>;
 
 interface PropertyGeneratorContextValue {
   currentStep: StepType;
   description: string;
-  propertyData: PropertyResponse | null;
+  propertyData: LocationSearchResponse | null;
   isLoading: boolean;
   error: Error | undefined;
   hasPartialData: boolean;
@@ -27,7 +31,7 @@ interface PropertyGeneratorContextValue {
   handleReviewSubmit: () => void;
   handlePreviewBack: () => void;
   handleStartOver: () => void;
-  handlePropertyDataChange: (data: PropertyResponse) => void;
+  handlePropertyDataChange: (data: LocationSearchResponse) => void;
   getStepIndicatorProps: () => {
     showResults: boolean;
     hasPartialData: boolean;
@@ -45,7 +49,7 @@ interface PropertyGeneratorProviderProps {
 export function PropertyGeneratorProvider({
   children,
 }: PropertyGeneratorProviderProps) {
-  const handleGenerate = useCallback((data: PropertyResponse) => {
+  const handleGenerate = useCallback((data: LocationSearchResponse) => {
     console.log('Generated work request:', data);
   }, []);
 
@@ -53,18 +57,16 @@ export function PropertyGeneratorProvider({
   const [description, setDescription] = useState('');
   const [currentStep, setCurrentStep] = useState<StepType>('describe');
 
-  // AI Object
   const {
-    object: partialData,
+    object: propertyData,
     submit,
     isLoading,
     error,
-  } = useObject<PropertyResponse>({
-    api: '/api/generate-property',
-    schema: propertySchema,
+  } = useObject<LocationSearchResponse>({
+    api: '/api/property',
+    schema: LocationSearchResponseSchema,
   });
 
-  const propertyData = partialData as PropertyResponse | null;
   const hasPartialData = Boolean(
     propertyData && Object.keys(propertyData).length > 0
   );
@@ -86,7 +88,7 @@ export function PropertyGeneratorProvider({
 
     try {
       setCurrentStep('loading');
-      await submit({ description });
+      await submit({ query: description });
     } catch (error) {
       console.error('Error generating property requirements:', error);
       setCurrentStep('describe');
@@ -106,7 +108,7 @@ export function PropertyGeneratorProvider({
     setCurrentStep('describe');
   };
 
-  const handlePropertyDataChange = (data: PropertyResponse) => {
+  const handlePropertyDataChange = (data: LocationSearchResponse) => {
     handleGenerate(data);
   };
 

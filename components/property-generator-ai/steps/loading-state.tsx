@@ -5,10 +5,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 
 const LOADING_STEPS = [
-  'Preparing your data...',
-  'Setting up AI models...',
-  'Initializing property engine...',
-  'Getting everything ready...',
+  'Analyzing your property preferences...',
+  'Exploring available locations...',
+  'Gathering neighborhood details...',
+  'Checking local amenities...',
+  'Analyzing transport connections...',
+  'Compiling property features...',
+  'Finalizing your personalized results...',
 ];
 
 export function LoadingState() {
@@ -19,7 +22,7 @@ export function LoadingState() {
       setCurrentStep((prev) =>
         prev < LOADING_STEPS.length - 1 ? prev + 1 : prev
       );
-    }, 1200);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, []);

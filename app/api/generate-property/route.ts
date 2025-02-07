@@ -12,13 +12,14 @@ export async function POST(req: Request) {
 
     const result = streamObject({
       model: deepseek('deepseek-chat'),
+      temperature: 1.0,
       schema: propertySchema,
       schemaName: 'PropertyResponse',
+      system:
+        'You are an advanced AI real estate analyst specializing in UAE property market intelligence. Your core function is to analyze property requirements and generate data-driven recommendations based on current market conditions, seasonal factors, and location-specific insights. Check your knowledge base before answering any questions.',
       schemaDescription:
         'A property lead with structured requirements and content',
-      prompt: `You are an advanced AI real estate analyst specializing in UAE property market intelligence. Your core function is to analyze property requirements and generate data-driven recommendations based on current market conditions, seasonal factors, and location-specific insights.
-
-Given this property requirement: "${description}"
+      prompt: `Given this property requirement: "${description}"
 
 Use the following property.activity: ${filters.activityTypes.map(
         (activity) => `${activity.id}|${activity.name}`

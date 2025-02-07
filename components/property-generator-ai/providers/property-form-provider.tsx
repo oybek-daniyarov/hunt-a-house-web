@@ -11,22 +11,28 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Path, useForm, UseFormReturn } from 'react-hook-form';
 
 import { usePropertyGenerator } from '@/components/property-generator-ai/providers/property-generator-provider';
-import {
-  PropertyResponse,
-  propertySchema,
-} from '@/components/property-generator-ai/schema';
 import { EditingSectionType } from '@/components/property-generator-ai/types';
 import { Form } from '@/components/ui/form';
+import {
+  LocationSearchResponse,
+  LocationSearchResponseSchema,
+  PriceRange,
+  Term,
+} from '@/lib/ai/types';
 
 interface PropertyFormContextValue {
-  form: UseFormReturn<PropertyResponse>;
-  propertyData: PropertyResponse | null;
-  getValue: <T>(path: Path<PropertyResponse>, defaultValue: T) => T;
+  form: UseFormReturn<LocationSearchResponse>;
+  propertyData: LocationSearchResponse | null;
+  getValue: <T>(path: Path<LocationSearchResponse>, defaultValue: T) => T;
   handleSubmit: () => Promise<boolean>;
   handleSectionStepChange: (section: EditingSectionType) => void;
   isEditing: boolean;
   isCurrentEditingSection: (section: EditingSectionType) => boolean;
   filters: App.Data.Lead.LeadFiltersData;
+  findName: (
+    key: keyof App.Data.Lead.LeadFiltersData,
+    id: number | string
+  ) => string | undefined;
 }
 
 const PropertyFormContext = createContext<PropertyFormContextValue | null>(
@@ -38,37 +44,32 @@ interface PropertyFormProviderProps {
   filters: App.Data.Lead.LeadFiltersData;
 }
 
-const defaultValues: PropertyResponse = {
+const defaultValues: LocationSearchResponse = {
   location: {
-    emirate: '',
-    areas: [],
-    communities: [],
+    emirateId: 0,
+    emirateName: '',
+    communityName: '',
+    materializedPath: 'town',
   },
-  property: {
+  price: {
+    min: 0,
+    max: 0,
+    range: PriceRange.BudgetFriendly,
+    term: Term.Daily,
+  },
+  listing: {
     type: '',
     activity: '',
     size: {
-      min: 200,
-      max: 200,
+      min: 0,
+      max: 0,
     },
-  },
-  specifications: {
-    bedrooms: 1,
-    bathrooms: 1,
-  },
-  budget: {
-    min: 20000,
-    max: 40000,
-    frequency: null,
+    bedrooms: '',
+    bathrooms: '',
   },
   content: {
-    description: '',
-    title: '',
-    tags: [],
-  },
-  seo: {
-    title: '',
-    description: '',
+    userAd: '',
+    locationSummary: '',
   },
 };
 
@@ -81,8 +82,8 @@ export function PropertyFormProvider({
 
   const isEditing = sectionStep !== null;
 
-  const form = useForm<PropertyResponse>({
-    resolver: zodResolver(propertySchema),
+  const form = useForm<LocationSearchResponse>({
+    resolver: zodResolver(LocationSearchResponseSchema),
     values: propertyData || undefined,
     defaultValues,
     mode: 'onChange',
@@ -96,7 +97,7 @@ export function PropertyFormProvider({
   }, [propertyData, form]);
 
   const getValue = useCallback(
-    <T,>(path: Path<PropertyResponse>, defaultValue: T): T => {
+    <T,>(path: Path<LocationSearchResponse>, defaultValue: T): T => {
       const formValue = form.getValues(path);
       if (formValue !== undefined && formValue !== null) {
         return formValue as T;
@@ -130,6 +131,13 @@ export function PropertyFormProvider({
     return sectionStep === section;
   };
 
+  const findName = (
+    key: keyof App.Data.Lead.LeadFiltersData,
+    id: number | string
+  ) => {
+    return filters[key].find((filter) => filter.id === Number(id))?.name;
+  };
+
   return (
     <PropertyFormContext.Provider
       value={{
@@ -141,6 +149,7 @@ export function PropertyFormProvider({
         isEditing,
         isCurrentEditingSection,
         filters,
+        findName,
       }}
     >
       <Form {...form}>

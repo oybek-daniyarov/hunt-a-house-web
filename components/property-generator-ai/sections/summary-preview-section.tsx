@@ -5,22 +5,28 @@ import { usePropertyForm } from '../providers/property-form-provider';
 const SummaryPreviewSection = () => {
   const { getValue } = usePropertyForm();
   const content = getValue('content', {
-    title: '',
-    description: '',
+    userAd: '',
+    locationSummary: '',
+    originalQuery: '',
     tags: [],
-  });
-  const seo = getValue('seo', {
-    title: '',
-    description: '',
   });
 
   return (
     <Preview>
-      <Preview.Row column={false} title="Title" value={content.title} />
       <Preview.Row
         column={false}
-        title="Description"
-        value={content.description}
+        title="Original query"
+        value={content.originalQuery}
+      />
+      <Preview.Row
+        column={false}
+        title="Generated Enquiry"
+        value={content.userAd}
+      />
+      <Preview.Row
+        column={false}
+        title="Location Summary"
+        value={content.locationSummary}
       />
       <Preview.Row
         column={false}

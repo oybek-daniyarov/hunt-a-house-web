@@ -43,11 +43,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="h-full">
       <link rel="icon" href="/favicon.ico" />
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased overscroll-none',
+          'h-full flex flex-col bg-background font-sans antialiased overscroll-none',
           fontSans.variable
         )}
       >
