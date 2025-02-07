@@ -41,11 +41,7 @@ export default function Footer() {
         </div>
         <div className="mt-8 flex flex-col lg:flex-row gap-6 justify-center text-center lg:mt-5 text-xs border-t pt-8">
           <p className="text-foreground/60">
-            &copy; {getCurrentYear()} Built by{' '}
-            <Link href="https://x.com/serge_0v" target="_blank" rel="noopener">
-              @karvedigital.com
-            </Link>
-            .
+            &copy; {getCurrentYear()} Hunt a house - All rights reserved
           </p>
         </div>
       </div>
