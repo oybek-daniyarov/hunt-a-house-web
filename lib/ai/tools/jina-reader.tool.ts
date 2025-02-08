@@ -42,6 +42,8 @@ const jinaReaderTool = tool({
         return null;
       }
 
+      return json.data.content;
+
       const content =
         json.data.content?.slice(0, CONTENT_CHARACTER_LIMIT) || '';
 
@@ -61,7 +63,7 @@ ${params.community ? `- Community: ${params.community}` : ''}
 ${params.occupancyType ? `- Occupancy: ${params.occupancyType}` : ''}
 ${params.peopleCount ? `- Max Occupants: ${params.peopleCount}` : ''}
 
-Provide Two best options in this format:
+Provide Three best options in this format:
   - They should not be the same price, or area 
 
 OPTION 1:
