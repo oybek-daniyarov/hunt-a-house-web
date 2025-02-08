@@ -80,12 +80,11 @@ export const ListingGeneratorSchema = z.object({
         ),
     })
     .describe('Best matching property details'),
-  title: z.string().max(100).describe(`Title for the listing seo friendly`),
+  title: z.string().describe(`Title for the listing seo friendly, max:100`),
   content: z
     .string()
-    .max(300)
     .describe(
-      `User directed description, do not include Attention Agents, Or anything extra, simple text no formating`
+      `User directed description, do not include Attention Agents, Or anything extra, simple text no formating, max:300`
     ),
 });
 
