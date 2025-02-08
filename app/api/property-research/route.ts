@@ -8,8 +8,6 @@ import {
   WorkflowMetrics,
 } from '@/lib/workflow/types';
 
-export const runtime = 'edge';
-
 // Helper to convert WorkflowMetrics to a JSON-safe object
 function metricsToJSON(metrics: WorkflowMetrics) {
   return {
