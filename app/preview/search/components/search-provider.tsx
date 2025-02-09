@@ -69,6 +69,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     handleSubmit: baseHandleSubmit,
     isLoading,
     error,
+    data,
     reload,
   } = useChat({
     api: '/api/property-research',
@@ -122,6 +123,8 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     setChatId(generateId());
     baseHandleSubmit(e);
   };
+
+  console.log(data);
 
   return (
     <SearchContext.Provider

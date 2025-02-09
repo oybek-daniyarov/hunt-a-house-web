@@ -1,4 +1,4 @@
-import { createDataStreamResponse, generateId } from 'ai';
+import { createDataStreamResponse, generateId, JSONValue } from 'ai';
 
 import { createPropertyResearchWorkflow } from '@/lib/ai/workflow/property-research';
 import { PropertyWorkflowData } from '@/lib/ai/workflow/property-research/types';
@@ -91,15 +91,10 @@ export async function POST(request: Request) {
           ) => {
             const metrics = metricsToJSON(context.metrics);
 
-            // Write final metrics
+            // // Write final metrics
             dataStream.writeData({
               type: 'complete',
-              data: {
-                metrics,
-                duration: metrics.duration
-                  ? `${Number(metrics.duration) / 1000}s`
-                  : null,
-              },
+              data: context.data['generate-listing']?.data as JSONValue,
             });
 
             // just pass the metrics

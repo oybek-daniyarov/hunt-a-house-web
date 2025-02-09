@@ -18,7 +18,6 @@ export const KeywordExtractorSchema = z.object({
       'Umm Al Quwain',
     ])
     .optional()
-    .default('Dubai')
     .describe('Primary UAE emirate for property search'),
   community: z
     .string()
@@ -45,7 +44,7 @@ export const KeywordExtractorSchema = z.object({
     .default('apartment')
     .describe('Specific type of property or accommodation'),
   duration: z
-    .enum(['daily', 'weekly', 'monthly', 'quarterly', 'yearly'])
+    .enum(['daily', 'weekly', 'monthly', 'yearly', 'one-time'])
     .describe('Rental duration period'),
   durationInWords: z
     .enum(['short-term', 'long-term', 'flexible'])
@@ -62,7 +61,6 @@ export const KeywordExtractorSchema = z.object({
       'ultra-luxury',
       'exclusive',
     ])
-    .default('mid-range')
     .describe(
       'Price range category based on market segments, amount, location + duration'
     ),
@@ -88,7 +86,9 @@ export const KeywordExtractorSchema = z.object({
       'shopping',
       'travel',
       'business travel',
-      'relocation',
+      'rental',
+      'sale',
+      'buy',
       'short-term',
       'long-term',
       'family living',
