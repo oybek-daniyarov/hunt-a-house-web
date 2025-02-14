@@ -12,14 +12,16 @@ interface PhoneInputProps {
   disabled?: boolean;
   name?: string;
   required?: boolean;
+  onValueChange?: (value: string, isValid: boolean) => void;
 }
 
 const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
-  ({ className, disabled, value, name, required }) => {
+  ({ className, disabled, value, name, required, onValueChange }, ref) => {
     const [isPhoneValid, setIsPhoneValid] = useState(false);
 
     const handlePhoneChange = (value: string, isValid: boolean) => {
       setIsPhoneValid(isValid);
+      onValueChange?.(value, isValid);
     };
 
     return (
@@ -31,6 +33,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           required={required}
           placeholder="(555) 000-0000"
           onValueChange={handlePhoneChange}
+          ref={ref}
         />
         {!isPhoneValid && value && (
           <p className="text-xs text-destructive">

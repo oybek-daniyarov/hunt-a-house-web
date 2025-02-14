@@ -1,6 +1,7 @@
 import 'server-only';
 
 import { revalidateTag } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 import { getToken } from './cookies';
 import type {
@@ -52,6 +53,10 @@ export class LaravelClient {
     };
 
     const response = await fetch(url, fetchOptions);
+
+    if (response.status === 401) {
+      redirect('/auth/login');
+    }
 
     if (!response.ok) {
       const error = (await response.json()) as LaravelValidationError;
@@ -135,6 +140,11 @@ export class LaravelClient {
         : undefined,
     });
     this.revalidateTags(tags);
+
+    if (response.status === 204) {
+      return {} as T;
+    }
+
     return response.json();
   }
 

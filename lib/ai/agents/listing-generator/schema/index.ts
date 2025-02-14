@@ -17,18 +17,20 @@ export enum Term {
 
 export const ListingGeneratorSchema = z.object({
   location: z
-    .object({
-      emirateName: z.string().describe('emirate name'),
-      emirateId: z.string().describe('emirate id from the config'),
-      locationName: z.string(),
-      locationPath: z.string().describe(
-        `Materialized path of the location, 
+    .array(
+      z.object({
+        emirateName: z.string().describe('emirate name'),
+        emirateId: z.string().describe('emirate id from the config'),
+        locationName: z.string(),
+        locationPath: z.string().describe(
+          `Materialized path of the location, 
           Example:
           - Al Raffa, Bur Dubai, Dubai
           -Al Hamriya, Bur Dubai, Dubai
           `
-      ),
-    })
+        ),
+      })
+    )
     .describe('Location not just emirate name'),
   price: z
     .object({

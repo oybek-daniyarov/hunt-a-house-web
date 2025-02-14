@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import i18nIsoCountries from 'i18n-iso-countries';
 import enCountries from 'i18n-iso-countries/langs/en.json';
 import {
@@ -35,11 +35,10 @@ interface PhoneInputWithCountryProps
   onValueChange?: (value: string, isValid: boolean) => void;
 }
 
-export const PhoneInputWithCountry = ({
-  className,
-  onValueChange,
-  ...props
-}: PhoneInputWithCountryProps) => {
+export const PhoneInputWithCountry = forwardRef<
+  HTMLInputElement,
+  PhoneInputWithCountryProps
+>(({ className, onValueChange, ...props }, ref) => {
   const options = getCountriesOptions();
   const defaultCountry = parsePhoneNumber('+33606060606')?.country;
   const defaultCountryOption = options.find(
@@ -78,6 +77,7 @@ export const PhoneInputWithCountry = ({
       />
       <PhoneInput
         {...props}
+        ref={ref}
         international
         withCountryCallingCode
         country={country.value.toUpperCase() as Country}
@@ -94,4 +94,6 @@ export const PhoneInputWithCountry = ({
       />
     </div>
   );
-};
+});
+
+PhoneInputWithCountry.displayName = 'PhoneInputWithCountry';

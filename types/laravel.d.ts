@@ -1,14 +1,15 @@
-declare namespace App.Data.Ai {
-  export type AiResponseData = {
-    id: string;
-    object: string;
-    created: number;
-    model: string;
-    choices: Array<any>;
-    usage: Array<any>;
-    systemFingerprint: string | null;
-    content: string | null;
-  };
+declare namespace App.Ai.Enums {
+  export type AiModel =
+    | 'claude-3-sonnet'
+    | 'claude-3-opus'
+    | 'claude-3-haiku-20240307'
+    | 'mistral-medium'
+    | 'mistral-large'
+    | 'gpt-4'
+    | 'gpt-4o-mini'
+    | 'gpt-4-turbo-preview'
+    | 'gpt-3.5-turbo'
+    | 'deepseek-chat';
 }
 declare namespace App.Data.Auth {
   export type CreateEmailAccountData = {
@@ -60,40 +61,6 @@ declare namespace App.Data.Auth.Payload {
   };
 }
 declare namespace App.Data.Lead {
-  export type CreateLeadData = {
-    lead: App.Data.Lead.LeadData;
-    token: string | null;
-    user: App.Data.User.UserData | null;
-  };
-  export type LeadData = {
-    id: number | null;
-    user_id: number;
-    contact_methods: Array<any>;
-    emirate_id: number;
-    city_id: number;
-    areas: Array<number>;
-    property_type_id: number;
-    activity_type_id: number;
-    bedrooms: string | null;
-    bathrooms: string | null;
-    min_size: number | null;
-    max_size: number | null;
-    min_budget: number | null;
-    max_budget: number | null;
-    budget_frequency: App.Enums.BudgetFrequency | null;
-    description: string;
-    max_agent_views: number;
-    current_agent_views: number;
-    credit_cost: number;
-    view_multiplier: number | null;
-    override_credit_cost: boolean;
-    override_credit_cost_value: number | null;
-    created_at: string | null;
-    updated_at: string | null;
-    property_images: { [key: number]: any } | null | Array<any>;
-    documents: { [key: number]: any } | null | Array<any>;
-    contact: any | null;
-  };
   export type LeadFiltersData = {
     emirates: Array<App.Data.Lead.OptionData>;
     cities: Array<App.Data.Lead.OptionData>;
@@ -117,46 +84,18 @@ declare namespace App.Data.Lead {
     minBudget: number | null;
     maxBudget: number | null;
     budgetFrequency: App.Enums.BudgetFrequency | null;
-    user: App.Data.User.UserData;
+    user: any | null;
     createdAt: string;
     isAuthenticated: boolean;
     isUserHadPurchasedLead: boolean;
   };
   export type OptionData = {
-    id: number;
+    id: string | number;
     name: string;
   };
   export type PropertyTypeData = {
     id: number;
     name: string;
-  };
-}
-declare namespace App.Data.Location {
-  export type AreaData = {
-    id: string;
-    name: string;
-    cityId: string;
-    code: string | null;
-  };
-  export type CityData = {
-    id: string;
-    name: string;
-    emirateId: string;
-    code: string | null;
-  };
-  export type EmirateData = {
-    id: string;
-    name: string;
-    code: string | null;
-  };
-}
-declare namespace App.Data.Property {
-  export type SearchPropertyData = {
-    id: string;
-    name: string;
-    location_id: string;
-    path: string;
-    property_name: string;
   };
 }
 declare namespace App.Data.User {
@@ -215,4 +154,20 @@ declare namespace App.Enums {
   export type TransactionType = 'purchase' | 'usage' | 'refund';
   export type UserStatus = 'pending' | 'active' | 'suspended' | 'banned';
   export type UserType = 'user' | 'agent' | 'admin';
+}
+declare namespace App.Services.Location.Data {
+  export type LocationData = {
+    id: number;
+    name: string;
+    path: string | null;
+    parent: App.Services.Location.Data.LocationParentData | null;
+    children: Array<App.Services.Location.Data.LocationData> | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  };
+  export type LocationParentData = {
+    id: number;
+    name: string;
+    path: string | null;
+  };
 }

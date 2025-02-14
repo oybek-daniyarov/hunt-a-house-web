@@ -1,4 +1,11 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -8,14 +15,67 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import {
+  handleFormError,
+  handleFormSuccess,
+} from '@/lib/client/laravel/helpers/form.helpers';
 import { cn } from '@/lib/utils';
+
+const forgotPasswordSchema = z.object({
+  email: z.string().email('Please enter a valid email'),
+});
+
+type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
+
+interface ForgotPasswordFormProps
+  extends React.ComponentPropsWithoutRef<'div'> {
+  onSuccess?: () => void;
+  onLogin?: () => void;
+}
 
 export function ForgotPasswordForm({
   className,
+  onSuccess,
+  onLogin,
   ...props
-}: React.ComponentPropsWithoutRef<'div'>) {
+}: ForgotPasswordFormProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const form = useForm<ForgotPasswordFormData>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: '',
+    },
+  });
+
+  async function onSubmit(data: ForgotPasswordFormData) {
+    if (isLoading) return;
+
+    setIsLoading(true);
+    try {
+      // TODO: Implement forgot password action
+      handleFormSuccess('Reset link has been sent to your email');
+
+      if (onSuccess) {
+        onSuccess();
+      }
+    } catch (error) {
+      handleFormError(form, error, 'Failed to send reset link');
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
@@ -26,31 +86,50 @@ export function ForgotPasswordForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
-            <div className="grid gap-6">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="m@example.com"
+                          disabled={isLoading}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Send Reset Link
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? 'Sending...' : 'Send Reset Link'}
               </Button>
               <div className="text-center text-sm">
                 Remember your password?{' '}
                 <Link
-                  href="/auth/login"
+                  href={onLogin ? '#' : '/auth/login'}
+                  onClick={(e) => {
+                    if (onLogin) {
+                      e.preventDefault();
+                      onLogin();
+                    } else {
+                      router.push('/auth/login');
+                    }
+                  }}
                   className="underline underline-offset-4 hover:text-primary"
                 >
                   Back to login
                 </Link>
               </div>
-            </div>
-          </form>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </div>

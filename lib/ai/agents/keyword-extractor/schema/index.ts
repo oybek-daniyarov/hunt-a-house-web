@@ -110,7 +110,7 @@ export const KeywordExtractorSchema = z.object({
     .optional()
     .describe('Original user query for reference'),
   occupancyType: z
-    .enum(['single', 'family', 'sharing', 'corporate', 'student'])
+    .enum(['single', 'family', 'sharing', 'corporate', 'student', 'investment'])
     .optional()
     .describe('Intended occupancy type'),
 });

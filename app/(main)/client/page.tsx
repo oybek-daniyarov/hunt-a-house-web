@@ -1,14 +1,16 @@
-import { LeadForm } from '@/components/forms/lead/lead-form';
+import LeadSteps from '@/components/forms/lead/lead-steps';
 import { CTASection } from '@/components/landing/cta-section';
 import { FeaturesSection } from '@/components/landing/features-section';
 import { HeroSection } from '@/components/landing/hero-section';
 import { HowItWorksSection } from '@/components/landing/how-it-works-section';
 import { StatsSection } from '@/components/landing/stats-section';
 import { TestimonialsSection } from '@/components/landing/testimonials-section';
+import { getLeadFilters } from '@/lib/data/laravel/lead/lead.api';
 
-export default function ClientLandingPage() {
+export default async function ClientLandingPage() {
+  const filters = await getLeadFilters();
   return (
-    <div className="min-h-screen">
+    <div>
       <HeroSection
         title="Find Your Perfect Match"
         description="Connect with top real estate agents who understand your needs"
@@ -36,7 +38,7 @@ export default function ClientLandingPage() {
           },
         ]}
       >
-        <LeadForm />
+        <LeadSteps filters={filters} />
       </FeaturesSection>
 
       <HowItWorksSection

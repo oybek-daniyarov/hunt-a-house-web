@@ -1,5 +1,6 @@
-import 'server-only';
+'use server';
 
+import { revalidatePath } from 'next/cache';
 import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { cookies } from 'next/headers';
 
@@ -12,6 +13,7 @@ const COOKIE_OPTIONS: Partial<ResponseCookie> = {
   sameSite: 'lax',
   path: '/',
   maxAge: 30 * 24 * 60 * 60, // 30 days
+  domain: process.env.DOMAIN ?? 'localhost',
 };
 
 export async function isAuthenticated(): Promise<boolean> {
@@ -38,7 +40,7 @@ export async function getToken({
       return undefined;
     }
 
-    return decrypt(encryptedToken, encryptionKey);
+    return await decrypt(encryptedToken, encryptionKey);
   } catch (error) {
     console.error('Error getting token:', error);
     return undefined;
@@ -54,7 +56,7 @@ export async function setToken({
 }): Promise<void> {
   try {
     const cookieStore = await cookies();
-    const encryptedToken = encrypt(token, encryptionKey);
+    const encryptedToken = await encrypt(token, encryptionKey);
 
     // Debug info
     if (process.env.NODE_ENV === 'development') {
@@ -76,6 +78,8 @@ export async function deleteToken(): Promise<void> {
   try {
     const cookieStore = await cookies();
     cookieStore.delete(env.AUTH_COOKIE_NAME);
+    revalidatePath('/');
+    console.log('Token deleted');
   } catch (error) {
     console.error('Error deleting token:', error);
   }

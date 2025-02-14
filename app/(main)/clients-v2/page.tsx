@@ -1,6 +1,6 @@
 'use client';
 
-import { LeadForm } from '../../../components/forms/lead/lead-form';
+import { LeadForm } from '../../../components/forms/lead/lead-form-step';
 import {
   HeroSection,
   HowItWorksSection,

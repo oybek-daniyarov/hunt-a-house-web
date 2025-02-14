@@ -1,3 +1,5 @@
+'use server';
+
 import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 
 const ALGORITHM = 'aes-256-gcm';
@@ -5,7 +7,7 @@ const IV_LENGTH = 12;
 const SALT_LENGTH = 16;
 const TAG_LENGTH = 16;
 
-export function encrypt(text: string, key: string): string {
+export async function encrypt(text: string, key: string): Promise<string> {
   const iv = randomBytes(IV_LENGTH);
   const salt = randomBytes(SALT_LENGTH);
   const cipher = createCipheriv(ALGORITHM, Buffer.from(key), iv);
@@ -20,7 +22,10 @@ export function encrypt(text: string, key: string): string {
   );
 }
 
-export function decrypt(encryptedData: string, key: string): string {
+export async function decrypt(
+  encryptedData: string,
+  key: string
+): Promise<string> {
   const buf = Buffer.from(encryptedData, 'base64');
 
   // Extract the parts

@@ -1,4 +1,5 @@
 import client from '@/lib/client/laravel/client';
+import { createUrl, routes } from '@/types/api-routes';
 import type { LeadFilterParams } from './lead.types';
 import { buildLeadFilters, buildLeadSorting } from './lead.utils';
 
@@ -14,9 +15,8 @@ export async function getLeads(params: LeadFilterParams = {}) {
 }
 
 export async function getLeadFilters() {
-  return client.get<App.Data.Lead.LeadFiltersData>('/leads/filters', [
-    'filters',
-  ]);
+  const url = createUrl(routes['leads.filters']);
+  return client.get<App.Data.Lead.LeadFiltersData>(url, ['filters']);
 }
 
 export type { LeadFilterParams };

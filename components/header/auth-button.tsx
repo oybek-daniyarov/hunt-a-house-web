@@ -1,18 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { getCookie } from 'cookies-next';
 
+import { useAuth } from '@/components/providers/auth-provider';
 import { Button } from '@/components/ui/button';
 
 export default function AuthButton() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = getCookie('auth_token');
-    setIsAuthenticated(!!token);
-  }, []);
+  const { isAuthenticated } = useAuth();
 
   return (
     <Button variant="outline" size="sm" asChild>

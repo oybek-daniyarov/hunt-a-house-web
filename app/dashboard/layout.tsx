@@ -17,15 +17,15 @@ import {
 } from '@/components/ui/sidebar';
 import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
 
-export default async function DashboardLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getCurrentUser();
+  const user = getCurrentUser();
 
-  if (!user.data) {
-    console.error('User not found');
+  if (!user) {
+    redirect('/auth/login');
   }
 
   return (

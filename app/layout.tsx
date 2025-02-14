@@ -3,9 +3,7 @@ import { Inter as FontSans } from 'next/font/google';
 
 import './globals.css';
 
-import { NuqsAdapter } from 'nuqs/adapters/next/app';
-
-import { ThemeProvider } from '@/components/theme-provider';
+import WithProviders from '@/components/providers/with-providers';
 import { Toaster } from '@/components/ui/sonner';
 import { cn } from '@/lib/utils';
 
@@ -51,14 +49,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <NuqsAdapter>{children}</NuqsAdapter>
-        </ThemeProvider>
+        <WithProviders>{children}</WithProviders>
         <Toaster position="top-center" richColors closeButton />
       </body>
     </html>
