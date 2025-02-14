@@ -83,7 +83,7 @@ export function PropertyFilterSheet({
                   <SelectValue placeholder="Select property type" />
                 </SelectTrigger>
                 <SelectContent>
-                  {filterData.property_types?.map((type) => (
+                  {filterData.propertyTypes?.map((type) => (
                     <SelectItem key={type.id} value={type.id.toString()}>
                       {type.name}
                     </SelectItem>
@@ -102,7 +102,7 @@ export function PropertyFilterSheet({
                   <SelectValue placeholder="Select activity type" />
                 </SelectTrigger>
                 <SelectContent>
-                  {filterData.activity_types?.map((type) => (
+                  {filterData.activityTypes?.map((type) => (
                     <SelectItem key={type.id} value={type.id.toString()}>
                       {type.name}
                     </SelectItem>

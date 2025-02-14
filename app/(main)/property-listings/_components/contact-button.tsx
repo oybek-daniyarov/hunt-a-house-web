@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 interface ContactButtonProps {
   className?: string;
-  listing: App.Data.Lead.LeadListResponse;
+  listing: App.Data.Lead.LeadListData;
   searchParams: URLSearchParams;
 }
 

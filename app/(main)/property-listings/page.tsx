@@ -51,7 +51,7 @@ export default async function PropertyListingsPage({
   // Fetch leads with filters and sorting
   const response = (await getLeads(
     params
-  )) as PaginatedResponse<App.Data.Lead.LeadListResponse>;
+  )) as PaginatedResponse<App.Data.Lead.LeadListData>;
 
   return (
     <>

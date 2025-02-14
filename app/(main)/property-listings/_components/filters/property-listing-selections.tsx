@@ -12,14 +12,7 @@ type Props = {
   filterData: App.Data.Lead.LeadFiltersData;
 };
 
-type FilterKey =
-  | 'emirates'
-  | 'cities'
-  | 'areas'
-  | 'property_types'
-  | 'activity_types'
-  | 'bedrooms'
-  | 'bathrooms';
+type FilterKey = 'propertyTypes' | 'activityTypes' | 'bedrooms' | 'bathrooms';
 
 type FilterBadgeProps = {
   label: string;
@@ -90,19 +83,15 @@ export function PropertyListingSelections({ filterData }: Props) {
 
   const singleFilters = [
     { key: 'search', label: `Search: ${filters.search}`, show: filters.search },
-    {
-      key: 'emirate',
-      label: getLabel('emirates', filters.emirate),
-      show: filters.emirate,
-    },
+
     {
       key: 'propertyType',
-      label: getLabel('property_types', filters.propertyType),
+      label: getLabel('propertyTypes', filters.propertyType),
       show: filters.propertyType,
     },
     {
       key: 'activityType',
-      label: getLabel('activity_types', filters.activityType),
+      label: getLabel('activityTypes', filters.activityType),
       show: filters.activityType,
     },
     {
