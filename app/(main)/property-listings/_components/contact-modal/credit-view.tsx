@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { PropertyInfo } from './components/property-info';
 
 interface CreditViewProps {
-  listing: App.Data.Lead.LeadListResponse;
+  listing: App.Data.Lead.LeadListData;
   credits?: number;
 }
 

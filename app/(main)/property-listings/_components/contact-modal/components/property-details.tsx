@@ -3,44 +3,43 @@ import { BanknoteIcon, Bath, BedSingle, Ruler } from 'lucide-react';
 import { formatCurrency, formatSize } from '@/lib/utils/format-number';
 
 interface PropertyDetailsProps {
-  listing: App.Data.Lead.LeadListResponse;
+  listing: App.Data.Lead.LeadListData;
 }
 
 const propertyDetails = [
   {
     icon: BedSingle,
     label: 'Bedrooms',
-    value: (listing: App.Data.Lead.LeadListResponse) =>
-      listing.bedrooms === '0' ? 'Studio' : listing.bedrooms || 'N/A',
+    value: (listing: App.Data.Lead.LeadListData) =>
+      listing.bedrooms === 0 ? 'Studio' : listing.bedrooms || 'N/A',
   },
   {
     icon: Bath,
     label: 'Bathrooms',
-    value: (listing: App.Data.Lead.LeadListResponse) =>
-      listing.bathrooms || 'N/A',
+    value: (listing: App.Data.Lead.LeadListData) => listing.bathrooms || 'N/A',
   },
   {
     icon: Ruler,
     label: 'Size',
-    value: (listing: App.Data.Lead.LeadListResponse) =>
-      listing.min_size && listing.max_size
-        ? `${formatSize(listing.min_size)} - ${formatSize(listing.max_size)}`
-        : listing.min_size
-          ? formatSize(listing.min_size)
+    value: (listing: App.Data.Lead.LeadListData) =>
+      listing.minSize && listing.maxSize
+        ? `${formatSize(listing.minSize)} - ${formatSize(listing.maxSize)}`
+        : listing.minSize
+          ? formatSize(listing.minSize)
           : 'Not specified',
   },
   {
     icon: BanknoteIcon,
     label: 'Budget',
-    value: (listing: App.Data.Lead.LeadListResponse) =>
-      listing.min_budget && listing.max_budget
-        ? `${formatCurrency(listing.min_budget)} - ${formatCurrency(listing.max_budget)}`
-        : listing.min_budget
-          ? formatCurrency(listing.min_budget)
+    value: (listing: App.Data.Lead.LeadListData) =>
+      listing.minBudget && listing.maxBudget
+        ? `${formatCurrency(listing.minBudget)} - ${formatCurrency(listing.maxBudget)}`
+        : listing.minBudget
+          ? formatCurrency(listing.minBudget)
           : 'Not specified',
-    suffix: (listing: App.Data.Lead.LeadListResponse) =>
-      listing.budget_frequency
-        ? ` ${listing.budget_frequency.replace('_', ' ')}`
+    suffix: (listing: App.Data.Lead.LeadListData) =>
+      listing.budgetFrequency
+        ? ` ${listing.budgetFrequency.replace('_', ' ')}`
         : '',
   },
 ];

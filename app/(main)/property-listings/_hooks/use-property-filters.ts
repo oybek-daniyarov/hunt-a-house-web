@@ -4,7 +4,6 @@ import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs';
 
 export const filterParsers = {
   search: parseAsString.withDefault(''),
-  emirate: parseAsString.withDefault(''),
   propertyType: parseAsString.withDefault(''),
   activityType: parseAsString.withDefault(''),
   bedrooms: parseAsString.withDefault(''),

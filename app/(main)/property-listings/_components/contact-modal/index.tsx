@@ -9,7 +9,7 @@ import { CreditView } from './credit-view';
 import { GuestView } from './guest-view';
 
 interface ContactModalProps {
-  listings: App.Data.Lead.LeadListResponse[];
+  listings: App.Data.Lead.LeadListData[];
 }
 
 export default function ContactModal({ listings }: ContactModalProps) {

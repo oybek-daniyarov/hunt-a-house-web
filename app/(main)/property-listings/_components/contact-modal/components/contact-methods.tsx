@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface ContactMethodsProps {
-  listing: App.Data.Lead.LeadListResponse;
+  listing: App.Data.Lead.LeadListData;
   contact: {
     phone: string;
     whatsapp: string;
@@ -13,11 +13,11 @@ interface ContactMethodsProps {
   };
 }
 
-const getMessageText = (listing: App.Data.Lead.LeadListResponse) => {
+const getMessageText = (listing: App.Data.Lead.LeadListData) => {
   const message = [
     'Hi,',
-    `I'm interested in your ${listing.property_type_name}`,
-    `in ${listing.emirate_name}, ${listing.area_name}.`,
+    `I'm interested in your ${listing.propertyTypeName}`,
+    `in ${listing.emirateName}, ${listing.areaName}.`,
     '',
     'Is it still available?',
   ].join('\n');
@@ -25,9 +25,9 @@ const getMessageText = (listing: App.Data.Lead.LeadListResponse) => {
   return encodeURIComponent(message);
 };
 
-const getEmailSubject = (listing: App.Data.Lead.LeadListResponse) => {
+const getEmailSubject = (listing: App.Data.Lead.LeadListData) => {
   return encodeURIComponent(
-    `${listing.property_type_name} in ${listing.emirate_name} - Inquiry`
+    `${listing.propertyTypeName} in ${listing.emirateName} - Inquiry`
   );
 };
 
@@ -44,7 +44,7 @@ const contactMethods = [
     label: 'WhatsApp',
     href: (
       contact: ContactMethodsProps['contact'],
-      listing: App.Data.Lead.LeadListResponse
+      listing: App.Data.Lead.LeadListData
     ) =>
       `https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, '')}?text=${getMessageText(listing)}`,
     color: 'text-blue-500',
@@ -56,7 +56,7 @@ const contactMethods = [
     label: 'Telegram',
     href: (
       contact: ContactMethodsProps['contact'],
-      listing: App.Data.Lead.LeadListResponse
+      listing: App.Data.Lead.LeadListData
     ) =>
       `https://t.me/${contact.telegram.replace('@', '')}?text=${getMessageText(listing)}`,
     color: 'text-blue-500',
@@ -68,7 +68,7 @@ const contactMethods = [
     label: 'Send Email',
     href: (
       contact: ContactMethodsProps['contact'],
-      listing: App.Data.Lead.LeadListResponse
+      listing: App.Data.Lead.LeadListData
     ) =>
       `mailto:${contact.email}?subject=${getEmailSubject(listing)}&body=${getMessageText(listing)}`,
     color: 'text-orange-500',
