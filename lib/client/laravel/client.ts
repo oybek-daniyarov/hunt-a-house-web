@@ -1,7 +1,6 @@
 import 'server-only';
 
 import { revalidateTag } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 import { getToken } from './cookies';
 import type {
@@ -52,10 +51,15 @@ export class LaravelClient {
       credentials: 'include',
     };
 
-    const response = await fetch(url, fetchOptions);
+    let response: Response | null = null; // Initialize response to null
 
-    if (response.status === 401) {
-      redirect('/auth/login');
+    try {
+      response = await fetch(url, fetchOptions);
+    } finally {
+      if (response && response.status === 401) {
+        // Check if response is not null
+        throw new Error('UNAUTHORIZED');
+      }
     }
 
     if (!response.ok) {

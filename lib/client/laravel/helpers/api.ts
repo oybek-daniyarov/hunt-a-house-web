@@ -23,6 +23,12 @@ export async function handleApiResponse<T, R>(
         error: error.cause as LaravelValidationError,
       };
     }
-    throw error;
+
+    return {
+      success: false,
+      error: {
+        message: 'An unexpected error occurred',
+      },
+    };
   }
 }

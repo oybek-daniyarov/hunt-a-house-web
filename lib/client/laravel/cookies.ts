@@ -8,7 +8,7 @@ import { env } from '@/lib/env';
 import { decrypt, encrypt } from './crypto';
 
 const COOKIE_OPTIONS: Partial<ResponseCookie> = {
-  httpOnly: false, // Allow JS access for client-side auth check
+  httpOnly: true, // Secure against XSS
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax',
   path: '/',
@@ -77,7 +77,11 @@ export async function setToken({
 export async function deleteToken(): Promise<void> {
   try {
     const cookieStore = await cookies();
-    cookieStore.delete(env.AUTH_COOKIE_NAME);
+    cookieStore.set(env.AUTH_COOKIE_NAME, '', {
+      ...COOKIE_OPTIONS,
+      maxAge: 0,
+      expires: new Date(0),
+    });
     revalidatePath('/');
     console.log('Token deleted');
   } catch (error) {
