@@ -17,6 +17,8 @@ import {
 } from '@/components/ui/sidebar';
 import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
 
+export const dynamic = 'force-dynamic';
+
 export default function DashboardLayout({
   children,
 }: {
