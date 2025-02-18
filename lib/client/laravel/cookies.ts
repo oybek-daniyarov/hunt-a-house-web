@@ -5,7 +5,6 @@ import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { cookies } from 'next/headers';
 
 import { env } from '@/lib/env';
-import { decrypt, encrypt } from './crypto';
 
 const COOKIE_OPTIONS: Partial<ResponseCookie> = {
   httpOnly: true, // Secure against XSS
@@ -13,7 +12,6 @@ const COOKIE_OPTIONS: Partial<ResponseCookie> = {
   sameSite: 'lax',
   path: '/',
   maxAge: 30 * 24 * 60 * 60, // 30 days
-  domain: process.env.DOMAIN ?? 'localhost',
 };
 
 export async function isAuthenticated(): Promise<boolean> {
@@ -27,47 +25,36 @@ export async function isAuthenticated(): Promise<boolean> {
   }
 }
 
-export async function getToken({
-  encryptionKey,
-}: {
-  encryptionKey: string;
-}): Promise<string | undefined> {
+export async function getToken(): Promise<string | undefined> {
   try {
     const cookieStore = await cookies();
-    const encryptedToken = cookieStore.get(env.AUTH_COOKIE_NAME)?.value;
+    const token = cookieStore.get(env.AUTH_COOKIE_NAME)?.value;
 
-    if (!encryptedToken) {
+    if (!token) {
       return undefined;
     }
 
-    return await decrypt(encryptedToken, encryptionKey);
+    return token;
   } catch (error) {
     console.error('Error getting token:', error);
     return undefined;
   }
 }
 
-export async function setToken({
-  token,
-  encryptionKey,
-}: {
-  token: string;
-  encryptionKey: string;
-}): Promise<void> {
+export async function setToken({ token }: { token: string }): Promise<void> {
   try {
     const cookieStore = await cookies();
-    const encryptedToken = await encrypt(token, encryptionKey);
 
     // Debug info
     if (process.env.NODE_ENV === 'development') {
       console.log('Setting token:', {
         cookieName: env.AUTH_COOKIE_NAME,
-        hasToken: !!encryptedToken,
+        hasToken: !!token,
         options: COOKIE_OPTIONS,
       });
     }
 
-    cookieStore.set(env.AUTH_COOKIE_NAME, encryptedToken, COOKIE_OPTIONS);
+    cookieStore.set(env.AUTH_COOKIE_NAME, token, COOKIE_OPTIONS);
   } catch (error) {
     console.error('Error setting token:', error);
     throw new Error('Failed to set authentication token');
@@ -77,14 +64,33 @@ export async function setToken({
 export async function deleteToken(): Promise<void> {
   try {
     const cookieStore = await cookies();
+
+    // Debug info
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Deleting token:', {
+        cookieName: env.AUTH_COOKIE_NAME,
+        options: {
+          ...COOKIE_OPTIONS,
+          maxAge: 0,
+          expires: new Date(0),
+        },
+      });
+    }
+
+    // Delete the cookie by setting maxAge to 0 and expires to past date
     cookieStore.set(env.AUTH_COOKIE_NAME, '', {
       ...COOKIE_OPTIONS,
       maxAge: 0,
       expires: new Date(0),
     });
+
+    // Delete the cookie again with a different approach as fallback
+    cookieStore.delete(env.AUTH_COOKIE_NAME);
+
     revalidatePath('/');
-    console.log('Token deleted');
+    console.log('Token deleted successfully');
   } catch (error) {
     console.error('Error deleting token:', error);
+    throw new Error('Failed to delete authentication token');
   }
 }

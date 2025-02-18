@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
 import { SubmitButton } from '@/components/forms/fields';
+import {
+  LeadContactFormData,
+  leadContactFormSchema,
+} from '@/components/forms/lead/lead-contact-form/schema';
 import { useSteps } from '@/components/steps/step-provider';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -25,45 +28,9 @@ const CONTACT_METHODS = [
   { id: 'telegram', label: 'Telegram', type: 'phone' },
 ] as const;
 
-const leadContactFormSchema = z.object({
-  contact: z
-    .object({
-      whatsapp: z.object({
-        active: z.boolean(),
-        value: z.string(),
-      }),
-      phone: z.object({
-        active: z.boolean(),
-        value: z.string(),
-      }),
-      email: z.object({
-        active: z.boolean(),
-        value: z
-          .string()
-          .refine(
-            (val) => !val || z.string().email().safeParse(val).success,
-            'Please enter a valid email address'
-          ),
-      }),
-      telegram: z.object({
-        active: z.boolean(),
-        value: z.string(),
-      }),
-    })
-    .refine(
-      (data) =>
-        Object.values(data).some((method) => method.active && method.value),
-      {
-        message:
-          'Please select at least one contact method and provide its value',
-      }
-    ),
-});
-
-type LeadContactFormData = z.infer<typeof leadContactFormSchema>;
-
 const LeadContactForm = () => {
-  const { updateStepData, stepData } = useSteps();
+  'use no memo';
+  const { updateStepData, goToNextStep, isLastStep } = useSteps();
 
   const [user, setUser] = useState<App.Data.User.UserData | undefined>();
 
@@ -104,11 +71,9 @@ const LeadContactForm = () => {
   }, [form, user]);
 
   async function onSubmit(data: LeadContactFormData) {
-    updateStepData(data);
-    console.log(stepData);
+    updateStepData({ contact: data });
+    await goToNextStep(); // This will trigger onComplete on the last step
   }
-
-  console.log(form.formState.errors);
 
   return (
     <Form {...form}>

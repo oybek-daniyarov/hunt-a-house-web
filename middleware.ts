@@ -1,55 +1,50 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-import { env } from './lib/env';
+import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
 
-// Define protected routes that require authentication
-const protectedRoutes = ['/dashboard'];
-// Define auth routes that should redirect to dashboard if authenticated
-const authRoutes = ['/auth/login', '/auth/register'];
+// Paths that are accessible to agents only
+const AGENT_PATHS = ['/dashboard/leads'];
+
+// Paths that are accessible to users only
+const USER_PATHS = ['/dashboard/my-leads'];
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  try {
+    const { data: user } = await getCurrentUser();
 
-  // Check if the current path is protected or auth-related
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    pathname.startsWith(route)
-  );
-  const isAuthRoute = authRoutes.includes(pathname);
+    console.log('user', user);
 
-  // Get the token from cookies
-  const token = request.cookies.get(env.AUTH_COOKIE_NAME);
-  const isAuthenticated = token !== undefined && token.value !== '';
+    // If no user is logged in, redirect to login
+    if (!user) {
+      return NextResponse.redirect(new URL('/auth/login', request.url));
+    }
 
-  // Debug info in development
-  if (process.env.NODE_ENV === 'development') {
-    console.log('Auth Middleware:', {
-      pathname,
-      isProtectedRoute,
-      isAuthRoute,
-      isAuthenticated,
-      hasToken: !!token,
-    });
+    const path = request.nextUrl.pathname;
+
+    // Check if the path is agent-only and user is not an agent
+    if (
+      AGENT_PATHS.some((p) => path.startsWith(p)) &&
+      user.userType !== 'agent'
+    ) {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
+
+    // Check if the path is user-only and user is not a regular user
+    if (
+      USER_PATHS.some((p) => path.startsWith(p)) &&
+      user.userType !== 'user'
+    ) {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
+
+    return NextResponse.next();
+  } catch (error) {
+    // If there's any error, redirect to login
+    return NextResponse.redirect(new URL('/auth/login', request.url));
   }
-
-  // If accessing protected route without auth, redirect to login
-  if (isProtectedRoute && !isAuthenticated) {
-    const loginUrl = new URL('/auth/login', request.url);
-    loginUrl.searchParams.set('from', pathname);
-    return NextResponse.redirect(loginUrl);
-  }
-
-  // If accessing auth routes while authenticated, redirect to dashboard
-  if (isAuthRoute && isAuthenticated) {
-    const response = NextResponse.redirect(new URL('/', request.url));
-    response.cookies.delete(env.AUTH_COOKIE_NAME);
-    return response;
-  }
-
-  return NextResponse.next();
 }
 
 export const config = {
-  // Matcher ignoring api routes and static files
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/dashboard/:path*'],
 };

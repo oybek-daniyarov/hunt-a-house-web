@@ -61,11 +61,13 @@ export const LocationSearchField = ({
           placeholder={placeholder}
           onSearch={async (query) => {
             const locations = await searchLocations(query);
-            return locations.data.map((location) => ({
-              label: location.name,
-              value: location.id.toString(),
-              group: location.parent?.name,
-            }));
+            return (
+              locations.data?.map((location) => ({
+                label: location.name,
+                value: location.id.toString(),
+                group: location.parent?.name,
+              })) ?? []
+            );
           }}
           loadingIndicator={
             <div className="flex items-center justify-center gap-2 py-6 text-sm text-muted-foreground">

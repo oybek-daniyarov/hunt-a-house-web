@@ -15,14 +15,14 @@ interface RegisterPageProps {
   params: Promise<{ type: string }>;
 }
 
-type RegisterType = 'agent' | 'client';
+type RegisterType = 'agent' | 'user';
 
 export default async function RegisterPage({ params }: RegisterPageProps) {
   const { type } = await params;
 
   // Validate and redirect if type is not valid
-  if (!['agent', 'client'].includes(type)) {
-    redirect('/auth/register/client');
+  if (!['agent', 'user'].includes(type)) {
+    redirect('/auth/register/user');
   }
 
   return (

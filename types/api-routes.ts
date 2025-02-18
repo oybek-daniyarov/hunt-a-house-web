@@ -71,7 +71,7 @@ export const routes = {
   },
   'auth.logout': {
     path: 'api/v1/auth/logout',
-    method: 'delete',
+    method: 'post',
   },
   'auth.register': {
     path: 'api/v1/auth/register',
@@ -149,6 +149,7 @@ export type Params = Record<
   string,
   string | number | boolean | Array<string | number> | null
 >;
+
 function addQueryString(path: string, params: Params): string {
   const searchParams = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {

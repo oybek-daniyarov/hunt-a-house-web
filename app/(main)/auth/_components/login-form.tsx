@@ -44,6 +44,7 @@ export function LoginForm({
   onRegister,
   ...props
 }: LoginFormProps) {
+  'use no memo';
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 

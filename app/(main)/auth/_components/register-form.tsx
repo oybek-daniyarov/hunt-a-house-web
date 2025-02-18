@@ -49,7 +49,7 @@ const registerSchema = z
   });
 
 interface RegisterFormProps extends React.ComponentPropsWithoutRef<'div'> {
-  userType: 'agent' | 'client';
+  userType: 'agent' | 'user';
   onSuccess?: () => void;
   onGoogleSignup?: () => void;
   onLogin?: () => void;
@@ -64,6 +64,7 @@ export function RegisterForm({
   onLogin,
   ...props
 }: RegisterFormProps) {
+  'use no memo';
   const [isLoading, setIsLoading] = useState(false);
   const [isPhoneValid, setIsPhoneValid] = useState(false);
   const router = useRouter();
@@ -83,11 +84,16 @@ export function RegisterForm({
   async function onSubmit(data: RegisterFormData) {
     if (isLoading || !isPhoneValid) return;
 
-    console.log(data);
     setIsLoading(true);
     try {
       const result = await registerAction({
-        ...data,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        password: data.password,
+        password_confirmation: data.password_confirmation,
+        type: userType as App.Enums.UserType,
+        licenseNumber: data.license || null,
       });
 
       if (!result.success) {

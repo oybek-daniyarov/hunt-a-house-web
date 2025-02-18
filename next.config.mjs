@@ -33,6 +33,9 @@ const nextConfig = {
       fullUrl: true,
     },
   },
+  experimental: {
+    reactCompiler: true,
+  },
 };
 
 export default nextConfig;

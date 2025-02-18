@@ -1,49 +1,23 @@
 'use server';
 
-import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
+import { EncryptJWT, jwtDecrypt } from 'jose';
 
-const ALGORITHM = 'aes-256-gcm';
-const IV_LENGTH = 12;
-const SALT_LENGTH = 16;
-const TAG_LENGTH = 16;
+// Use a more secure secret key generation
+const SECRET = new TextEncoder().encode(
+  process.env.JWT_SECRET || '0'.repeat(32)
+);
 
-export async function encrypt(text: string, key: string): Promise<string> {
-  const iv = randomBytes(IV_LENGTH);
-  const salt = randomBytes(SALT_LENGTH);
-  const cipher = createCipheriv(ALGORITHM, Buffer.from(key), iv);
+export async function encrypt(text: string): Promise<string> {
+  const jwt = await new EncryptJWT({ data: text })
+    .setProtectedHeader({ alg: 'dir', enc: 'A256GCM' })
+    .setIssuedAt()
+    .setExpirationTime('30d') // Match cookie expiration
+    .encrypt(SECRET);
 
-  let encrypted = cipher.update(text, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  const tag = cipher.getAuthTag();
-
-  // Combine IV, salt, tag, and encrypted data
-  return Buffer.concat([iv, salt, tag, Buffer.from(encrypted, 'hex')]).toString(
-    'base64'
-  );
+  return jwt;
 }
 
-export async function decrypt(
-  encryptedData: string,
-  key: string
-): Promise<string> {
-  const buf = Buffer.from(encryptedData, 'base64');
-
-  // Extract the parts
-  const iv = buf.subarray(0, IV_LENGTH);
-  const tag = buf.subarray(
-    IV_LENGTH + SALT_LENGTH,
-    IV_LENGTH + SALT_LENGTH + TAG_LENGTH
-  );
-  const encrypted = buf
-    .subarray(IV_LENGTH + SALT_LENGTH + TAG_LENGTH)
-    .toString('hex');
-
-  // Create decipher
-  const decipher = createDecipheriv(ALGORITHM, Buffer.from(key), iv);
-  decipher.setAuthTag(tag);
-
-  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-
-  return decrypted;
+export async function decrypt(encryptedData: string): Promise<string> {
+  const { payload } = await jwtDecrypt(encryptedData, SECRET);
+  return payload.data as string;
 }

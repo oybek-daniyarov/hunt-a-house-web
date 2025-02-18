@@ -47,6 +47,7 @@ declare namespace App.Data.Auth.Payload {
     email: string;
     phone: string;
     password: string;
+    password_confirmation: string | null;
     type: App.Enums.UserType;
     licenseNumber: string | null;
   };
@@ -62,10 +63,8 @@ declare namespace App.Data.Auth.Payload {
 }
 declare namespace App.Data.Lead {
   export type LeadFiltersData = {
-    emirates: Array<App.Data.Lead.OptionData>;
-    cities: Array<App.Data.Lead.OptionData>;
-    areas: Array<App.Data.Lead.OptionData>;
     propertyTypes: Array<App.Data.Lead.PropertyTypeData>;
+    budgetFrequency: Array<App.Data.Lead.OptionData>;
     activityTypes: Array<App.Data.Lead.OptionData>;
     bedrooms: Array<App.Data.Lead.OptionData>;
     bathrooms: Array<App.Data.Lead.OptionData>;
@@ -98,7 +97,40 @@ declare namespace App.Data.Lead {
     name: string;
   };
 }
+declare namespace App.Data.Lead.Payload {
+  export type CreateLeadPayloadData = {
+    locations: Array<any>;
+    propertyType: number;
+    activityType: number;
+    bedrooms: number;
+    bathrooms: number;
+    minSize: number;
+    maxSize: number;
+    minBudget: number;
+    maxBudget: number;
+    budgetFrequency: App.Enums.BudgetFrequency;
+    description: string;
+    contact: Array<any>;
+  };
+}
+declare namespace App.Data.Media {
+  export type MediaData = {
+    id: number;
+    name: string;
+    file_name: string;
+    mime_type: string;
+    size: number;
+    url: string;
+    thumb_url: string | null;
+    preview_url: string | null;
+  };
+}
 declare namespace App.Data.User {
+  export type ContactData = {
+    name: string;
+    email: string;
+    phone: string | null;
+  };
   export type UserData = {
     id: number | null;
     name: string;
@@ -144,11 +176,10 @@ declare namespace App.Enums {
     | 'closed_lost';
   export type LeadStatus =
     | 'active'
-    | 'inactive'
-    | 'expired'
+    | 'pending'
+    | 'on_hold'
     | 'closed'
-    | 'rented'
-    | 'completed';
+    | 'expired';
   export type PaymentMethod = 'stripe' | 'bank_transfer' | 'crypto';
   export type PropertyType = 'room' | 'apartment' | 'townhouse' | 'villa';
   export type TransactionType = 'purchase' | 'usage' | 'refund';
@@ -169,5 +200,25 @@ declare namespace App.Services.Location.Data {
     id: number;
     name: string;
     path: string | null;
+  };
+}
+declare namespace App.Services.Search.Data.Lead {
+  export type LeadData = {
+    id: number;
+    user_id: number;
+    contact_methods: Array<any>;
+    locations: Array<any>;
+    property_type_id: number;
+    activity_type_id: number;
+    bedrooms: number;
+    bathrooms: number;
+    min_size: number;
+    max_size: number;
+    min_budget: number;
+    max_budget: number;
+    budget_frequency: App.Enums.BudgetFrequency;
+    description: string;
+    max_agent_views: number;
+    current_agent_views: number;
   };
 }

@@ -30,14 +30,20 @@ const StepContent = () => {
 type StepProps<T extends Record<string, unknown>> = {
   steps: Step[];
   initialData: T;
+  onComplete: (data: T) => void;
 };
 
 export const Steps = <T extends Record<string, unknown>>({
   steps,
   initialData,
+  onComplete,
 }: StepProps<T>) => {
   return (
-    <StepProvider steps={steps} initialData={initialData}>
+    <StepProvider
+      steps={steps}
+      initialData={initialData}
+      onComplete={onComplete}
+    >
       <div className="space-y-8 py-8">
         <StepProgress />
         <StepContent />

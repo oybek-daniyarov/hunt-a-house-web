@@ -28,6 +28,7 @@ import {
   handleFormError,
   handleFormSuccess,
 } from '@/lib/client/laravel/helpers/form.helpers';
+import { ResponseError } from '@/lib/client/laravel/types';
 import { cn } from '@/lib/utils';
 
 const forgotPasswordSchema = z.object({
@@ -48,6 +49,7 @@ export function ForgotPasswordForm({
   onLogin,
   ...props
 }: ForgotPasswordFormProps) {
+  'use no memo';
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -70,7 +72,11 @@ export function ForgotPasswordForm({
         onSuccess();
       }
     } catch (error) {
-      handleFormError(form, error, 'Failed to send reset link');
+      handleFormError(
+        form,
+        error as ResponseError,
+        'Failed to send reset link'
+      );
     } finally {
       setIsLoading(false);
     }

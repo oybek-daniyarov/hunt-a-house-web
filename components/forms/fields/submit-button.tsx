@@ -21,8 +21,7 @@ export const SubmitButton = ({
   const form = useFormContext();
 
   const isLoading = pending || form.formState.isSubmitting;
-  const disabled =
-    isLoading || form.formState.isSubmitting || !form.formState.isValid;
+  const disabled = isLoading || form.formState.isSubmitting;
   return (
     <Button
       type="submit"

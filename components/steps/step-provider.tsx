@@ -47,6 +47,7 @@ interface StepProviderProps<T = StepData> {
     prevIndex: number,
     data: Partial<T>
   ) => void | Promise<void>;
+  onComplete?: (data: T) => void | Promise<void>;
 }
 
 const StepContext = createContext<StepContextType<any> | undefined>(undefined);
@@ -66,6 +67,7 @@ export const StepProvider = <T extends StepData>({
   onStepComplete,
   onNextStep,
   onPrevStep,
+  onComplete,
 }: StepProviderProps<T>) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [stepData, setStepData] = useState<Partial<T>>(initialData);
@@ -89,8 +91,25 @@ export const StepProvider = <T extends StepData>({
       } finally {
         setIsLoading(false);
       }
+    } else if (currentStepIndex === steps.length - 1 && onComplete) {
+      setIsLoading(true);
+      try {
+        if (onStepComplete) {
+          await onStepComplete(currentStepIndex, stepData);
+        }
+        await onComplete(stepData as T);
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }, [currentStepIndex, steps.length, stepData, onStepComplete, onNextStep]);
+  }, [
+    currentStepIndex,
+    steps.length,
+    stepData,
+    onStepComplete,
+    onNextStep,
+    onComplete,
+  ]);
 
   const goToPreviousStep = useCallback(async () => {
     if (currentStepIndex > 0 && steps[currentStepIndex].canGoBack !== false) {

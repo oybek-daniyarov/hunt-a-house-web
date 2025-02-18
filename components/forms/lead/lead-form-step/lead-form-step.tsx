@@ -2,7 +2,6 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 
 import {
   LocationSearchField,
@@ -11,45 +10,12 @@ import {
   SubmitButton,
   TextareaField,
 } from '@/components/forms/fields';
+import {
+  LeadFormStepData,
+  leadFormStepSchema,
+} from '@/components/forms/lead/lead-form-step/schema';
 import { useSteps } from '@/components/steps/step-provider';
 import { Form } from '@/components/ui/form';
-
-const leadFormStepSchema = z
-  .object({
-    location: z
-      .array(
-        z.object({
-          value: z.string(),
-          label: z.string(),
-        })
-      )
-      .min(1, 'Location is required'),
-    propertyType: z.string().min(1, 'Property type is required'),
-    activityType: z.string().min(1, 'Activity type is required'),
-    bedrooms: z.string(),
-    bathrooms: z.string(),
-    minSize: z.string().min(1, 'Min size is required'),
-    maxSize: z.string().min(1, 'Max size is required'),
-    minBudget: z.string().min(1, 'Min budget is required'),
-    maxBudget: z.string().min(1, 'Max budget is required'),
-    description: z.string().min(1, 'Description is required'),
-  })
-  .superRefine((data, ctx) => {
-    if (parseFloat(data.minSize) > parseFloat(data.maxSize)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['minSize'],
-        message: 'Min size must be less than max size',
-      });
-    }
-    if (parseFloat(data.minBudget) > parseFloat(data.maxBudget)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['minBudget'],
-        message: 'Min budget must be less than max budget',
-      });
-    }
-  });
 
 const convertToOptions = (items: { id: number | string; name: string }[]) => {
   return items.map((item) => ({
@@ -63,8 +29,9 @@ type LeadFormStepProps = {
 };
 
 export function LeadFormStep({ filters }: LeadFormStepProps) {
+  'use no memo';
   const { updateStepData, goToNextStep } = useSteps();
-  const form = useForm<z.infer<typeof leadFormStepSchema>>({
+  const form = useForm<LeadFormStepData>({
     resolver: zodResolver(leadFormStepSchema),
     defaultValues: {
       location: [],
@@ -84,8 +51,9 @@ export function LeadFormStep({ filters }: LeadFormStepProps) {
   const activityTypeOptions = convertToOptions(filters.activityTypes);
   const bedroomOptions = convertToOptions(filters.bedrooms);
   const bathroomOptions = convertToOptions(filters.bathrooms);
+  const budgetFrequencyOptions = convertToOptions(filters.budgetFrequency);
 
-  async function onSubmit(data: z.infer<typeof leadFormStepSchema>) {
+  async function onSubmit(data: LeadFormStepData) {
     updateStepData({
       lead: data,
     });
@@ -131,6 +99,14 @@ export function LeadFormStep({ filters }: LeadFormStepProps) {
           <NumberInputField name="minBudget" label="Min Budget" prefix="AED" />
 
           <NumberInputField name="maxBudget" label="Max Budget" prefix="AED" />
+
+          <div className="col-span-2">
+            <SelectField
+              name="budgetFrequency"
+              label="Budget Frequency"
+              options={budgetFrequencyOptions}
+            />
+          </div>
 
           <div className="col-span-2">
             <TextareaField name="description" label="Description" />

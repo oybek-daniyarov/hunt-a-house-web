@@ -1,163 +1,78 @@
-'use client';
+import { Building2, FileText, Home, Users } from 'lucide-react';
 
-import { ChevronRightIcon } from '@radix-ui/react-icons';
-import {
-  BookOpen,
-  Bot,
-  Frame,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-  type LucideIcon,
-} from 'lucide-react';
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
+import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
 
-const data = {
-  navMain: [
-    {
-      title: 'Playground',
-      url: '#',
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: 'History',
-          url: '#',
-        },
-        {
-          title: 'Starred',
-          url: '#',
-        },
-        {
-          title: 'Settings',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Models',
-      url: '#',
-      icon: Bot,
-      items: [
-        {
-          title: 'Genesis',
-          url: '#',
-        },
-        {
-          title: 'Explorer',
-          url: '#',
-        },
-        {
-          title: 'Quantum',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
-      items: [
-        {
-          title: 'Introduction',
-          url: '#',
-        },
-        {
-          title: 'Get Started',
-          url: '#',
-        },
-        {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Settings',
-      url: '#',
-      icon: Settings2,
-      items: [
-        {
-          title: 'General',
-          url: '#',
-        },
-        {
-          title: 'Team',
-          url: '#',
-        },
-        {
-          title: 'Billing',
-          url: '#',
-        },
-        {
-          title: 'Limits',
-          url: '#',
-        },
-      ],
-    },
-  ],
+type NavItem = {
+  title: string;
+  url: string;
+  icon: any;
+  isActive?: boolean;
+  userTypes?: App.Enums.UserType[];
 };
 
-export function NavMain() {
-  const items = data.navMain;
+export async function NavMain() {
+  const { data: user } = await getCurrentUser();
+
+  const items: NavItem[] = [
+    {
+      title: 'Dashboard',
+      url: '/dashboard',
+      icon: Home,
+      isActive: true,
+    },
+    {
+      title: 'My Leads',
+      url: '/dashboard/my-leads',
+      icon: FileText,
+      userTypes: ['user'],
+    },
+    {
+      title: 'Lead Management',
+      url: '/dashboard/leads',
+      icon: FileText,
+      userTypes: ['agent'],
+    },
+    {
+      title: 'Properties',
+      url: '/dashboard/properties',
+      icon: Building2,
+      userTypes: ['agent'],
+    },
+    {
+      title: 'Users',
+      url: '/dashboard/users',
+      icon: Users,
+      userTypes: ['admin'],
+    },
+  ];
+
+  // Filter items based on user type
+  const filteredItems = items.filter(
+    (item) =>
+      !item.userTypes ||
+      item.userTypes.includes(user?.userType as App.Enums.UserType)
+  );
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
-          <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.title}>
-                <a href={item.url}>
-                  <item.icon />
-                  <span>{item.title}</span>
-                </a>
-              </SidebarMenuButton>
-              {item.items?.length ? (
-                <>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuAction className="data-[state=open]:rotate-90">
-                      <ChevronRightIcon />
-                      <span className="sr-only">Toggle</span>
-                    </SidebarMenuAction>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <SidebarMenuSub>
-                      {item.items?.map((subItem) => (
-                        <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
-                            <a href={subItem.url}>
-                              <span>{subItem.title}</span>
-                            </a>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      ))}
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
-                </>
-              ) : null}
-            </SidebarMenuItem>
-          </Collapsible>
+        {filteredItems.map((item) => (
+          <SidebarMenuItem key={item.title}>
+            <SidebarMenuButton asChild tooltip={item.title}>
+              <a href={item.url}>
+                <item.icon />
+                <span>{item.title}</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         ))}
       </SidebarMenu>
     </SidebarGroup>

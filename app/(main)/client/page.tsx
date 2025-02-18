@@ -8,7 +8,7 @@ import { TestimonialsSection } from '@/components/landing/testimonials-section';
 import { getLeadFilters } from '@/lib/data/laravel/lead/lead.api';
 
 export default async function ClientLandingPage() {
-  const filters = await getLeadFilters();
+  const { data: filters } = await getLeadFilters();
   return (
     <div>
       <HeroSection
@@ -38,7 +38,7 @@ export default async function ClientLandingPage() {
           },
         ]}
       >
-        <LeadSteps filters={filters} />
+        {filters && <LeadSteps filters={filters} />}
       </FeaturesSection>
 
       <HowItWorksSection

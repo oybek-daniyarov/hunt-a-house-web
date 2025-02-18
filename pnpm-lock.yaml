@@ -113,6 +113,9 @@ dependencies:
   ai:
     specifier: ^4.1.37
     version: 4.1.37(react@19.0.0)(zod@3.24.2)
+  babel-plugin-react-compiler:
+    specifier: 19.0.0-beta-21e868a-20250216
+    version: 19.0.0-beta-21e868a-20250216
   chalk:
     specifier: ^5.4.1
     version: 5.4.1
@@ -140,6 +143,9 @@ dependencies:
   i18n-iso-countries:
     specifier: ^7.13.0
     version: 7.13.0
+  jose:
+    specifier: ^5.10.0
+    version: 5.10.0
   libphonenumber-js:
     specifier: ^1.11.19
     version: 1.11.19
@@ -154,7 +160,7 @@ dependencies:
     version: 5.0.9
   next:
     specifier: 15.1.7
-    version: 15.1.7(@babel/core@7.26.7)(react-dom@19.0.0)(react@19.0.0)
+    version: 15.1.7(@babel/core@7.26.7)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)
   next-sanity:
     specifier: ^9.8.57
     version: 9.8.57(@sanity/client@6.28.0)(@sanity/icons@3.5.7)(@sanity/types@3.75.0)(@sanity/ui@2.12.4)(next@15.1.7)(react-dom@19.0.0)(react-is@19.0.0)(react@19.0.0)(sanity@3.75.0)(styled-components@6.1.15)
@@ -205,7 +211,7 @@ dependencies:
     version: 7.8.1
   sanity:
     specifier: ^3.75.0
-    version: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
+    version: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
   sanity-plugin-iframe-pane:
     specifier: ^3.2.1
     version: 3.2.1(@sanity/client@6.28.0)(react-dom@19.0.0)(react-is@19.0.0)(react@19.0.0)(sanity@3.75.0)(styled-components@6.1.15)
@@ -3065,7 +3071,7 @@ packages:
       next: ^13.0.0 || ^14.0.0 || ^15.0.0
       react: ^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0
     dependencies:
-      next: 15.1.7(@babel/core@7.26.7)(react-dom@19.0.0)(react@19.0.0)
+      next: 15.1.7(@babel/core@7.26.7)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)
       react: 19.0.0
       third-party-capital: 1.0.20
     dev: false
@@ -4659,7 +4665,7 @@ packages:
       react-fast-compare: 3.2.2
       rxjs: 7.8.1
       rxjs-exhaustmap-with-trailing: 2.1.1(rxjs@7.8.1)
-      sanity: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
+      sanity: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
       styled-components: 6.1.15(react-dom@19.0.0)(react@19.0.0)
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
@@ -4678,7 +4684,7 @@ packages:
     resolution: {integrity: sha512-so+/UtCge8t1jq509hH0otbbptRz0zM/Aa0dh5MhMD7HGT6n2igWIL2VWH/9QR9e77Jn3dJsjz23mW1WCxT+sg==}
     dev: false
 
-  /@sanity/cli@3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(react@19.0.0)(typescript@5.7.3):
+  /@sanity/cli@3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react@19.0.0)(typescript@5.7.3):
     resolution: {integrity: sha512-0yqdFEBLXoZP/gKpqz/kUVPJkqEm8PAahZHSLXteURKzhjvFemnwuzABG+E+5mW6i/m/BybiHw96fAw+Y3X5fA==}
     engines: {node: '>=18'}
     hasBin: true
@@ -4687,7 +4693,7 @@ packages:
       '@sanity/client': 6.27.2(debug@4.4.0)
       '@sanity/codegen': 3.75.0
       '@sanity/telemetry': 0.7.9(react@19.0.0)
-      '@sanity/template-validator': 2.4.0(@types/node@22.13.2)(debug@4.4.0)(typescript@5.7.3)
+      '@sanity/template-validator': 2.4.0(@types/node@22.13.2)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(debug@4.4.0)(typescript@5.7.3)
       '@sanity/util': 3.75.0(@types/react@19.0.8)(debug@4.4.0)
       chalk: 4.1.2
       debug: 4.4.0
@@ -5011,7 +5017,7 @@ packages:
       '@sanity/client': 6.28.0
       '@sanity/comlink': 3.0.1
       '@sanity/presentation-comlink': 1.0.6(@sanity/client@6.28.0)(@sanity/types@3.75.0)
-      next: 15.1.7(@babel/core@7.26.7)(react-dom@19.0.0)(react@19.0.0)
+      next: 15.1.7(@babel/core@7.26.7)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)
       react: 19.0.0
       use-effect-event: 1.0.2(react@19.0.0)
     transitivePeerDependencies:
@@ -5035,7 +5041,7 @@ packages:
       lexorank: 1.0.5
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
-      sanity: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
+      sanity: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
       sanity-plugin-utils: 1.6.7(react-dom@19.0.0)(react-is@19.0.0)(react@19.0.0)(rxjs@7.8.1)(sanity@3.75.0)(styled-components@6.1.15)
       styled-components: 6.1.15(react-dom@19.0.0)(react@19.0.0)
     transitivePeerDependencies:
@@ -5045,7 +5051,7 @@ packages:
       - rxjs
     dev: false
 
-  /@sanity/pkg-utils@6.13.4(@types/node@22.13.2)(debug@4.4.0)(typescript@5.7.3):
+  /@sanity/pkg-utils@6.13.4(@types/node@22.13.2)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(debug@4.4.0)(typescript@5.7.3):
     resolution: {integrity: sha512-m4x0qyu2wiUHKuVxy/B2kcQRh20RvsyvUlUjPbiM5ENt4hwpJPLFfxtPe53GOCf3NJfcSK/te4yQkMOyL8RzAA==}
     engines: {node: '>=18.17.0'}
     hasBin: true
@@ -5070,6 +5076,7 @@ packages:
       '@rollup/plugin-replace': 6.0.2(rollup@4.34.4)
       '@rollup/plugin-terser': 0.4.4(rollup@4.34.4)
       '@sanity/browserslist-config': 1.0.5
+      babel-plugin-react-compiler: 19.0.0-beta-21e868a-20250216
       browserslist: 4.24.4
       cac: 6.7.14
       chalk: 4.1.2
@@ -5199,14 +5206,14 @@ packages:
       typeid-js: 0.3.0
     dev: false
 
-  /@sanity/template-validator@2.4.0(@types/node@22.13.2)(debug@4.4.0)(typescript@5.7.3):
+  /@sanity/template-validator@2.4.0(@types/node@22.13.2)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(debug@4.4.0)(typescript@5.7.3):
     resolution: {integrity: sha512-gkQ4hPbfad7CtLrl5ZFReqKbFEBf9ijsyqNJaKny53QTMlyGgwL0JKxiM+bwAiU0uOUT0vSqdzSAxDJNF0BDpg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
       '@actions/core': 1.11.1
       '@actions/github': 6.0.0
-      '@sanity/pkg-utils': 6.13.4(@types/node@22.13.2)(debug@4.4.0)(typescript@5.7.3)
+      '@sanity/pkg-utils': 6.13.4(@types/node@22.13.2)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(debug@4.4.0)(typescript@5.7.3)
       yaml: 2.7.0
     transitivePeerDependencies:
       - '@types/babel__core'
@@ -5445,7 +5452,7 @@ packages:
       '@sanity/visual-editing-csm': 2.0.4(@sanity/client@6.28.0)(@sanity/types@3.75.0)
       '@vercel/stega': 0.1.2
       get-random-values-esm: 1.0.2
-      next: 15.1.7(@babel/core@7.26.7)(react-dom@19.0.0)(react@19.0.0)
+      next: 15.1.7(@babel/core@7.26.7)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
       react-is: 19.0.0
@@ -6392,6 +6399,12 @@ packages:
       - supports-color
     dev: false
 
+  /babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216:
+    resolution: {integrity: sha512-WDOBsm9t9P0RADm8CSlav5OqWvs+3mZFvrBo/qf3vuNtdz78OG5TFxOy7De8ePR3rA6qg1Qmcjjae6nR1pOpCA==}
+    dependencies:
+      '@babel/types': 7.26.7
+    dev: false
+
   /bail@2.0.2:
     resolution: {integrity: sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==}
     dev: false
@@ -6927,7 +6940,7 @@ packages:
       react: '>= 16.8.0'
     dependencies:
       cookie: 1.0.2
-      next: 15.1.7(@babel/core@7.26.7)(react-dom@19.0.0)(react@19.0.0)
+      next: 15.1.7(@babel/core@7.26.7)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)
       react: 19.0.0
     dev: false
 
@@ -9529,6 +9542,10 @@ packages:
     resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
     dev: false
 
+  /jose@5.10.0:
+    resolution: {integrity: sha512-s+3Al/p9g32Iq+oqXxkW//7jk2Vig6FF1CFqzVXoTUXt2qz89YWbL+OwS17NFYEvxC35n0FKeGO2LGYSxeM2Gg==}
+    dev: false
+
   /js-beautify@1.15.1:
     resolution: {integrity: sha512-ESjNzSlt/sWE8sciZH8kBF8BPlwXPwhR6pWKAw8bw4Bwj+iZcnKW6ONWUutJ7eObuBZQpiIb8S7OYspWrKt7rA==}
     engines: {node: '>=14'}
@@ -10664,9 +10681,9 @@ packages:
       '@sanity/visual-editing': 2.13.2(@sanity/client@6.28.0)(@sanity/types@3.75.0)(next@15.1.7)(react-dom@19.0.0)(react-is@19.0.0)(react@19.0.0)
       groq: 3.75.0
       history: 5.3.0
-      next: 15.1.7(@babel/core@7.26.7)(react-dom@19.0.0)(react@19.0.0)
+      next: 15.1.7(@babel/core@7.26.7)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)
       react: 19.0.0
-      sanity: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
+      sanity: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
       styled-components: 6.1.15(react-dom@19.0.0)(react@19.0.0)
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
@@ -10689,7 +10706,7 @@ packages:
       react-dom: 19.0.0(react@19.0.0)
     dev: false
 
-  /next@15.1.7(@babel/core@7.26.7)(react-dom@19.0.0)(react@19.0.0):
+  /next@15.1.7(@babel/core@7.26.7)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0):
     resolution: {integrity: sha512-GNeINPGS9c6OZKCvKypbL8GTsT5GhWPp4DM0fzkXJuXMilOO2EeFxuAY6JZbtk6XIl6Ws10ag3xRINDjSO5+wg==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
     hasBin: true
@@ -10713,6 +10730,7 @@ packages:
       '@next/env': 15.1.7
       '@swc/counter': 0.1.3
       '@swc/helpers': 0.5.15
+      babel-plugin-react-compiler: 19.0.0-beta-21e868a-20250216
       busboy: 1.6.0
       caniuse-lite: 1.0.30001697
       postcss: 8.4.31
@@ -10812,7 +10830,7 @@ packages:
         optional: true
     dependencies:
       mitt: 3.0.1
-      next: 15.1.7(@babel/core@7.26.7)(react-dom@19.0.0)(react@19.0.0)
+      next: 15.1.7(@babel/core@7.26.7)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)
       react: 19.0.0
     dev: false
 
@@ -12424,7 +12442,7 @@ packages:
       '@sanity/ui': 2.12.4(react-dom@19.0.0)(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15)
       framer-motion: 12.4.2(react-dom@19.0.0)(react@19.0.0)
       react: 19.0.0
-      sanity: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
+      sanity: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
       styled-components: 6.1.15(react-dom@19.0.0)(react@19.0.0)
       suspend-react: 0.1.3(react@19.0.0)
     transitivePeerDependencies:
@@ -12449,7 +12467,7 @@ packages:
       react: 19.0.0
       react-fast-compare: 3.2.2
       rxjs: 7.8.1
-      sanity: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
+      sanity: 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3)
       styled-components: 6.1.15(react-dom@19.0.0)(react@19.0.0)
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
@@ -12457,7 +12475,7 @@ packages:
       - react-is
     dev: false
 
-  /sanity@3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3):
+  /sanity@3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react-dom@19.0.0)(react@19.0.0)(styled-components@6.1.15)(typescript@5.7.3):
     resolution: {integrity: sha512-Ys2QK8amH9dhxjzaRrluN6nJYR2DceF6xcozHcp+UxoOucuByH7Lse+a7mxjT9CmpeoF7u8G56Ycdb9K745lcA==}
     engines: {node: '>=18'}
     hasBin: true
@@ -12478,7 +12496,7 @@ packages:
       '@rexxars/react-json-inspector': 9.0.1(react@19.0.0)
       '@sanity/asset-utils': 2.2.1
       '@sanity/bifur-client': 0.4.1
-      '@sanity/cli': 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(react@19.0.0)(typescript@5.7.3)
+      '@sanity/cli': 3.75.0(@types/node@22.13.2)(@types/react@19.0.8)(babel-plugin-react-compiler@19.0.0-beta-21e868a-20250216)(react@19.0.0)(typescript@5.7.3)
       '@sanity/client': 6.27.2(debug@4.4.0)
       '@sanity/color': 3.0.6
       '@sanity/comlink': 3.0.1

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ForgotPasswordForm } from '@/app/(main)/auth/_components/forgot-password-form';
 import { LoginForm } from '@/app/(main)/auth/_components/login-form';
 import { RegisterForm } from '@/app/(main)/auth/_components/register-form';
-import LeadContactForm from '@/components/forms/lead/lead-contact-form';
+import LeadContactForm from '@/components/forms/lead/lead-contact-form/lead-contact-form';
 import { useAuth } from '@/components/providers/auth-provider';
 
 type FormTypes = 'login' | 'register' | 'forgotPassword';
@@ -17,7 +17,7 @@ type RenderFormProps = {
 const RenderForm = ({ currentForm, onSuccess, setForm }: RenderFormProps) => {
   switch (currentForm) {
     case 'register':
-      return <RegisterForm userType="client" onSuccess={onSuccess} />;
+      return <RegisterForm userType="user" onSuccess={onSuccess} />;
     case 'forgotPassword':
       return (
         <ForgotPasswordForm
