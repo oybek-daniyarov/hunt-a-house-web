@@ -38,8 +38,7 @@
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
   ],
-  "editor.fontSize": 13,
-  "editor.lineHeight": 1.5,
+
   //"editor.fontFamily": "JetBrains Mono, Menlo, Monaco, 'Courier New', monospace",
   "editor.fontLigatures": true,
   "editor.smoothScrolling": true,
@@ -59,10 +58,7 @@
   "editor.inlineSuggest.enabled": true,
   "editor.stickyScroll.enabled": true,
   "workbench.list.smoothScrolling": true,
-  "workbench.tree.indent": 20,
   "workbench.colorTheme": "Learn with Sumit Theme - Dracula version",
   "workbench.iconTheme": "material-icon-theme",
-  "terminal.integrated.fontSize": 13,
-  "window.zoomLevel": 0.6,
   "breadcrumbs.enabled": true
 }

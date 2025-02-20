@@ -1,7 +1,8 @@
 'use server';
 
-import { get, post } from '@/lib/client/laravel/client';
+import { get, list, post } from '@/lib/client/laravel/client';
 import { ApiResult, handleApiResponse } from '@/lib/client/laravel/helpers/api';
+import { PaginatedResponse } from '@/lib/client/laravel/types';
 import { createUrl, routes } from '@/types/api-routes';
 import type { LeadFilterParams } from './lead.types';
 
@@ -9,21 +10,13 @@ const LEAD_TAGS = ['leads'] as string[];
 
 export async function getLeads(
   params: LeadFilterParams = {}
-): Promise<ApiResult<App.Data.Lead.LeadListData[]>> {
-  try {
-    const url = createUrl(routes['leads.list'], {
-      page: params.page ? parseInt(params.page.toString()) : 1,
-      perPage: 15,
-      ...params,
-    });
-    const response = await get<ApiResult<App.Data.Lead.LeadListData[]>>(
-      url,
-      LEAD_TAGS
-    );
-    return handleApiResponse(() => Promise.resolve(response));
-  } catch (error) {
-    return handleApiResponse(() => Promise.reject(error));
-  }
+): Promise<PaginatedResponse<App.Data.Lead.LeadListData>> {
+  const url = createUrl(routes['leads.list'], {
+    page: params.page ? parseInt(params.page.toString()) : 1,
+    perPage: 15,
+    ...params,
+  });
+  return await list<App.Data.Lead.LeadListData>(url, LEAD_TAGS);
 }
 
 export async function getLead(

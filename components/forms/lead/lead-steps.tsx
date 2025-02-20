@@ -78,7 +78,7 @@ const LeadSteps = ({ filters }: LeadStepsProps) => {
 
       if (result.success) {
         handleFormSuccess('Lead created successfully');
-        router.push('/dashboard/leads');
+        router.push('/dashboard/my-leads');
       } else {
         toast.error(result.error?.message || 'Failed to create lead');
       }

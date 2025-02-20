@@ -1,4 +1,4 @@
-import { BanknoteIcon, Clock, MapPin, SquareStack } from 'lucide-react';
+import { BanknoteIcon, MapPin, SquareStack } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -41,11 +41,17 @@ export function PropertyListingCard({
 
           <div className="space-y-1">
             <h3 className="text-2xl font-semibold tracking-tight text-foreground/90">
-              {listing.areaName}
+              {listing.locations[0]?.name}
             </h3>
-            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-              <MapPin className="h-3.5 w-3.5" />
-              <span>{listing.emirateName}</span>
+            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <MapPin className="h-3.5 w-3.5 shrink-0" />
+              <span className="line-clamp-1">
+                {listing.locations
+                  .map((location) =>
+                    location.breadcrumbs?.map((crumb) => crumb.name).join(' › ')
+                  )
+                  .join(' | ')}
+              </span>
             </div>
           </div>
 
@@ -57,7 +63,7 @@ export function PropertyListingCard({
         </div>
 
         <div className="flex-1 space-y-6">
-          <div className="inline-flex items-center gap-4 rounded-lg bg-muted/50 px-4 py-2 text-sm">
+          <div className="inline-flex items-center gap-4 rounded-lg bg-muted px-4 py-2 text-sm">
             <div className="flex items-center gap-1">
               <span className="font-medium">
                 {formatBedrooms(listing.bedrooms?.toString())}
@@ -70,7 +76,6 @@ export function PropertyListingCard({
               <span className="text-muted-foreground">Baths</span>
             </div>
           </div>
-
           <div className="space-y-3">
             <div className="space-y-0.5">
               <div className="flex items-center gap-1">
@@ -85,7 +90,6 @@ export function PropertyListingCard({
                     : 'Not specified'}
               </p>
             </div>
-
             <div className="space-y-0.5">
               <div className="flex items-center gap-1">
                 <BanknoteIcon className="h-4 w-4 text-muted-foreground" />
@@ -102,13 +106,7 @@ export function PropertyListingCard({
               </p>
             </div>
           </div>
-
-          <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-            <Clock className="h-4 w-4" />
-            <span>{listing.createdAt}</span>
-          </div>
         </div>
-
         <div className="mt-5 border-t pt-5">
           <ContactButton
             className="w-full bg-foreground text-background hover:bg-foreground/90"

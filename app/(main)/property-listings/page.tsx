@@ -1,9 +1,6 @@
 import { LaravelPagination } from '@/components/laravel/pagination';
-import type { PaginatedResponse } from '@/lib/client/laravel/types';
-import {
-  getLeads,
-  type LeadFilterParams,
-} from '@/lib/data/laravel/lead/lead.api';
+import { getLeads } from '@/lib/data/laravel/lead/lead.api';
+import { LeadFilterParams } from '@/lib/data/laravel/lead/lead.types';
 import ContactModal from './_components/contact-modal';
 import Filters from './_components/filters';
 import { PropertyListingCard } from './_components/property-listing-card';
@@ -49,9 +46,7 @@ export default async function PropertyListingsPage({
   };
 
   // Fetch leads with filters and sorting
-  const response = (await getLeads(
-    params
-  )) as PaginatedResponse<App.Data.Lead.LeadListData>;
+  const response = await getLeads(params);
 
   return (
     <>
@@ -74,7 +69,7 @@ export default async function PropertyListingsPage({
 
         <div className="container py-12 md:py-16">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {response.data.map((listing) => (
+            {response.data?.map((listing) => (
               <PropertyListingCard
                 key={listing.id}
                 listing={listing}
@@ -87,7 +82,7 @@ export default async function PropertyListingsPage({
                 }
               />
             ))}
-            {response.data.length === 0 && (
+            {response.data && response.data.length === 0 && (
               <div className="col-span-full py-16 text-center">
                 <p className="text-lg text-muted-foreground">
                   No properties found matching your filters.
@@ -96,7 +91,7 @@ export default async function PropertyListingsPage({
             )}
           </div>
 
-          {response.data.length > 0 && (
+          {response.data && response.data.length > 0 && (
             <div className="mt-8 flex justify-center">
               <LaravelPagination
                 currentPage={response.current_page}
