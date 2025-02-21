@@ -1,4 +1,6 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity';
+
+import { LINK_QUERY } from '@/sanity/queries/shared';
 
 export const cta1Query = groq`
   _type == "cta-1" => {
@@ -27,6 +29,6 @@ export const cta1Query = groq`
         }
       }
     },
-    links,
+    links[]{ ${LINK_QUERY} },
   },
 `;

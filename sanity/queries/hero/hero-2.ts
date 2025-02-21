@@ -1,8 +1,11 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity';
+
+import { LINK_QUERY } from '@/sanity/queries/shared';
 
 export const hero2Query = groq`
   _type == "hero-2" => {
     _type,
+    height,
     tagLine,
     title,
     body[]{
@@ -23,6 +26,6 @@ export const hero2Query = groq`
         }
       }
     },
-    links,
+    links[]{ ${LINK_QUERY} },
   },
 `;

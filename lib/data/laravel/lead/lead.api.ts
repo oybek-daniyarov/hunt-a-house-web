@@ -50,17 +50,7 @@ export async function createLead(
   }
 }
 
-export async function getLeadFilters(): Promise<
-  ApiResult<App.Data.Lead.LeadFiltersData>
-> {
-  try {
-    const url = createUrl(routes['leads.filters']);
-    const response = await get<ApiResult<App.Data.Lead.LeadFiltersData>>(
-      url,
-      LEAD_TAGS
-    );
-    return handleApiResponse(() => Promise.resolve(response));
-  } catch (error) {
-    return handleApiResponse(() => Promise.reject(error));
-  }
+export async function getLeadFilters(): Promise<App.Data.Lead.LeadFiltersData> {
+  const url = createUrl(routes['leads.filters']);
+  return get<App.Data.Lead.LeadFiltersData>(url, LEAD_TAGS);
 }

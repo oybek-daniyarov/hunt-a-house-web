@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import { stegaClean } from 'next-sanity';
 
 import PortableTextRenderer from '@/components/portable-text-renderer';
 import { Button } from '@/components/ui/button';
+import SanityLink from '@/components/ui/sanity-link';
 import SectionContainer, {
   ISectionContainer,
   ISectionPadding,
@@ -26,20 +26,7 @@ export default function Cta1({
   tagLine: string;
   title: string;
   body: any;
-  links: {
-    title: string;
-    href: string;
-    target?: boolean;
-    buttonVariant:
-      | 'default'
-      | 'secondary'
-      | 'link'
-      | 'destructive'
-      | 'outline'
-      | 'ghost'
-      | null
-      | undefined;
-  }[];
+  links: Sanity.Link[];
 }>) {
   const isNarrow = stegaClean(sectionWidth) === 'narrow';
   const align = stegaClean(stackAlign);
@@ -75,17 +62,11 @@ export default function Cta1({
               links.length > 0 &&
               links.map((link) => (
                 <Button
-                  key={link.title}
+                  key={link._key}
                   variant={stegaClean(link?.buttonVariant)}
                   asChild
                 >
-                  <Link
-                    href={link.href as string}
-                    target={link.target ? '_blank' : undefined}
-                    rel={link.target ? 'noopener' : undefined}
-                  >
-                    {link.title}
-                  </Link>
+                  <SanityLink link={link} />
                 </Button>
               ))}
           </div>

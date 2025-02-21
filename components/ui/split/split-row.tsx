@@ -34,6 +34,7 @@ export default function SplitRow({
     <SectionContainer color={color} padding={padding}>
       {splitColumns && splitColumns?.length > 0 && (
         <div
+          key={splitColumns?.[0]?._key}
           className={cn(
             'grid grid-cols-1 lg:grid-cols-2',
             noGap ? 'gap-0' : 'gap-12 lg:gap-20'

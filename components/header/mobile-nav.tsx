@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { TextAlignRightIcon } from '@radix-ui/react-icons';
 
-import Logo from '@/components/logo';
+import Logo from '@/components/header/logo';
 import { Button } from '@/components/ui/button';
+import SanityLink from '@/components/ui/sanity-link';
 import {
   Sheet,
   SheetContent,
@@ -14,9 +14,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { NavItem } from '@/types';
 
-export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
+type MobileNavProps = {
+  navItems?: Sanity.Navigation;
+  logo?: Sanity.Logo;
+};
+
+export default function MobileNav({ navItems, logo }: MobileNavProps) {
   const [open, setOpen] = useState(false);
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -32,7 +36,7 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
       <SheetContent>
         <SheetHeader>
           <div className="mr-6 ml-auto">
-            <Logo />
+            <Logo logo={logo} />
           </div>
           <div className="sr-only">
             <SheetTitle>Main Navigation</SheetTitle>
@@ -42,21 +46,17 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
         <div className="pt-10 pb-20">
           <div className="container">
             <ul className="list-none text-right space-y-3">
-              <>
-                {navItems.map((navItem) => (
-                  <li key={navItem.label}>
-                    <Link
+              {navItems?.items?.map((item, key) => (
+                <li key={key}>
+                  {item._type === 'link' && (
+                    <SanityLink
                       onClick={() => setOpen(false)}
-                      href={navItem.href}
-                      target={navItem.target ? '_blank' : undefined}
-                      rel={navItem.target ? 'noopener noreferrer' : undefined}
+                      link={item}
                       className="hover:text-decoration-none hover:opacity-50 text-lg"
-                    >
-                      {navItem.label}
-                    </Link>
-                  </li>
-                ))}
-              </>
+                    />
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

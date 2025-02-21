@@ -1,9 +1,14 @@
+'use client';
+
 import Image from 'next/image';
-import Link from 'next/link';
+import { ChevronDown } from 'lucide-react';
+import * as motion from 'motion/react-client';
 import { stegaClean } from 'next-sanity';
 
 import PortableTextRenderer from '@/components/portable-text-renderer';
 import { Button } from '@/components/ui/button';
+import SanityLink from '@/components/ui/sanity-link';
+import { cn } from '@/lib/utils';
 import { urlFor } from '@/sanity/lib/image';
 
 export default function Hero1({
@@ -12,76 +17,131 @@ export default function Hero1({
   body,
   image,
   links,
+  height = 'half',
 }: Partial<{
   tagLine: string;
   title: string;
   body: any;
   image: Sanity.Image;
-  links: {
-    title: string;
-    href: string;
-    target?: boolean;
-    buttonVariant:
-      | 'default'
-      | 'secondary'
-      | 'link'
-      | 'destructive'
-      | 'outline'
-      | 'ghost'
-      | null
-      | undefined;
-  }[];
+  links?: Sanity.Link[];
+  height: 'full' | 'half';
 }>) {
+  const isFullScreen = stegaClean(height) === 'full';
+
+  const scrollToContent = () => {
+    window.scrollTo({
+      top: window.innerHeight - 64, // Subtract header height
+      behavior: 'smooth',
+    });
+  };
+
   return (
-    <div className="container dark:bg-background py-20 lg:pt-40">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <div className="flex flex-col justify-center">
-          {tagLine && (
-            <h1 className="leading-[0] font-sans">
-              <span className="text-base font-semibold">{tagLine}</span>
-            </h1>
-          )}
-          {title && <h2 className="mt-6 font-bold leading-[1.1]">{title}</h2>}
-          {body && (
-            <div className="text-lg mt-6">
-              <PortableTextRenderer value={body} />
-            </div>
-          )}
-          {links && links.length > 0 && (
-            <div className="mt-10 flex flex-wrap gap-4">
-              {links.map((link) => (
-                <Button
-                  key={link.title}
-                  variant={stegaClean(link?.buttonVariant)}
-                  asChild
-                >
-                  <Link
-                    href={link.href as string}
-                    target={link.target ? '_blank' : undefined}
-                    rel={link.target ? 'noopener' : undefined}
+    <div
+      className={cn(
+        'relative w-full dark:bg-background',
+        isFullScreen ? 'min-h-[calc(100vh-4rem)]' : 'py-20 lg:pt-40'
+      )}
+    >
+      <div className="container h-full">
+        <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="flex flex-col justify-center">
+            {tagLine && (
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="leading-[0] font-sans"
+              >
+                <span className="text-base font-semibold">{tagLine}</span>
+              </motion.h1>
+            )}
+            {title && (
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="mt-6 font-bold leading-[1.1]"
+              >
+                {title}
+              </motion.h2>
+            )}
+            {body && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-lg mt-6"
+              >
+                <PortableTextRenderer value={body} />
+              </motion.div>
+            )}
+            {links && links.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="mt-10 flex flex-wrap gap-4"
+              >
+                {links.map((link) => (
+                  <Button
+                    key={link.label}
+                    variant={stegaClean(link?.buttonVariant)}
+                    asChild
                   >
-                    {link.title}
-                  </Link>
-                </Button>
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="flex flex-col justify-center">
-          {image && image.asset?._id && (
-            <Image
-              className="rounded-xl"
-              src={urlFor(image.asset).url()}
-              alt={image.alt || ''}
-              width={image.asset?.metadata?.dimensions?.width || 800}
-              height={image.asset?.metadata?.dimensions?.height || 800}
-              placeholder={image?.asset?.metadata?.lqip ? 'blur' : undefined}
-              blurDataURL={image?.asset?.metadata?.lqip || ''}
-              quality={100}
-            />
-          )}
+                    <SanityLink link={link} />
+                  </Button>
+                ))}
+              </motion.div>
+            )}
+          </div>
+          <div className="flex flex-col justify-center">
+            {image && image.asset?._id && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <Image
+                  className="rounded-xl"
+                  src={urlFor(image.asset!).url()}
+                  alt={image.alt || ''}
+                  width={image.asset?.metadata?.dimensions?.width || 800}
+                  height={image.asset?.metadata?.dimensions?.height || 800}
+                  placeholder={
+                    image?.asset?.metadata?.lqip ? 'blur' : undefined
+                  }
+                  blurDataURL={image?.asset?.metadata?.lqip || ''}
+                  quality={100}
+                />
+              </motion.div>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* Scroll Indicator for Full Screen */}
+      {isFullScreen && (
+        <div className="absolute bottom-8 inset-x-0">
+          <motion.button
+            onClick={scrollToContent}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.8,
+              delay: 1,
+              repeat: Infinity,
+              repeatType: 'reverse',
+              repeatDelay: 0.5,
+            }}
+            className="mx-auto flex flex-col items-center gap-2 cursor-pointer"
+          >
+            <span className="text-sm text-muted-foreground">
+              Scroll to explore
+            </span>
+            <ChevronDown className="h-6 w-6 text-muted-foreground animate-bounce" />
+          </motion.button>
+        </div>
+      )}
     </div>
   );
 }

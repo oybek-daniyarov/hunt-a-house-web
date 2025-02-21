@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { SearchParams } from 'nuqs/server';
 
 import Blocks from '@/components/blocks';
 import { generatePageMetadata } from '@/lib/metadata';
@@ -8,6 +9,7 @@ export const dynamic = 'force-static';
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<SearchParams>;
 }) {
   const params = await props.params;
   const page = await fetchSanityPageBySlug({ slug: params.slug });
@@ -21,6 +23,7 @@ export async function generateMetadata(props: {
 
 export default async function Page(props: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<SearchParams>;
 }) {
   const params = await props.params;
   const page = await fetchSanityPageBySlug({ slug: params.slug });
@@ -29,5 +32,5 @@ export default async function Page(props: {
     notFound();
   }
 
-  return <Blocks blocks={page?.blocks} />;
+  return <Blocks blocks={page?.blocks} searchParams={props.searchParams} />;
 }

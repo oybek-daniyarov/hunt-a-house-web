@@ -1,6 +1,10 @@
 import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list';
-import { BookA, Files, ListCollapse, Quote, User } from 'lucide-react';
+import { BookOpen, Files, ListCollapse, Quote } from 'lucide-react';
+import { BsDatabaseAdd } from 'react-icons/bs';
+import { VscServerProcess } from 'react-icons/vsc';
 import { Iframe, UrlResolver } from 'sanity-plugin-iframe-pane';
+
+import { group, singleton } from '@/sanity/lib/utils';
 
 const getPreviewUrl: UrlResolver = () => {
   return `${process.env.NEXT_PUBLIC_SITE_URL}/preview/search`;
@@ -10,6 +14,8 @@ export const structure = (S: any, context: any) =>
   S.list()
     .title('Content')
     .items([
+      singleton(S, 'site', 'Site settings').icon(VscServerProcess),
+      S.divider(),
       orderableDocumentListDeskItem({
         type: 'page',
         title: 'Pages',
@@ -17,42 +23,41 @@ export const structure = (S: any, context: any) =>
         S,
         context,
       }),
+      group(S, 'Press & Media', [
+        S.documentTypeListItem('post').title('Posts'),
+        S.documentTypeListItem('category').title('Categories'),
+        S.documentTypeListItem('author').title('Authors'),
+      ]).icon(BookOpen),
       S.listItem()
-        .title('Posts')
-        .schemaType('post')
+        .title('Navigation')
+        .schemaType('navigation')
         .child(
-          S.documentTypeList('post')
-            .title('Post')
+          S.documentTypeList('navigation')
+            .title('Navigation')
             .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]) // Default ordering
         ),
-      orderableDocumentListDeskItem({
-        type: 'category',
-        title: 'Categories',
-        icon: BookA,
-        S,
-        context,
-      }),
-      orderableDocumentListDeskItem({
-        type: 'author',
-        title: 'Authors',
-        icon: User,
-        S,
-        context,
-      }),
-      orderableDocumentListDeskItem({
-        type: 'faq',
-        title: 'FAQs',
-        icon: ListCollapse,
-        S,
-        context,
-      }),
-      orderableDocumentListDeskItem({
-        type: 'testimonial',
-        title: 'Testimonials',
-        icon: Quote,
-        S,
-        context,
-      }),
+      S.divider(),
+      group(S, 'Miscellaneous', [
+        S.documentTypeListItem('announcement').title('Announcements'),
+        S.documentTypeListItem('logo').title('Logos'),
+        orderableDocumentListDeskItem({
+          type: 'testimonial',
+          title: 'Testimonials',
+          icon: Quote,
+          S,
+          context,
+        }),
+        orderableDocumentListDeskItem({
+          type: 'faq',
+          title: 'FAQs',
+          icon: ListCollapse,
+          S,
+          context,
+        }),
+      ]).icon(BsDatabaseAdd),
+
+      S.divider(),
+
       S.listItem()
         .title('AI Agents')
         .schemaType('agent')
