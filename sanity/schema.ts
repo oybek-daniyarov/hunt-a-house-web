@@ -12,6 +12,7 @@ import logo from '@/sanity/schemas/objects/logo';
 import carousel1 from './schemas/blocks/carousel/carousel-1';
 import carousel2 from './schemas/blocks/carousel/carousel-2';
 import carousel3 from './schemas/blocks/carousel/carousel-3';
+import content from './schemas/blocks/content';
 import cta1 from './schemas/blocks/cta/cta-1';
 import faqs from './schemas/blocks/faqs';
 import features from './schemas/blocks/features';
@@ -71,6 +72,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     hero1,
     hero2,
     sectionHeader,
+    content,
     splitRow,
     splitContent,
     splitCardsList,

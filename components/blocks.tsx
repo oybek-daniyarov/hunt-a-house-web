@@ -3,6 +3,7 @@ import { SearchParams } from 'nuqs/server';
 import Carousel1 from '@/components/ui/carousel/carousel-1';
 import Carousel2 from '@/components/ui/carousel/carousel-2';
 import Carousel3 from '@/components/ui/carousel/carousel-3';
+import Content from '@/components/ui/content';
 import Cta1 from '@/components/ui/cta/cta-1';
 import FAQs from '@/components/ui/faqs';
 import Features from '@/components/ui/features';
@@ -23,6 +24,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   'hero-1': Hero1,
   'hero-2': Hero2,
   'section-header': SectionHeader,
+  content: Content,
   'split-row': SplitRow,
   'split-form': SplitForm,
   'grid-row': GridRow,

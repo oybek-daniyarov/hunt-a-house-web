@@ -3,6 +3,7 @@ import { groq } from 'next-sanity';
 import { carousel1Query } from './carousel/carousel-1';
 import { carousel2Query } from './carousel/carousel-2';
 import { carousel3Query } from './carousel/carousel-3';
+import { contentQuery } from './content';
 import { cta1Query } from './cta/cta-1';
 import { faqsQuery } from './faqs';
 import { featuresQuery } from './features';
@@ -25,6 +26,7 @@ export const PAGE_QUERY = groq`
       ${hero1Query}
       ${hero2Query}
       ${sectionHeaderQuery}
+      ${contentQuery}
       ${splitRowQuery}
       ${splitFormQuery}
       ${gridRowQuery}
