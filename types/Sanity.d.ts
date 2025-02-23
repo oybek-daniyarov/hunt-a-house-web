@@ -150,6 +150,18 @@ declare global {
         description: string;
       }[];
     };
+
+    export interface Content {
+      _type: 'content';
+      body: PortableTextBlock[];
+      colorVariant?: {
+        className?: string;
+      };
+      sectionWidth?: 'default' | 'narrow' | 'compact';
+      padding?: {
+        className?: string;
+      };
+    }
   }
 }
 
