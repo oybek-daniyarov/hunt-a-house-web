@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Loader2, SearchX } from 'lucide-react';
 
 import { NumberInput } from '@/components/forms/fields';
@@ -51,6 +52,7 @@ export const LocationSearchField = ({
   placeholder = 'Enter a community, area or Emirate',
   maxSelected = 3,
 }: LocationSearchFieldProps) => {
+  const [hasSearched, setHasSearched] = useState(false);
   return (
     <FormFieldWrapper name={name} label={label}>
       {(field) => (
@@ -70,15 +72,17 @@ export const LocationSearchField = ({
             );
           }}
           loadingIndicator={
-            <div className="flex items-center justify-center gap-2 py-6 text-sm text-muted-foreground">
+            <div className="flex items-center justify-center gap-2 py-1 text-sm text-muted-foreground">
               <Loader2 className="h-4 w-4 animate-spin" />
-              Loading locations...
+              Searching for locations...
             </div>
           }
           emptyIndicator={
-            <div className="flex items-center justify-center gap-2 py-6 text-sm text-muted-foreground">
+            <div className="flex items-center justify-center gap-2 py-1 text-sm text-muted-foreground">
               <SearchX className="h-4 w-4" />
-              No locations found
+              {hasSearched
+                ? 'No matching locations found'
+                : 'Type to search for a location, e.g. Dubai'}
             </div>
           }
         />

@@ -92,7 +92,7 @@ export async function getLocationTree(): Promise<
 
 export async function searchLocations(query: string) {
   const url = createUrl(routes['locations.search'], { query });
-  return await list<ApiResult<App.Services.Location.Data.LocationData[]>>(
+  return await list<App.Services.Location.Data.LocationData>(
     url,
     LOCATION_TAGS
   );
