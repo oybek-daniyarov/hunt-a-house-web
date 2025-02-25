@@ -94,7 +94,7 @@ export default function SplitForm(props: SplitFormProps) {
               <PortableText value={body} />
             </div>
           )}
-          {link && (
+          {link && link?.label && (
             <Button
               variant={stegaClean(link.buttonVariant) || 'default'}
               asChild

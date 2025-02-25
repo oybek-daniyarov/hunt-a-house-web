@@ -30,7 +30,7 @@ const StepContent = () => {
 type StepProps<T extends Record<string, unknown>> = {
   steps: Step[];
   initialData: T;
-  onComplete: (data: T) => void;
+  onComplete?: (data: T) => void;
 };
 
 export const Steps = <T extends Record<string, unknown>>({

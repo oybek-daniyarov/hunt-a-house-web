@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { isValidPhoneNumber } from 'react-phone-number-input';
 import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -29,10 +30,12 @@ const registerSchema = z
   .object({
     name: z.string().min(1, 'Please enter your name'),
     email: z.string().email('Please enter a valid email'),
-    phone: z.string().min(10, 'Please enter a valid phone number'),
+    phone: z.string().refine(isValidPhoneNumber, {
+      message: 'Please enter a valid phone number',
+    }),
     password: z
       .string()
-      .min(8, 'Password must be at least 8 characters')
+      .min(6, 'Password must be at least 8 characters')
       .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
       .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
       .regex(/[0-9]/, 'Password must contain at least one number')
@@ -66,7 +69,6 @@ export function RegisterForm({
 }: RegisterFormProps) {
   'use no memo';
   const [isLoading, setIsLoading] = useState(false);
-  const [isPhoneValid, setIsPhoneValid] = useState(false);
   const router = useRouter();
 
   const form = useForm<RegisterFormData>({
@@ -82,7 +84,7 @@ export function RegisterForm({
   });
 
   async function onSubmit(data: RegisterFormData) {
-    if (isLoading || !isPhoneValid) return;
+    if (isLoading) return;
 
     setIsLoading(true);
     try {
@@ -162,14 +164,9 @@ export function RegisterForm({
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
                     <PhoneInput
-                      name={field.name}
-                      value={field.value}
+                      defaultCountry="AE"
                       disabled={isLoading}
-                      required
-                      onValueChange={(value, isValid) => {
-                        field.onChange(value);
-                        setIsPhoneValid(isValid);
-                      }}
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />

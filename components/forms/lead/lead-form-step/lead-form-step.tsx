@@ -35,15 +35,16 @@ export function LeadFormStep({ filters }: LeadFormStepProps) {
     resolver: zodResolver(leadFormStepSchema),
     defaultValues: {
       location: [],
-      propertyType: '',
-      activityType: '',
-      bedrooms: '',
-      bathrooms: '',
+      propertyType: filters.propertyTypes[0].id.toString(),
+      activityType: filters.activityTypes[0].id.toString(),
+      bedrooms: filters.bedrooms[0].id.toString(),
+      bathrooms: filters.bathrooms[0].id.toString(),
       minSize: '',
       maxSize: '',
       minBudget: '',
       maxBudget: '',
       description: '',
+      budgetFrequency: filters.budgetFrequency[0].id.toString(),
     },
   });
 

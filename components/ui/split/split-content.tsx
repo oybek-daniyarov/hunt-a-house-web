@@ -67,7 +67,7 @@ export default function SplitContent({
             title
           )}
         {body && <PortableTextRenderer value={body} />}
-        {link?.href && (
+        {link?.href && link?.title && (
           <div className="flex flex-col">
             <Button
               className="mt-2"
