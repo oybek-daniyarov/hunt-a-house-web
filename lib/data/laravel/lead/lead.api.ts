@@ -16,6 +16,7 @@ export async function getLeads(
     perPage: 15,
     ...params,
   });
+  console.log(url);
   return await list<App.Data.Lead.LeadListData>(url, LEAD_TAGS);
 }
 

@@ -92,12 +92,6 @@ export default defineType({
           type: 'boolean',
           initialValue: true,
         }),
-        defineField({
-          name: 'amenities',
-          title: 'Amenities Filter',
-          type: 'boolean',
-          initialValue: true,
-        }),
       ],
     }),
     defineField({

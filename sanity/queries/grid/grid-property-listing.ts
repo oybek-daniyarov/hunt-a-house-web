@@ -9,12 +9,7 @@ export const gridPropertyListingQuery = groq`
     gridColumns,
     perPage,
     filters {
-      propertyType,
-      price,
-      bedrooms,
-      bathrooms,
-      location,
-      amenities,
+      ...,
     },
     sortOptions[] {
       label,

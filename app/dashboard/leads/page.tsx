@@ -55,11 +55,7 @@ const dummyLeads = {
   },
 };
 
-export default async function LeadsPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | undefined };
-}) {
+export default async function LeadsPage() {
   return (
     <div className="flex flex-col gap-4">
       <div>

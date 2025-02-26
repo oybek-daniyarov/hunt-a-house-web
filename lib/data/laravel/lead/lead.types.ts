@@ -1,17 +1,13 @@
 export type LeadFilterParams = {
   search?: string;
-  emirate?: string;
   propertyType?: string;
   activityType?: string;
   bedrooms?: string | number;
   bathrooms?: string | number;
-  minBudget?: string | number;
-  maxBudget?: string | number;
-  minSize?: string | number;
-  maxSize?: string | number;
+  price?: string | number;
+  location?: string;
   sort?: string;
   page?: string | number;
-  leadId?: string | number;
 };
 
 export const LEAD_FILTER_MAPPINGS = {

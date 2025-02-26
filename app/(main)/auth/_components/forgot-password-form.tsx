@@ -60,7 +60,7 @@ export function ForgotPasswordForm({
     },
   });
 
-  async function onSubmit(data: ForgotPasswordFormData) {
+  async function onSubmit() {
     if (isLoading) return;
 
     setIsLoading(true);

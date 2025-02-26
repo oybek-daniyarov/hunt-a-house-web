@@ -1,9 +1,9 @@
 import { stegaClean } from 'next-sanity';
 import { SearchParams } from 'nuqs/server';
 
+import PropertyFilters from '@/components/ui/grid-property-listing/filters';
 import SectionContainer from '@/components/ui/section-container';
 import { getLeadFilters } from '@/lib/data/laravel/lead/lead.api';
-import PropertyFilters from './property-filters';
 import PropertyGrid from './property-grid';
 
 type Filters = {
@@ -39,7 +39,7 @@ type GridPropertyListingProps = {
   perPage: number;
   filters: Filters;
   sortOptions: SortOption[];
-  searchParams: Promise<SearchParams>;
+  searchParams: SearchParams;
 };
 
 export default async function GridPropertyListing({
@@ -53,7 +53,7 @@ export default async function GridPropertyListing({
 }: GridPropertyListingProps) {
   const color = stegaClean(colorVariant);
 
-  const [filtersData] = await Promise.all([getLeadFilters()]);
+  const filtersData = await getLeadFilters();
 
   return (
     <SectionContainer color={color} padding={padding}>

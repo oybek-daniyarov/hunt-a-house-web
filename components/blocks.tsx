@@ -1,3 +1,4 @@
+import { ComponentType } from 'react';
 import { SearchParams } from 'nuqs/server';
 
 import Carousel1 from '@/components/ui/carousel/carousel-1';
@@ -20,7 +21,7 @@ import Stats from '@/components/ui/stats';
 import Steps from '@/components/ui/steps';
 import TimelineRow from '@/components/ui/timeline/timeline-row';
 
-const componentMap: { [key: string]: React.ComponentType<any> } = {
+const componentMap: { [key: string]: ComponentType<any> } = {
   'hero-1': Hero1,
   'hero-2': Hero2,
   'section-header': SectionHeader,
@@ -44,7 +45,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
 
 type BlocksProps = {
   blocks?: Sanity.Block[];
-  searchParams: Promise<SearchParams>;
+  searchParams: SearchParams;
 };
 
 export default function Blocks({ blocks, searchParams }: BlocksProps) {

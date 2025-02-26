@@ -1,7 +1,7 @@
 import { createLoader, parseAsInteger, parseAsString } from 'nuqs/server';
 
 export const filterParsers = {
-  search: parseAsString.withDefault(''),
+  location: parseAsString.withDefault(''),
   propertyType: parseAsString.withDefault(''),
   activityType: parseAsString.withDefault(''),
   bedrooms: parseAsString.withDefault(''),

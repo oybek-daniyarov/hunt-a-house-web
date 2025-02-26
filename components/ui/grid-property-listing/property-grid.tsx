@@ -6,11 +6,12 @@ import { PropertyListingCard } from '@/components/ui/grid-property-listing/prope
 import { loadSearchParams } from '@/components/ui/grid-property-listing/search-params';
 import { getLeads } from '@/lib/data/laravel/lead/lead.api';
 import { cn } from '@/lib/utils';
+import NoResultsFound from './no-results-found';
 
 type PropertyGridProps = {
   gridColumns: 'grid-cols-2' | 'grid-cols-3' | 'grid-cols-4';
   perPage: number;
-  searchParams: Promise<SearchParams>;
+  searchParams: SearchParams;
 };
 
 export default async function PropertyGrid({
@@ -22,31 +23,41 @@ export default async function PropertyGrid({
 
   const response = await getLeads({
     sort: filtersParams.sort,
-    page: filtersParams.page,
+    page: filtersParams.page || perPage,
     propertyType: filtersParams.propertyType,
     activityType: filtersParams.activityType,
     bedrooms: filtersParams.bedrooms,
     bathrooms: filtersParams.bathrooms,
+    price: filtersParams.price,
+    location: filtersParams.location,
   });
+
+  const hasResults = response.data && response.data.length > 0;
 
   return (
     <>
-      <div
-        className={cn(
-          'grid gap-4 sm:gap-6 md:gap-8',
-          'grid-cols-1 sm:grid-cols-2',
-          `lg:${stegaClean(gridColumns)}`
-        )}
-      >
-        {response.data?.map((listing) => (
-          <PropertyListingCard key={listing.id} listing={listing} />
-        ))}
-      </div>
-      <LaravelPagination
-        currentPage={response.current_page}
-        lastPage={response.last_page}
-        total={response.total}
-      />
+      {hasResults ? (
+        <>
+          <div
+            className={cn(
+              'grid gap-4 sm:gap-6 md:gap-8',
+              'grid-cols-1 sm:grid-cols-2',
+              `lg:${stegaClean(gridColumns)}`
+            )}
+          >
+            {response.data?.map((listing) => (
+              <PropertyListingCard key={listing.id} listing={listing} />
+            ))}
+          </div>
+          <LaravelPagination
+            currentPage={response.current_page}
+            lastPage={response.last_page}
+            total={response.total}
+          />
+        </>
+      ) : (
+        <NoResultsFound />
+      )}
     </>
   );
 }

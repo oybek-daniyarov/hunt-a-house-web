@@ -1,10 +1,8 @@
-import { useState } from 'react';
-import { Loader2, SearchX } from 'lucide-react';
-
 import { NumberInput } from '@/components/forms/fields';
 import { FormFieldWrapper } from '@/components/forms/fields/form-field-wrapper';
 import { NumberInputProps } from '@/components/forms/fields/number-input';
 import { Input } from '@/components/ui/input';
+import { LocationSearch } from '@/components/ui/location-search';
 import MultipleSelector from '@/components/ui/multiple-selector';
 import {
   Select,
@@ -14,7 +12,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { searchLocations } from '@/lib/data/laravel/location/location.api';
 
 type NumberInputFieldProps = NumberInputProps & {
   label: string;
@@ -52,39 +49,15 @@ export const LocationSearchField = ({
   placeholder = 'Enter a community, area or Emirate',
   maxSelected = 3,
 }: LocationSearchFieldProps) => {
-  const [hasSearched, setHasSearched] = useState(false);
   return (
     <FormFieldWrapper name={name} label={label}>
       {(field) => (
-        <MultipleSelector
-          {...field}
-          maxSelected={maxSelected}
-          groupBy="group"
+        <LocationSearch
+          value={field.value}
+          onChange={field.onChange}
           placeholder={placeholder}
-          onSearch={async (query) => {
-            const locations = await searchLocations(query);
-            return (
-              locations.data?.map((location) => ({
-                label: location.name,
-                value: location.id.toString(),
-                group: location.parent?.name,
-              })) ?? []
-            );
-          }}
-          loadingIndicator={
-            <div className="flex items-center justify-center gap-2 py-1 text-sm text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Searching for locations...
-            </div>
-          }
-          emptyIndicator={
-            <div className="flex items-center justify-center gap-2 py-1 text-sm text-muted-foreground">
-              <SearchX className="h-4 w-4" />
-              {hasSearched
-                ? 'No matching locations found'
-                : 'Type to search for a location, e.g. Dubai'}
-            </div>
-          }
+          maxSelected={maxSelected}
+          disabled={field.disabled}
         />
       )}
     </FormFieldWrapper>

@@ -5,8 +5,6 @@ import Blocks from '@/components/blocks';
 import { generatePageMetadata } from '@/lib/metadata';
 import { fetchSanityPageBySlug } from '../actions';
 
-export const dynamic = 'force-static';
-
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
   searchParams: Promise<SearchParams>;
@@ -32,5 +30,7 @@ export default async function Page(props: {
     notFound();
   }
 
-  return <Blocks blocks={page?.blocks} searchParams={props.searchParams} />;
+  return (
+    <Blocks blocks={page?.blocks} searchParams={await props.searchParams} />
+  );
 }
