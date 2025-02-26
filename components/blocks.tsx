@@ -45,7 +45,7 @@ const componentMap: { [key: string]: ComponentType<any> } = {
 
 type BlocksProps = {
   blocks?: Sanity.Block[];
-  searchParams: SearchParams;
+  searchParams?: SearchParams;
 };
 
 export default function Blocks({ blocks, searchParams }: BlocksProps) {
