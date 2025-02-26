@@ -78,10 +78,6 @@ export function LeadsList({ initialLeads }: LeadsListProps) {
                   {lead.minBudget} - {lead.maxBudget} AED
                 </p>
               </div>
-              <div>
-                <p className="text-sm font-medium text-gray-500">Location</p>
-                <p className="mt-1">{lead.emirateName}</p>
-              </div>
             </div>
           ))}
         </div>

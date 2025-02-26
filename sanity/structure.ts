@@ -2,13 +2,8 @@ import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list';
 import { BookOpen, Files, ListCollapse, Quote } from 'lucide-react';
 import { BsDatabaseAdd } from 'react-icons/bs';
 import { VscServerProcess } from 'react-icons/vsc';
-import { Iframe, UrlResolver } from 'sanity-plugin-iframe-pane';
 
 import { group, singleton } from '@/sanity/lib/utils';
-
-const getPreviewUrl: UrlResolver = () => {
-  return `${process.env.NEXT_PUBLIC_SITE_URL}/preview/search`;
-};
 
 export const structure = (S: any, context: any) =>
   S.list()
@@ -55,37 +50,4 @@ export const structure = (S: any, context: any) =>
           context,
         }),
       ]).icon(BsDatabaseAdd),
-
-      S.divider(),
-
-      S.listItem()
-        .title('AI Agents')
-        .schemaType('agent')
-        .child(
-          S.documentTypeList('agent')
-            .title('AI Agents')
-            .child((documentId: string) =>
-              S.document()
-                .documentId(documentId)
-                .schemaType('agent')
-                .views([
-                  S.view.form(),
-                  S.view
-                    .component(Iframe)
-                    .options({
-                      url: getPreviewUrl,
-                      reload: {
-                        button: true,
-                        revision: true,
-                      },
-                      attributes: {
-                        allow: 'fullscreen',
-                        height: '100%',
-                        width: '100%',
-                      },
-                    })
-                    .title('Preview'),
-                ])
-            )
-        ),
     ]);

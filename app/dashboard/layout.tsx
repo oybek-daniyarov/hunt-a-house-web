@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
 
 import { AppSidebar } from '@/components/app-sidebar';
@@ -10,12 +11,12 @@ import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
 
 export const dynamic = 'force-dynamic';
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
-  const user = getCurrentUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect('/auth/login');
@@ -23,7 +24,7 @@ export default function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar user={user} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">

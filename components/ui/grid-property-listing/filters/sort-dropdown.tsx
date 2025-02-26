@@ -16,7 +16,6 @@ export function SortDropdown() {
       options={sortOptions}
       icon={<SortAsc className="h-4 w-4" />}
       placeholder="Sort By"
-      className="w-[140px] md:w-[180px]"
       valueKey="value"
       labelKey="label"
     />

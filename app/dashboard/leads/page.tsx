@@ -64,6 +64,7 @@ export default async function LeadsPage() {
           View and manage your property leads
         </p>
       </div>
+      {/* @ts-expect-error Server Component */}
       <LeadsList initialLeads={dummyLeads} />
     </div>
   );
