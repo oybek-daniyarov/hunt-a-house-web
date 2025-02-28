@@ -62,34 +62,12 @@ declare namespace App.Data.Auth.Payload {
   };
 }
 declare namespace App.Data.Lead {
-  export type LeadData = {
-    id: number | null;
-    user_id: number;
-    contact_methods: Array<any>;
-    locations: { id: number; name: string; path: string; depth: number };
-    property_type_id: number;
-    activity_type_id: number;
-    bedrooms: string | null;
-    bathrooms: string | null;
-    min_size: number | null;
-    max_size: number | null;
-    min_budget: number | null;
-    max_budget: number | null;
-    budget_frequency: App.Enums.BudgetFrequency | null;
-    description: string;
-    max_agent_views: number;
-    current_agent_views: number;
-    credit_cost: number;
-    override_credit_cost: boolean;
-    override_credit_cost_value: number | null;
-    created_at: string | null;
-    updated_at: string | null;
-    property_images: { [key: number]: any } | null | Array<any>;
-    documents: { [key: number]: any } | null | Array<any>;
-    contact: App.Data.User.ContactData | null;
+  export type ContactMethodData = {
+    type: string;
+    value: string;
   };
   export type LeadFiltersData = {
-    propertyTypes: Array<App.Data.Lead.PropertyTypeData>;
+    propertyTypes: Array<App.Data.Lead.OptionData>;
     budgetFrequency: Array<App.Data.Lead.OptionData>;
     activityTypes: Array<App.Data.Lead.OptionData>;
     bedrooms: Array<App.Data.Lead.OptionData>;
@@ -112,6 +90,7 @@ declare namespace App.Data.Lead {
     createdAt: string;
     isAuthenticated: boolean;
     isUserHadPurchasedLead: boolean;
+    contactMethods: Array<App.Data.Lead.ContactMethodData>;
   };
   export type OptionData = {
     id: string | number;
@@ -230,25 +209,5 @@ declare namespace App.Services.Location.Data {
     id: number;
     name: string;
     path: string | null;
-  };
-}
-declare namespace App.Services.Search.Data.Lead {
-  export type LeadData = {
-    id: number;
-    user_id: number;
-    contact_methods: Array<any>;
-    locations: Array<any>;
-    property_type_id: number;
-    activity_type_id: number;
-    bedrooms: number;
-    bathrooms: number;
-    min_size: number;
-    max_size: number;
-    min_budget: number;
-    max_budget: number;
-    budget_frequency: App.Enums.BudgetFrequency;
-    description: string;
-    max_agent_views: number;
-    current_agent_views: number;
   };
 }
