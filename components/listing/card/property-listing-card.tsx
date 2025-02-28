@@ -6,10 +6,10 @@ import {
   FaWhatsapp,
 } from 'react-icons/fa';
 
+import { LocationDisplay } from '@/components/listing/card/location-display';
 import { PriceDisplay } from '@/components/listing/card/price-display';
 import { Card, CardContent } from '@/components/ui/card';
 import { ContactButton } from '@/components/ui/grid-property-listing/contact-button';
-import { LocationDisplay } from './location-display';
 import { PropertyBadges } from './property-badges';
 import { PropertyFeaturesGrid } from './property-features-grid';
 
@@ -42,7 +42,9 @@ export function PropertyListingCard({ listing }: PropertyListingCardProps) {
               {listing.description}
             </p>
           )}
+        </div>
 
+        <div className="flex flex-col gap-5 justify-end flex-1">
           <div className="space-y-2">
             <LocationDisplay locations={listing.locations} />
             <PriceDisplay
@@ -51,9 +53,6 @@ export function PropertyListingCard({ listing }: PropertyListingCardProps) {
               budgetFrequency={listing.budgetFrequency}
             />
           </div>
-        </div>
-
-        <div className="flex flex-col gap-5 justify-end flex-1">
           <PropertyFeaturesGrid
             bedrooms={listing.bedrooms}
             bathrooms={listing.bathrooms}
@@ -62,21 +61,25 @@ export function PropertyListingCard({ listing }: PropertyListingCardProps) {
           />
 
           {listing.contactMethods && listing.contactMethods.length > 0 && (
-            <div className="flex gap-2 justify-center">
-              {listing.contactMethods.map((method, index) => {
-                const IconComponent =
-                  contactMethodIcons[method.type as ContactMethod] ||
-                  contactMethodIcons.phone;
-                return (
-                  <div
-                    key={`${method.type}-${index}`}
-                    className="flex items-center justify-center h-8 w-8 rounded-full bg-muted hover:bg-muted/80 transition-colors"
-                    title={`${method.type}: ${method.value}`}
-                  >
-                    <IconComponent className="h-4 w-4 text-foreground" />
-                  </div>
-                );
-              })}
+            <div className="flex gap-2 justify-between">
+              <span className="text-sm text-muted-foreground">
+                Contact via:
+              </span>
+              <div className="flex items-center gap-2">
+                {listing.contactMethods.map((method, index) => {
+                  const IconComponent =
+                    contactMethodIcons[method.type as ContactMethod] ||
+                    contactMethodIcons.phone;
+                  return (
+                    <div
+                      key={`${method.type}-${index}`}
+                      title={`${method.type}: ${method.value}`}
+                    >
+                      <IconComponent className="size-5 text-foreground" />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
 

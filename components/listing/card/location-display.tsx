@@ -16,7 +16,7 @@ interface LocationDisplayProps {
 
 export function LocationDisplay({ locations }: LocationDisplayProps) {
   return (
-    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+    <div className="flex items-center gap-2 text-sm text-muted-foreground">
       <MapPin className="h-3.5 w-3.5 shrink-0" />
       <span className="line-clamp-1">
         {locations
