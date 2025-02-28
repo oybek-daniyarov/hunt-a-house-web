@@ -58,7 +58,7 @@ export function LeadFormStep({ filters }: LeadFormStepProps) {
     updateStepData({
       lead: data,
     });
-    goToNextStep();
+    await goToNextStep();
   }
 
   return (
