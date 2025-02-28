@@ -28,7 +28,11 @@ export function ShortListingCard({ listing }: ShortListingCardProps) {
             maxBudget={listing.maxBudget}
             budgetFrequency={listing.budgetFrequency}
           />
-          <LocationDisplay locations={listing.locations} />
+          <LocationDisplay
+            locations={listing.locations}
+            max={3}
+            className="line-clamp-1 space-x-1"
+          />
         </div>
       </CardContent>
     </Card>
