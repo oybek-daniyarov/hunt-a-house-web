@@ -1,16 +1,16 @@
-'use client';
-
+import { getLeadFilters } from '@/lib/data/laravel/lead/lead.api';
 import { FiltersComponent } from './filters-component';
 import {
   PropertyFiltersProvider,
   PropertyFiltersProviderProps,
 } from './property-filters-context';
 
-export default function PropertyFilters({
+export default async function PropertyFilters({
   filters,
-  filtersData,
   sortOptions,
-}: PropertyFiltersProviderProps) {
+}: Omit<PropertyFiltersProviderProps, 'filtersData'>) {
+  const filtersData = await getLeadFilters();
+
   return (
     <PropertyFiltersProvider
       filters={filters}

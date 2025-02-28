@@ -1,9 +1,10 @@
+import { Suspense } from 'react';
 import { stegaClean } from 'next-sanity';
 import { SearchParams } from 'nuqs/server';
 
+import { PropertyListingGridSkeleton } from '@/components/listing/grid/property-listing-grid-skeleton';
 import PropertyFilters from '@/components/ui/grid-property-listing/filters';
 import SectionContainer from '@/components/ui/section-container';
-import { getLeadFilters } from '@/lib/data/laravel/lead/lead.api';
 import PropertyGrid from './property-grid';
 
 type Filters = {
@@ -53,20 +54,16 @@ export default async function GridPropertyListing({
 }: GridPropertyListingProps) {
   const color = stegaClean(colorVariant);
 
-  const filtersData = await getLeadFilters();
-
   return (
     <SectionContainer color={color} padding={padding}>
-      <PropertyFilters
-        filters={filters}
-        filtersData={filtersData}
-        sortOptions={sortOptions}
-      />
-      <PropertyGrid
-        searchParams={searchParams}
-        gridColumns={gridColumns}
-        perPage={perPage}
-      />
+      <PropertyFilters filters={filters} sortOptions={sortOptions} />
+      <Suspense fallback={<PropertyListingGridSkeleton />}>
+        <PropertyGrid
+          searchParams={searchParams}
+          gridColumns={gridColumns}
+          perPage={perPage}
+        />
+      </Suspense>
     </SectionContainer>
   );
 }
