@@ -14,7 +14,7 @@ export function PropertyFeatureItem({
       className={`flex flex-col items-center justify-center ${hasBorder ? 'border-x border-border/40' : ''}`}
     >
       <span className="font-semibold">{value}</span>
-      <span className="text-xs text-muted-foreground">{label}</span>
+      <span className="text-[0.8rem] text-muted-foreground">{label}</span>
     </div>
   );
 }

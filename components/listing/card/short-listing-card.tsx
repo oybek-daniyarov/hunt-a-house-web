@@ -23,12 +23,12 @@ export function ShortListingCard({ listing }: ShortListingCardProps) {
             </p>
           )}
 
-          <LocationDisplay locations={listing.locations} />
           <PriceDisplay
             minBudget={listing.minBudget}
             maxBudget={listing.maxBudget}
             budgetFrequency={listing.budgetFrequency}
           />
+          <LocationDisplay locations={listing.locations} />
         </div>
       </CardContent>
     </Card>

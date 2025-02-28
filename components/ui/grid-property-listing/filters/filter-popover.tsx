@@ -32,15 +32,15 @@ export function FilterPopover() {
   return (
     <Popover open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="icon" className="h-9 w-9 relative">
+        <Button variant="outline" className="relative ">
           <Filter className="h-4 w-4" />
           <FilterCounterBadge count={activeFilterCount} />
-          <span className="sr-only">Filters</span>
+          <span className="hidden md:block">Filters</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[calc(100vw-2rem)] md:w-[500px] p-4"
-        align="end"
+        className="w-[calc(100vw-1rem)] md:w-[500px] p-4"
+        align="start"
       >
         {/* Clear filters button (only shown if filters are active) */}
         {hasFilters && (

@@ -20,7 +20,7 @@ export function PropertyFeaturesGrid({
   const isStudio = bedrooms === 0;
 
   return (
-    <div className="grid grid-cols-3 gap-3 rounded-lg bg-muted/50 p-2 text-sm border border-border/40">
+    <div className="grid grid-cols-3 gap-3 rounded-lg bg-muted/50 p-1.5 text-sm border border-border/40">
       <PropertyFeatureItem
         value={formatBedrooms(bedrooms)}
         label={!isStudio ? 'Beds' : 'Studio'}

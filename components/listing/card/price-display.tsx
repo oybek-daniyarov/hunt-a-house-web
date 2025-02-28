@@ -8,6 +8,12 @@ interface PriceDisplayProps {
   budgetFrequency: BudgetFrequency | null;
 }
 
+const mapBudgetFrequency: Record<BudgetFrequency, string> = {
+  per_year: 'Per Year',
+  per_month: 'Per Month',
+  per_day: 'Per Day',
+};
+
 export function PriceDisplay({
   minBudget,
   maxBudget,
@@ -22,7 +28,7 @@ export function PriceDisplay({
           : 'Price on request'}
       {budgetFrequency && (
         <span className="ms-1 text-xs font-normal text-gray-600">
-          /{budgetFrequency.toLowerCase()}
+          / {mapBudgetFrequency[budgetFrequency]}
         </span>
       )}
     </div>

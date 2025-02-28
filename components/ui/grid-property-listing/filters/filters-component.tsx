@@ -10,13 +10,12 @@ export function FiltersComponent() {
     <div className="w-full">
       <div className="flex flex-wrap items-center justify-between gap-2 lg:gap-3">
         {/* Search field */}
-        <SearchInput />
-
-        {/* Filter button and sort dropdown */}
         <div className="flex items-center gap-2">
-          {/* Filter Button */}
+          <SearchInput />
           <FilterPopover />
+        </div>
 
+        <div className="flex items-center gap-2">
           {/* Sort Dropdown */}
           <SortDropdown />
         </div>
