@@ -1,25 +1,16 @@
 import { groq } from 'next-sanity';
 
+import { IMAGE_FRAGMENT } from '@/sanity/queries/shared';
+
 export const contentQuery = groq`
   _type == "content" => {
+    _key,
     _type,
     _key,
     body[]{
       ...,
       _type == "image" => {
-        ...,
-        asset->{
-          _id,
-          url,
-          mimeType,
-          metadata {
-            lqip,
-            dimensions {
-              width,
-              height
-            }
-          }
-        }
+        ${IMAGE_FRAGMENT}
       }
     },
     colorVariant,

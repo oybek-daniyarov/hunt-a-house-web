@@ -1,8 +1,7 @@
-import Image from 'next/image';
 import { ChevronRight } from 'lucide-react';
 
+import { SanityImage } from '@/components/ui/sanity-image';
 import { cn } from '@/lib/utils';
-import { urlFor } from '@/sanity/lib/image';
 
 export default function PostCard({
   className,
@@ -23,20 +22,9 @@ export default function PostCard({
       )}
     >
       <div className="flex flex-col">
-        {image && image.asset?._id && (
+        {image && (
           <div className="mb-4 relative h-[15rem] sm:h-[20rem] md:h-[25rem] lg:h-[9.5rem] xl:h-[12rem] rounded-2xl overflow-hidden">
-            <Image
-              src={urlFor(image.asset).url()}
-              alt={image.alt || ''}
-              placeholder={image?.asset?.metadata?.lqip ? 'blur' : undefined}
-              blurDataURL={image?.asset?.metadata?.lqip || ''}
-              fill
-              style={{
-                objectFit: 'cover',
-              }}
-              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-              quality={100}
-            />
+            <SanityImage image={image} />
           </div>
         )}
         {title && (

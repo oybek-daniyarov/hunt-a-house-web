@@ -1,23 +1,13 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity';
+
+import { IMAGE_FRAGMENT } from '@/sanity/queries/shared';
 
 export const POSTS_QUERY = groq`*[_type == "post" && defined(slug)] | order(_createdAt desc){
     title,
     slug,
     excerpt,
     image{
-      asset->{
-        _id,
-        url,
-        mimeType,
-        metadata {
-          lqip,
-          dimensions {
-            width,
-            height
-          }
-        }
-      },
-      alt
+      ${IMAGE_FRAGMENT}
     },
 }`;
 

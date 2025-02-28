@@ -22,6 +22,8 @@ export default async function DashboardLayout({
     redirect('/auth/login');
   }
 
+  console.log(user);
+
   return (
     <SidebarProvider>
       <AppSidebar user={user} />

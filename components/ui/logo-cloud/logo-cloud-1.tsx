@@ -1,12 +1,11 @@
 'use client';
 
 import { Fragment } from 'react';
-import Image from 'next/image';
 import { motion } from 'motion/react';
 import { stegaClean } from 'next-sanity';
 
+import { SanityImage } from '@/components/ui/sanity-image';
 import SectionContainer from '@/components/ui/section-container';
-import { urlFor } from '@/sanity/lib/image';
 
 interface LogoCloud1Props {
   padding: {
@@ -66,19 +65,10 @@ export default function LogoCloud1({
             <Fragment key={arrayIndex}>
               {images?.map((image, index) => (
                 <div
-                  key={`${image.asset._id}-${arrayIndex}-${index}`}
+                  key={`${arrayIndex}-${index}`}
                   className="flex-shrink-0 w-24 h-24 flex items-center justify-center"
                 >
-                  <Image
-                    src={urlFor(image.asset).url()}
-                    alt={image.alt || ''}
-                    placeholder={
-                      image?.asset?.metadata?.lqip ? 'blur' : undefined
-                    }
-                    blurDataURL={image?.asset?.metadata?.lqip || ''}
-                    width={image.asset?.metadata?.dimensions?.width || 220}
-                    height={image?.asset?.metadata?.dimensions?.height || 90}
-                  />
+                  <SanityImage image={image} width={220} height={90} />
                 </div>
               ))}
             </Fragment>

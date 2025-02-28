@@ -1,7 +1,8 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity';
 
 export const pricingCardQuery = groq`
   _type == "pricing-card" => {
+    _key,
     _type,
     title,
     tagLine,

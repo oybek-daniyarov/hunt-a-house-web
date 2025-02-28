@@ -2,6 +2,7 @@ import { groq } from 'next-sanity';
 
 export const splitFormQuery = groq`
   _type == "split-form" => {
+    _key,
     _type,
     _key,
     formType,

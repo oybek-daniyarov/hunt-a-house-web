@@ -2,6 +2,7 @@ import { groq } from 'next-sanity';
 
 export const gridPropertyListingQuery = groq`
   _type == "grid-property-listing" => {
+    _key,
     _type,
     _key,
     padding,

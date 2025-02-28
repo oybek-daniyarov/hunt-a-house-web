@@ -12,6 +12,7 @@ import logo from '@/sanity/schemas/objects/logo';
 import carousel1 from './schemas/blocks/carousel/carousel-1';
 import carousel2 from './schemas/blocks/carousel/carousel-2';
 import carousel3 from './schemas/blocks/carousel/carousel-3';
+import carouselLeadListing from './schemas/blocks/carousel/carousel-lead-listing';
 import content from './schemas/blocks/content';
 import cta1 from './schemas/blocks/cta/cta-1';
 import faqs from './schemas/blocks/faqs';
@@ -89,6 +90,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     carousel1,
     carousel2,
     carousel3,
+    carouselLeadListing,
     timelineRow,
     timelinesOne,
     cta1,

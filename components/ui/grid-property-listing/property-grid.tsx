@@ -2,7 +2,7 @@ import { stegaClean } from 'next-sanity';
 import { SearchParams } from 'nuqs/server';
 
 import { LaravelPagination } from '@/components/laravel/pagination';
-import { PropertyListingCard } from '@/components/ui/grid-property-listing/property-listing-card';
+import { PropertyListingCard } from '@/components/listing/card/property-listing-card';
 import { loadSearchParams } from '@/components/ui/grid-property-listing/search-params';
 import { getLeads } from '@/lib/data/laravel/lead/lead.api';
 import { cn } from '@/lib/utils';

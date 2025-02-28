@@ -1,7 +1,10 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity';
+
+import { IMAGE_FRAGMENT } from '@/sanity/queries/shared';
 
 export const timelineQuery = groq`
   _type == "timeline-row" => {
+    _key,
     _type,
     padding,
     colorVariant,
@@ -11,19 +14,7 @@ export const timelineQuery = groq`
       body[]{
         ...,
         _type == "image" => {
-          ...,
-          asset->{
-            _id,
-            url,
-            mimeType,
-            metadata {
-              lqip,
-              dimensions {
-                width,
-                height
-              }
-            }
-          }
+          ${IMAGE_FRAGMENT}
         }
       },
     },

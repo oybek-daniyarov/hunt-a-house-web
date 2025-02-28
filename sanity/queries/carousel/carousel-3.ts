@@ -1,7 +1,10 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity';
+
+import { IMAGE_FRAGMENT } from '@/sanity/queries/shared';
 
 export const carousel3Query = groq`
   _type == "carousel-3" => {
+    _key,
     _type,
     padding,
     colorVariant,
@@ -13,40 +16,16 @@ export const carousel3Query = groq`
         name,
         title,
         image{
-          asset->{
-            _id,
-            url,
-            mimeType,
-            metadata {
-              lqip,
-              dimensions {
-                width,
-                height
-              }
-            }
-          },
-          alt
+          ${IMAGE_FRAGMENT}
         },
         body[]{
           ...,
           _type == "image" => {
-            ...,
-            asset->{
-              _id,
-              url,
-              mimeType,
-              metadata {
-                lqip,
-                dimensions {
-                  width,
-                  height
-                }
-              }
-            }
+            ${IMAGE_FRAGMENT}
           }
         },
         rating,
       },
     },
   },
-`; 
+`;

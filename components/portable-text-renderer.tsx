@@ -1,30 +1,15 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { YouTubeEmbed } from '@next/third-parties/google';
 import { PortableText, PortableTextProps } from '@portabletext/react';
 
+import { SanityImage } from '@/components/ui/sanity-image';
+
 const portableTextComponents: PortableTextProps['components'] = {
   types: {
     image: ({ value }) => {
-      const { url, metadata } = value.asset;
-      const { lqip, dimensions } = metadata;
-      return (
-        <Image
-          src={url}
-          alt={value.alt || 'Image'}
-          width={dimensions.width}
-          height={dimensions.height}
-          placeholder="blur"
-          blurDataURL={lqip}
-          style={{
-            borderRadius: '1rem',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-          quality={100}
-        />
-      );
+      return <SanityImage image={value} />;
     },
+
     youtube: ({ value }) => {
       const { videoId } = value;
       return (

@@ -1,15 +1,14 @@
 'use client';
 
-import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 import * as motion from 'motion/react-client';
 import { stegaClean } from 'next-sanity';
 
 import PortableTextRenderer from '@/components/portable-text-renderer';
 import { Button } from '@/components/ui/button';
+import { SanityImage } from '@/components/ui/sanity-image';
 import SanityLink from '@/components/ui/sanity-link';
 import { cn } from '@/lib/utils';
-import { urlFor } from '@/sanity/lib/image';
 
 export default function Hero1({
   tagLine,
@@ -95,24 +94,13 @@ export default function Hero1({
             )}
           </div>
           <div className="flex flex-col justify-center">
-            {image && image.asset?._id && (
+            {image && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
-                <Image
-                  className="rounded-xl"
-                  src={urlFor(image.asset!).url()}
-                  alt={image.alt || ''}
-                  width={image.asset?.metadata?.dimensions?.width || 800}
-                  height={image.asset?.metadata?.dimensions?.height || 800}
-                  placeholder={
-                    image?.asset?.metadata?.lqip ? 'blur' : undefined
-                  }
-                  blurDataURL={image?.asset?.metadata?.lqip || ''}
-                  quality={100}
-                />
+                <SanityImage className="rounded-xl" image={image} />
               </motion.div>
             )}
           </div>

@@ -2,8 +2,8 @@ import { BanknoteIcon, MapPin, SquareStack } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { ContactButton } from '@/components/ui/grid-property-listing/contact-button';
 import { formatCurrency, formatSize } from '@/lib/utils/format-number';
-import { ContactButton } from './contact-button';
 
 interface PropertyListingCardProps {
   listing: App.Data.Lead.LeadListData;
@@ -36,9 +36,6 @@ export function PropertyListingCard({ listing }: PropertyListingCardProps) {
           </div>
 
           <div className="space-y-1">
-            <h3 className="text-2xl font-semibold tracking-tight text-foreground/90">
-              {listing.locations[0]?.name}
-            </h3>
             <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
               <MapPin className="h-3.5 w-3.5 shrink-0" />
               <span className="line-clamp-1">

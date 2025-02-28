@@ -4,6 +4,7 @@ import { SearchParams } from 'nuqs/server';
 import Carousel1 from '@/components/ui/carousel/carousel-1';
 import Carousel2 from '@/components/ui/carousel/carousel-2';
 import Carousel3 from '@/components/ui/carousel/carousel-3';
+import CarouselLeadListing from '@/components/ui/carousel/carousel-lead-listing';
 import Content from '@/components/ui/content';
 import Cta1 from '@/components/ui/cta/cta-1';
 import FAQs from '@/components/ui/faqs';
@@ -33,6 +34,7 @@ const componentMap: { [key: string]: ComponentType<any> } = {
   'carousel-1': Carousel1,
   'carousel-2': Carousel2,
   'carousel-3': Carousel3,
+  'carousel-lead-listing': CarouselLeadListing,
   'timeline-row': TimelineRow,
   'cta-1': Cta1,
   'logo-cloud-1': LogoCloud1,
@@ -49,14 +51,18 @@ type BlocksProps = {
 };
 
 export default function Blocks({ blocks, searchParams }: BlocksProps) {
-  return blocks?.map((block: Sanity.Block) => {
+  return blocks?.map((block: Sanity.Block, index) => {
     const Component = componentMap[block._type];
     if (!Component) {
       // Fallback for unknown block types to debug
-      return <div data-type={block._type} key={block._key} />;
+      return <div data-type={block._type} key={`${block._type}-${index}`} />;
     }
     return (
-      <Component {...block} key={block._key} searchParams={searchParams} />
+      <Component
+        {...block}
+        key={`${block._type}-${index}`}
+        searchParams={searchParams}
+      />
     );
   });
 }

@@ -18,3 +18,12 @@ export const CTA_QUERY = groq`
 	...,
 	link{ ${LINK_QUERY} }
 `;
+
+export const IMAGE_FRAGMENT = groq`
+    ...,
+    "alt": coalesce(alt, asset->originalFilename, "Image-Broken"),
+    "blurData": asset->metadata.lqip,
+    "dominantColor": asset->metadata.palette.dominant.background,
+    "dimensions": asset->metadata.dimensions,
+    "mimeType": asset->mimeType,
+`;

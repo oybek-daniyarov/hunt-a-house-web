@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/sidebar';
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
-  user: App.Data.User.UserData;
+  user?: App.Data.User.UserData;
 };
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {

@@ -1,13 +1,12 @@
 'use client';
 
 import { useRef } from 'react';
-import Image from 'next/image';
 import { motion, useInView } from 'motion/react';
 
 import PortableTextRenderer from '@/components/portable-text-renderer';
 import { Badge } from '@/components/ui/badge';
+import { SanityImage } from '@/components/ui/sanity-image';
 import { cn } from '@/lib/utils';
-import { urlFor } from '@/sanity/lib/image';
 
 interface SplitInfoItemProps {
   image: Sanity.Image;
@@ -42,22 +41,9 @@ export default function SplitCardsItem({
         )}
       >
         <div className="flex items-center gap-2">
-          {image && image.asset._id && (
+          {image && (
             <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center">
-              <Image
-                src={urlFor(image.asset).url()}
-                alt={image.alt || ''}
-                placeholder={
-                  image?.asset?.metadata?.lqip &&
-                  image?.asset?.mimeType !== 'image/svg+xml'
-                    ? 'blur'
-                    : undefined
-                }
-                blurDataURL={image?.asset?.metadata?.lqip || ''}
-                width={image.asset?.metadata?.dimensions?.width || 40}
-                height={image?.asset?.metadata?.dimensions?.height || 40}
-                unoptimized={image?.asset?.mimeType === 'image/svg+xml'}
-              />
+              <SanityImage height={40} image={image} />
             </div>
           )}
           {title && (

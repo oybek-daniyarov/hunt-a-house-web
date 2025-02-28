@@ -1,10 +1,9 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { stegaClean } from 'next-sanity';
 
 import { Button } from '@/components/ui/button';
+import { SanityImage } from '@/components/ui/sanity-image';
 import { cn } from '@/lib/utils';
-import { urlFor } from '@/sanity/lib/image';
 
 interface GridCardProps {
   color:
@@ -57,22 +56,9 @@ export default function GridCard({
         )}
       >
         <div>
-          {image && image.asset?._id && (
+          {image && (
             <div className="mb-4 relative h-[15rem] sm:h-[20rem] md:h-[25rem] lg:h-[9.5rem] xl:h-[12rem] rounded-2xl overflow-hidden">
-              <Image
-                src={
-                  image.asset?._id === 'static'
-                    ? '/images/placeholder.svg'
-                    : urlFor(image.asset).url()
-                }
-                alt={image.alt || ''}
-                placeholder={image?.asset?.metadata?.lqip ? 'blur' : undefined}
-                blurDataURL={image?.asset?.metadata?.lqip || ''}
-                fill
-                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover"
-                quality={100}
-              />
+              <SanityImage image={image} fill />
             </div>
           )}
           <div

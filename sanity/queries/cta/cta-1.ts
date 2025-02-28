@@ -1,9 +1,10 @@
 import { groq } from 'next-sanity';
 
-import { LINK_QUERY } from '@/sanity/queries/shared';
+import { IMAGE_FRAGMENT, LINK_QUERY } from '@/sanity/queries/shared';
 
 export const cta1Query = groq`
   _type == "cta-1" => {
+    _key,
     _type,
     padding,
     colorVariant,
@@ -14,19 +15,7 @@ export const cta1Query = groq`
     body[]{
       ...,
       _type == "image" => {
-        ...,
-        asset->{
-          _id,
-          url,
-          mimeType,
-          metadata {
-            lqip,
-            dimensions {
-              width,
-              height
-            }
-          }
-        }
+        ${IMAGE_FRAGMENT}
       }
     },
     links[]{ ${LINK_QUERY} },

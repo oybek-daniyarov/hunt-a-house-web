@@ -1,7 +1,10 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity';
+
+import { IMAGE_FRAGMENT } from '@/sanity/queries/shared';
 
 export const splitContentQuery = groq`
   _type == "split-content" => {
+    _key,
     _type,
     sticky,
     padding,
@@ -11,19 +14,7 @@ export const splitContentQuery = groq`
     body[]{
       ...,
       _type == "image" => {
-        ...,
-        asset->{
-          _id,
-          url,
-          mimeType,
-          metadata {
-            lqip,
-            dimensions {
-              width,
-              height
-            }
-          }
-        }
+        ${IMAGE_FRAGMENT}
       }
     },
     link,

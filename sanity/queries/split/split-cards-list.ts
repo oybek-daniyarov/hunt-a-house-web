@@ -1,7 +1,10 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity';
+
+import { IMAGE_FRAGMENT } from '@/sanity/queries/shared';
 
 export const splitCardsListQuery = groq`
   _type == "split-cards-list" => {
+    _key,
     _type,
     list[]{
       tagLine,
@@ -9,19 +12,7 @@ export const splitCardsListQuery = groq`
       body[]{
         ...,
         _type == "image" => {
-          ...,
-          asset->{
-            _id,
-            url,
-            mimeType,
-            metadata {
-              lqip,
-              dimensions {
-                width,
-                height
-              }
-            }
-          }
+          ${IMAGE_FRAGMENT}
         }
       },
     },

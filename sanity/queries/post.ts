@@ -1,57 +1,23 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity';
+
+import { IMAGE_FRAGMENT } from '@/sanity/queries/shared';
 
 export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
     title,
     slug,
     image{
-      asset->{
-        _id,
-        url,
-        mimeType,
-        metadata {
-          lqip,
-          dimensions {
-            width,
-            height
-          }
-        }
-      },
-      alt
+      ${IMAGE_FRAGMENT}
     },
     body[]{
       ...,
       _type == "image" => {
-        ...,
-        asset->{
-          _id,
-          url,
-          mimeType,
-          metadata {
-            lqip,
-            dimensions {
-              width,
-              height
-            }
-          }
-        }
+        ${IMAGE_FRAGMENT}
       }
     },
     author->{
       name,
       image {
-        asset->{
-          _id,
-          url,
-          mimeType,
-          metadata {
-            lqip,
-            dimensions {
-              width,
-              height
-            }
-          }
-        },
-        alt
+        ${IMAGE_FRAGMENT}
       }
     },
     _createdAt,

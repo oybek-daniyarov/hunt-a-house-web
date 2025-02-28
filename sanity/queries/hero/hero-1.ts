@@ -1,9 +1,10 @@
 import { groq } from 'next-sanity';
 
-import { LINK_QUERY } from '@/sanity/queries/shared';
+import { IMAGE_FRAGMENT, LINK_QUERY } from '@/sanity/queries/shared';
 
 export const hero1Query = groq`
   _type == "hero-1" => {
+    _key,
     _type,
     height,
     tagLine,
@@ -11,35 +12,11 @@ export const hero1Query = groq`
     body[]{
       ...,
       _type == "image" => {
-        ...,
-        asset->{
-          _id,
-          url,
-          mimeType,
-          metadata {
-            lqip,
-            dimensions {
-              width,
-              height
-            }
-          }
-        }
+        ${IMAGE_FRAGMENT}
       }
     },
     image{
-      asset->{
-        _id,
-        url,
-        mimeType,
-        metadata {
-          lqip,
-          dimensions {
-            width,
-            height
-          }
-        }
-      },
-      alt
+      ${IMAGE_FRAGMENT}
     },
     links[]{ ${LINK_QUERY} },
   },

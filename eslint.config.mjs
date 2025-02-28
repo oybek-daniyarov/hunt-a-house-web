@@ -1,5 +1,6 @@
 import { FlatCompat } from '@eslint/eslintrc';
 import eslintPluginPrettierRecommended from 'eslint-config-prettier';
+import perfectionist from 'eslint-plugin-perfectionist';
 import prettier from 'eslint-plugin-prettier';
 
 const compat = new FlatCompat({
@@ -10,10 +11,11 @@ const eslintConfig = [
   {
     plugins: {
       prettier: prettier,
+      perfectionist: perfectionist,
     },
   },
   ...compat.config({
-    extends: ['next/core-web-vitals'],
+    extends: ['next/core-web-vitals', 'next', 'prettier'],
   }),
   eslintPluginPrettierRecommended,
   {

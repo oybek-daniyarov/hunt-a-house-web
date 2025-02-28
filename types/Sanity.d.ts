@@ -65,14 +65,10 @@ declare global {
     type Image = SanityImageObject &
       Partial<{
         alt: string;
-        asset: {
-          _id: string;
-          mimeType?: string;
-          metadata: {
-            dimensions: SanityImageDimensions;
-            lqip: string;
-          };
-        };
+        blurData: string | null;
+        dominantColor: string | null;
+        dimensions: SanityImageDimensions;
+        mimeType: string;
       }>;
 
     // objects
@@ -93,7 +89,7 @@ declare global {
       loading?: 'lazy' | 'eager';
     };
 
-    type Image = SanityAssetDocument & {
+    type Image = SanityImageObject & {
       alt: string;
       loading: 'lazy' | 'eager';
     };

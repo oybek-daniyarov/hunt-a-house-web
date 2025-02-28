@@ -1,11 +1,10 @@
 import Image, { type ImageProps } from 'next/image';
-import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 import { cn } from '@/lib/utils';
 import { urlFor } from '@/sanity/lib/image';
 
 interface SanityImageProps extends Omit<ImageProps, 'src' | 'alt'> {
-  image?: SanityImageSource | null;
+  image?: Sanity.Image | null;
   alt?: string;
   className?: string;
   fill?: boolean;
@@ -26,7 +25,7 @@ export function SanityImage({
     return null;
   }
 
-  const title = alt ?? '';
+  const title = alt || image?.alt;
 
   if (!title) {
     return (
@@ -63,10 +62,11 @@ export function SanityImage({
       <Image
         src={imageUrl}
         alt={title}
+        unoptimized={image?.mimeType === 'image/svg+xml'}
         {...(!fill
           ? {
-              width: width ?? 1920,
-              height: height ?? 1080,
+              width: width ?? image?.dimensions?.width ?? 1920,
+              height: height ?? image?.dimensions?.height ?? 1080,
               sizes: props.sizes ?? defaultSizes,
             }
           : {

@@ -1,41 +1,20 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity';
+
+import { IMAGE_FRAGMENT } from '@/sanity/queries/shared';
 
 export const splitInfoListQuery = groq`
   _type == "split-info-list" => {
+    _key,
     _type,
     list[]{
       image{
-        asset->{
-          _id,
-          url,
-          mimeType,
-          metadata {
-            lqip,
-            dimensions {
-              width,
-              height
-            }
-          }
-        },
-        alt
+        ${IMAGE_FRAGMENT}
       },
       title,
       body[]{
         ...,
         _type == "image" => {
-          ...,
-          asset->{
-            _id,
-            url,
-            mimeType,
-            metadata {
-              lqip,
-              dimensions {
-                width,
-                height
-              }
-            }
-          }
+          ${IMAGE_FRAGMENT}
         }
       },
       tags[],

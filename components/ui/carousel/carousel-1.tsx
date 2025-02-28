@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { stegaClean } from 'next-sanity';
 
 import {
@@ -10,9 +9,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
+import { SanityImage } from '@/components/ui/sanity-image';
 import SectionContainer from '@/components/ui/section-container';
 import { cn } from '@/lib/utils';
-import { urlFor } from '@/sanity/lib/image';
 
 const CAROUSEL_SIZES = {
   one: 'basis-full',
@@ -74,22 +73,7 @@ export default function Carousel1({
                       stegaClean(size) === 'one' ? 'max-w-[35rem]' : undefined
                     )}
                   >
-                    <Image
-                      className="object-cover"
-                      src={
-                        image.asset?._id === 'static'
-                          ? '/images/placeholder.svg'
-                          : urlFor(image.asset).url()
-                      }
-                      alt={image.alt || ''}
-                      fill
-                      placeholder={
-                        image?.asset?.metadata?.lqip ? 'blur' : undefined
-                      }
-                      blurDataURL={image.asset?.metadata?.lqip || ''}
-                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                      quality={100}
-                    />
+                    <SanityImage image={image} />
                   </div>
                 )}
               </CarouselItem>

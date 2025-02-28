@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 
@@ -21,8 +20,6 @@ type LeadsListProps = {
 };
 
 export function LeadsList({ initialLeads }: LeadsListProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const [leads, setLeads] = useState<PaginatedLeads>(initialLeads);
   const [isLoading, setIsLoading] = useState(false);
 

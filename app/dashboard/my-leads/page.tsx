@@ -36,11 +36,7 @@ const dummyLeads = {
   },
 };
 
-export default async function MyLeadsPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | undefined };
-}) {
+export default async function MyLeadsPage() {
   return (
     <div className="flex flex-col gap-4">
       <div>
