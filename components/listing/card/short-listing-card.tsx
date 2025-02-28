@@ -9,8 +9,8 @@ interface ShortListingCardProps {
 
 export function ShortListingCard({ listing }: ShortListingCardProps) {
   return (
-    <Card className="rounded-xl border bg-card text-card-foreground shadow h-full w-80">
-      <CardContent className="flex h-full flex-col justify-center p-4">
+    <Card className="rounded-xl shadow-none border bg-card text-card-foreground justify-center h-full w-[23rem]">
+      <CardContent className="flex h-full flex-col  p-4">
         <div className="space-y-2">
           <PropertyBadges
             propertyTypeName={listing.propertyTypeName}
@@ -18,7 +18,7 @@ export function ShortListingCard({ listing }: ShortListingCardProps) {
           />
 
           {listing.description && (
-            <p className="text-sm leading-relaxed text-foreground/90">
+            <p className="text-sm leading-tight text-foreground/90 line-clamp-1">
               {listing.description}
             </p>
           )}

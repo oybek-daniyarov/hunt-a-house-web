@@ -8,9 +8,9 @@ import {
 
 import { LocationDisplay } from '@/components/listing/card/location-display';
 import { PriceDisplay } from '@/components/listing/card/price-display';
+import { PropertyBadges } from '@/components/listing/card/property-badges';
 import { Card, CardContent } from '@/components/ui/card';
 import { ContactButton } from '@/components/ui/grid-property-listing/contact-button';
-import { PropertyBadges } from './property-badges';
 import { PropertyFeaturesGrid } from './property-features-grid';
 
 type PropertyListingCardProps = {
@@ -30,29 +30,27 @@ type ContactMethod = keyof typeof contactMethodIcons;
 export function PropertyListingCard({ listing }: PropertyListingCardProps) {
   return (
     <Card className="rounded-xl shadow-none border bg-card text-card-foreground  bg-gradient-to-b from-muted/20 to-muted/10 transition-all dark:from-muted/20 dark:to-muted/10 dark:hover:from-muted/30 dark:hover:to-muted/20">
-      <CardContent className="flex h-full flex-col p-4 gap-5">
-        <div className="space-y-4">
-          <PropertyBadges
-            propertyTypeName={listing.propertyTypeName}
-            activityTypeName={listing.activityTypeName}
-          />
-
+      <CardContent className="flex h-full flex-col p-4 gap-4">
+        <PropertyBadges
+          propertyTypeName={listing.propertyTypeName}
+          activityTypeName={listing.activityTypeName}
+        />
+        <div className="space-y-2">
           {listing.description && (
-            <p className="text-muted-foreground line-clamp-2">
+            <p className="text-muted-foreground text-sm">
               {listing.description}
             </p>
           )}
+
+          <LocationDisplay locations={listing.locations} />
         </div>
 
         <div className="flex flex-col gap-5 justify-end flex-1">
-          <div className="space-y-2">
-            <LocationDisplay locations={listing.locations} />
-            <PriceDisplay
-              minBudget={listing.minBudget}
-              maxBudget={listing.maxBudget}
-              budgetFrequency={listing.budgetFrequency}
-            />
-          </div>
+          <PriceDisplay
+            minBudget={listing.minBudget}
+            maxBudget={listing.maxBudget}
+            budgetFrequency={listing.budgetFrequency}
+          />
           <PropertyFeaturesGrid
             bedrooms={listing.bedrooms}
             bathrooms={listing.bathrooms}

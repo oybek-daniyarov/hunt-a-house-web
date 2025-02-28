@@ -1,30 +1,29 @@
-import { MapPin } from 'lucide-react';
-
-interface LocationBreadcrumbsData {
-  name: string;
-  // Add other properties if needed
-}
-
-interface LocationData {
-  breadcrumbs?: LocationBreadcrumbsData[] | null;
-  // Add other properties if needed
-}
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 interface LocationDisplayProps {
-  locations: LocationData[];
+  locations: App.Services.Location.Data.LocationData[];
+  max?: number;
+  className?: string;
 }
 
-export function LocationDisplay({ locations }: LocationDisplayProps) {
+export function LocationDisplay({
+  locations,
+  max = 100,
+  className,
+}: LocationDisplayProps) {
   return (
-    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-      <MapPin className="h-3.5 w-3.5 shrink-0" />
-      <span className="line-clamp-1">
-        {locations
-          .map((location) =>
-            location.breadcrumbs?.map((crumb) => crumb.name).join(' › ')
-          )
-          .join(' | ')}
-      </span>
+    <div
+      className={cn(
+        'flex items-center flex-wrap gap-1 text-sm text-muted-foreground',
+        className
+      )}
+    >
+      {locations.slice(0, max).map((location) => (
+        <Badge variant="outline" size="sm" key={location.id}>
+          {location.name}
+        </Badge>
+      ))}
     </div>
   );
 }

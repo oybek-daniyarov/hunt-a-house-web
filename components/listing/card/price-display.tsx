@@ -20,7 +20,7 @@ export function PriceDisplay({
   budgetFrequency,
 }: PriceDisplayProps) {
   return (
-    <div className="text-sm">
+    <div className="text-sm font-medium">
       {minBudget && maxBudget
         ? `${formatCurrency(minBudget)} - ${formatCurrency(maxBudget)}`
         : minBudget

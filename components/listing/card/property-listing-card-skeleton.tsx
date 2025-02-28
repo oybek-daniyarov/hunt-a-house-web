@@ -1,5 +1,3 @@
-import { MapPin } from 'lucide-react';
-
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -7,7 +5,7 @@ export function PropertyListingCardSkeleton() {
   return (
     <Card className="rounded-xl shadow-none border bg-card text-card-foreground bg-gradient-to-b from-muted/20 to-muted/10 transition-all dark:from-muted/20 dark:to-muted/10 dark:hover:from-muted/30 dark:hover:to-muted/20">
       <CardContent className="flex h-full flex-col p-4 gap-5">
-        <div className="space-y-4">
+        <div className="space-y-2">
           {/* Property badges skeleton */}
           <div className="flex items-start justify-between text-xs">
             <Skeleton className="h-5 w-24 rounded-full" />
@@ -19,19 +17,18 @@ export function PropertyListingCardSkeleton() {
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-3/4" />
           </div>
+
+          {/* Location skeleton */}
+          <div className="flex flex-wrap gap-1">
+            <Skeleton className="h-5 w-20 rounded-full" />
+            <Skeleton className="h-5 w-24 rounded-full" />
+            <Skeleton className="h-5 w-16 rounded-full" />
+          </div>
         </div>
 
         <div className="flex flex-col gap-5 justify-end flex-1">
-          {/* Location skeleton */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <MapPin className="h-3.5 w-3.5 shrink-0 text-muted-foreground/50" />
-              <Skeleton className="h-4 w-3/4" />
-            </div>
-
-            {/* Price skeleton */}
-            <Skeleton className="h-5 w-1/2" />
-          </div>
+          {/* Price skeleton */}
+          <Skeleton className="h-5 w-1/2" />
 
           {/* Features grid skeleton */}
           <div className="flex gap-3 items-center justify-between rounded-xl bg-muted/50 p-1.5 text-sm border border-border/40">
