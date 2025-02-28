@@ -65,20 +65,6 @@ export async function forgotPasswordAction(
   return createSuccessResponse(response.data, '/dashboard');
 }
 
-export async function resetPasswordAction(
-  data: App.Data.Auth.ResetPasswordData
-) {
-  const response = await authApi.resetPassword(data);
-  if (!response.success) {
-    return createErrorResponse(
-      response.error?.message || 'Reset password failed',
-      422,
-      response.error?.errors
-    );
-  }
-  return createSuccessResponse(response.data, '/dashboard');
-}
-
 export async function logoutAction() {
   try {
     // First try to delete the token locally

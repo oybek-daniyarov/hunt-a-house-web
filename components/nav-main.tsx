@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Building2, FileText, Home, Users } from 'lucide-react';
 
 import {
@@ -67,10 +68,10 @@ export async function NavMain() {
         {filteredItems.map((item) => (
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild tooltip={item.title}>
-              <a href={item.url}>
+              <Link href={item.url}>
                 <item.icon />
                 <span>{item.title}</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}
