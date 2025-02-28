@@ -25,6 +25,8 @@ const contactMethodIcons = {
   phone: FaPhone,
 };
 
+type ContactMethod = keyof typeof contactMethodIcons;
+
 export function PropertyListingCard({ listing }: PropertyListingCardProps) {
   return (
     <Card className="rounded-xl shadow-none border bg-card text-card-foreground  bg-gradient-to-b from-muted/20 to-muted/10 transition-all dark:from-muted/20 dark:to-muted/10 dark:hover:from-muted/30 dark:hover:to-muted/20">
@@ -62,7 +64,9 @@ export function PropertyListingCard({ listing }: PropertyListingCardProps) {
           {listing.contactMethods && listing.contactMethods.length > 0 && (
             <div className="flex gap-2 justify-center">
               {listing.contactMethods.map((method, index) => {
-                const IconComponent = contactMethodIcons[method.type];
+                const IconComponent =
+                  contactMethodIcons[method.type as ContactMethod] ||
+                  contactMethodIcons.phone;
                 return (
                   <div
                     key={`${method.type}-${index}`}
