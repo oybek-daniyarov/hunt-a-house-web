@@ -16,7 +16,6 @@ export async function getLeads(
     perPage: 15,
     ...params,
   });
-  console.log(url);
   return await list<App.Data.Lead.LeadListData>(url, LEAD_TAGS);
 }
 
@@ -54,4 +53,19 @@ export async function createLead(
 export async function getLeadFilters(): Promise<App.Data.Lead.LeadFiltersData> {
   const url = createUrl(routes['leads.filters']);
   return get<App.Data.Lead.LeadFiltersData>(url, LEAD_TAGS);
+}
+
+export async function activateLead(
+  data: App.Data.Lead.Payload.ActivateLeadPayloadData
+): Promise<ApiResult<App.Data.Lead.ActivateLeadResponseData>> {
+  const url = createUrl(routes['leads.activate']);
+
+  try {
+    const response = await post<
+      ApiResult<App.Data.Lead.ActivateLeadResponseData>
+    >(url, data, LEAD_TAGS);
+    return handleApiResponse(() => Promise.resolve(response));
+  } catch (error) {
+    return handleApiResponse(() => Promise.reject(error));
+  }
 }

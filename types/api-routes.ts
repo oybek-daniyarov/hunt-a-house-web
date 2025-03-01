@@ -8,13 +8,6 @@ export interface Route {
 }
 
 export type Routes = {
-  // agents routes
-  'agents.execute': Route;
-  'agents.index': Route;
-
-  // api routes
-  'api.properties.analyze': Route;
-
   // auth routes
   'auth.forgot-password': Route;
   'auth.login': Route;
@@ -24,10 +17,13 @@ export type Routes = {
   'auth.user': Route;
 
   // leads routes
+  'leads.activate': Route;
   'leads.create': Route;
   'leads.filters': Route;
   'leads.list': Route;
+  'leads.my-leads': Route;
   'leads.show': Route;
+  'leads.update-status': Route;
 
   // locations routes
   'locations.breadcrumbs': Route;
@@ -44,22 +40,6 @@ export type Routes = {
 };
 
 export const routes = {
-  // agents routes
-  'agents.execute': {
-    path: 'api/v1/agents/${agent}/execute',
-    method: 'post',
-  },
-  'agents.index': {
-    path: 'api/v1/agents',
-    method: 'get',
-  },
-
-  // api routes
-  'api.properties.analyze': {
-    path: 'api/v1/properties/${property}/analyze',
-    method: 'get',
-  },
-
   // auth routes
   'auth.forgot-password': {
     path: 'api/v1/auth/forgot-password',
@@ -71,7 +51,7 @@ export const routes = {
   },
   'auth.logout': {
     path: 'api/v1/auth/logout',
-    method: 'post',
+    method: 'delete',
   },
   'auth.register': {
     path: 'api/v1/auth/register',
@@ -87,6 +67,10 @@ export const routes = {
   },
 
   // leads routes
+  'leads.activate': {
+    path: 'api/v1/leads/activate',
+    method: 'post',
+  },
   'leads.create': {
     path: 'api/v1/leads',
     method: 'post',
@@ -99,9 +83,17 @@ export const routes = {
     path: 'api/v1/leads',
     method: 'get',
   },
+  'leads.my-leads': {
+    path: 'api/v1/leads/my-leads',
+    method: 'get',
+  },
   'leads.show': {
     path: 'api/v1/leads/${id}',
     method: 'get',
+  },
+  'leads.update-status': {
+    path: 'api/v1/leads/my-leads/${lead}/status',
+    method: 'patch',
   },
 
   // locations routes
@@ -172,7 +164,7 @@ export function createUrl<P extends Params = Record<string, never>>(
 
   // Replace path parameters
   const pathParams = new Set(
-    path.match(/\{(\w+)\}/g)?.map((p) => p.slice(1, -1)) ?? []
+    path.match(/\{(\w+)}/g)?.map((p) => p.slice(1, -1)) ?? []
   );
   const queryParams: Params = {};
 

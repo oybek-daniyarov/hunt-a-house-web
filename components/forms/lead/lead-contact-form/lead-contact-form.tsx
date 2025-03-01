@@ -1,6 +1,6 @@
 'use client';
 
-import { SubmitButton } from '@/components/forms/fields';
+import { InputField, SubmitButton } from '@/components/forms/fields';
 import { Form } from '@/components/ui/form';
 import { ContactMethodInput } from './contact-method';
 import { CONTACT_METHODS } from './contact-methods';
@@ -19,6 +19,7 @@ const LeadContactForm = () => {
         <FormHeader />
 
         <div className="space-y-4">
+          <InputField name="email" label="Email" />
           {CONTACT_METHODS.map((method) => (
             <ContactMethodInput
               key={method.id}

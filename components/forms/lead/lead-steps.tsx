@@ -1,9 +1,9 @@
 'use client';
 
+import { LeadContactForm } from '@/components/forms/lead/lead-contact-form';
 import { LeadContactFormData } from '@/components/forms/lead/lead-contact-form/schema';
 import { LeadFormStep } from '@/components/forms/lead/lead-form-step/lead-form-step';
 import { LeadFormStepData } from '@/components/forms/lead/lead-form-step/schema';
-import UserInformationStep from '@/components/forms/lead/user-information-step';
 import { Steps } from '@/components/steps/steps';
 
 type LeadStepsProps = {
@@ -51,7 +51,7 @@ const LeadSteps = ({ filters }: LeadStepsProps) => {
       id: 'user',
       title: 'User Information',
       description: 'Enter your user information',
-      component: <UserInformationStep />,
+      component: <LeadContactForm />,
     },
   ];
 

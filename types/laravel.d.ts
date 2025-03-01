@@ -1,16 +1,3 @@
-declare namespace App.Ai.Enums {
-  export type AiModel =
-    | 'claude-3-sonnet'
-    | 'claude-3-opus'
-    | 'claude-3-haiku-20240307'
-    | 'mistral-medium'
-    | 'mistral-large'
-    | 'gpt-4'
-    | 'gpt-4o-mini'
-    | 'gpt-4-turbo-preview'
-    | 'gpt-3.5-turbo'
-    | 'deepseek-chat';
-}
 declare namespace App.Data.Auth {
   export type CreateEmailAccountData = {
     email: string;
@@ -62,6 +49,13 @@ declare namespace App.Data.Auth.Payload {
   };
 }
 declare namespace App.Data.Lead {
+  export type ActivateLeadResponseData = {
+    success: boolean;
+    message: string;
+    data: App.Data.Lead.LeadListData | null;
+    token: string | null;
+    errors: Array<any> | null;
+  };
   export type ContactMethodData = {
     type: string;
     value: string;
@@ -102,6 +96,11 @@ declare namespace App.Data.Lead {
   };
 }
 declare namespace App.Data.Lead.Payload {
+  export type ActivateLeadPayloadData = {
+    email: string;
+    token: string;
+    lead: number;
+  };
   export type CreateLeadPayloadData = {
     locations: Array<any>;
     propertyType: number;
@@ -115,6 +114,7 @@ declare namespace App.Data.Lead.Payload {
     budgetFrequency: App.Enums.BudgetFrequency;
     description: string;
     contact: Array<any>;
+    email: string | null;
   };
 }
 declare namespace App.Data.Media {

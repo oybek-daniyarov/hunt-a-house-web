@@ -1,18 +1,10 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { cookies } from 'next/headers';
 
 import { env } from '@/lib/env';
-
-const COOKIE_OPTIONS: Partial<ResponseCookie> = {
-  httpOnly: true, // Secure against XSS
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax',
-  path: '/',
-  maxAge: 30 * 24 * 60 * 60, // 30 days
-};
+import { COOKIE_OPTIONS } from './contants';
 
 export async function isAuthenticated(): Promise<boolean> {
   try {

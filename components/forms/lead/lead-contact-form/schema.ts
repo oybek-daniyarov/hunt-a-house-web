@@ -2,6 +2,7 @@ import { isValidPhoneNumber } from 'react-phone-number-input';
 import { z } from 'zod';
 
 export const leadContactFormSchema = z.object({
+  email: z.string().email('Please enter a valid email'),
   contact: z
     .object({
       phone: z

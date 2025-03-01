@@ -27,6 +27,7 @@ export const useLeadForm = () => {
         whatsapp: '',
         telegram: '',
       },
+      email: '',
     },
     mode: 'onBlur',
   });
@@ -73,6 +74,7 @@ export const useLeadForm = () => {
         description: stepData.lead.description,
         // @ts-expect-error - contact is optional
         contact: data.contact,
+        email: data.email,
       });
 
       if (result.success) {
