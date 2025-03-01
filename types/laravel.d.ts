@@ -70,7 +70,7 @@ declare namespace App.Data.Lead {
     bathrooms: Array<App.Data.Lead.OptionData>;
   };
   export type LeadListData = {
-    id: number;
+    id: string;
     propertyTypeName: string;
     activityTypeName: string;
     locations: Array<App.Services.Location.Data.LocationData>;
@@ -87,6 +87,7 @@ declare namespace App.Data.Lead {
     isAuthenticated: boolean;
     isUserHadPurchasedLead: boolean;
     contactMethods: Array<App.Data.ContactMethodData>;
+    owner: { id: string; name: string; email: string };
   };
   export type OptionData = {
     id: string | number;

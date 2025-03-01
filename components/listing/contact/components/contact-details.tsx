@@ -13,13 +13,10 @@ import { cn } from '@/lib/utils';
 interface ContactDetailsProps {
   contact: {
     name: string;
-    role: string;
-    company: string;
     phone: string;
     whatsapp: string;
     telegram: string;
     facebook?: string;
-    email?: string;
   };
 }
 
@@ -68,11 +65,11 @@ export function ContactDetails({ contact }: ContactDetailsProps) {
         <h3 className="text-lg font-medium tracking-tight">{contact.name}</h3>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
         {contactDetails
           .filter((detail) => !detail.condition || detail.condition(contact))
           .map(({ icon: Icon, label, getValue, color }) => (
-            <div key={label} className="group flex items-center gap-3">
+            <div key={label} className="group flex items-center gap-2">
               <div
                 className={cn(
                   'rounded-full p-2 bg-opacity-10',
@@ -83,10 +80,8 @@ export function ContactDetails({ contact }: ContactDetailsProps) {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-muted-foreground">{label}</p>
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-medium truncate">
-                    {getValue(contact)}
-                  </p>
+                <div className="flex items-center gap-1">
+                  <p className="text-sm font-medium">{getValue(contact)}</p>
                   <Button
                     variant="ghost"
                     size="icon"

@@ -17,18 +17,9 @@ const getContactMethodValue = (
 };
 
 export function ContactView({ listing }: ContactViewProps) {
-  // Get user information from listing
-  const userName = listing.user?.name || 'Property Owner';
-  const userRole =
-    listing.user?.userType === 'agent' ? 'Agent' : 'Property Owner';
-  const userCompany =
-    listing.user?.userType === 'agent' ? 'Real Estate Agency' : 'Private Owner';
-
   // Create contact object from listing data
   const contact = {
-    name: userName,
-    role: userRole,
-    company: userCompany,
+    name: listing.owner.name,
     phone: getContactMethodValue(listing.contactMethods, 'phone'),
     whatsapp: getContactMethodValue(listing.contactMethods, 'whatsapp'),
     telegram: getContactMethodValue(listing.contactMethods, 'telegram'),
@@ -37,23 +28,17 @@ export function ContactView({ listing }: ContactViewProps) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 -mx-6">
-      {/* Property and Contact Details - Left Side */}
       <div className="col-span-1 lg:col-span-2 space-y-8 px-6">
-        <div className="space-y-8">
-          {/* Property Info */}
-          <div className="space-y-4">
-            <PropertyInfo listing={listing} />
+        <div className="space-y-4">
+          <PropertyInfo listing={listing} />
 
-            {listing.description && (
-              <p className="text-sm text-muted-foreground">
-                {listing.description}
-              </p>
-            )}
+          {listing.description && (
+            <p className="text-sm text-muted-foreground">
+              {listing.description}
+            </p>
+          )}
 
-            <PropertyDetails listing={listing} />
-          </div>
-
-          {/* Contact Info */}
+          <PropertyDetails listing={listing} />
         </div>
       </div>
 
