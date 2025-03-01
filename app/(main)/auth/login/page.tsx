@@ -12,7 +12,9 @@ export default function LoginPage() {
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="text-xl">Welcome back</CardTitle>
-        <CardDescription>Login with your Google account</CardDescription>
+        <CardDescription>
+          Enter your email to sign in to your account
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
