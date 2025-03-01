@@ -14,7 +14,7 @@ export function ContactButton({ className, listing }: ContactButtonProps) {
   const params = new URLSearchParams();
 
   // Add the contact param
-  params.set('contact', listing.id.toString());
+  params.set('lead-id', listing.id.toString());
 
   return (
     <Button

@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { COOKIE_OPTIONS } from '@/lib/client/laravel/contants';
-import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
+import { getCurrentUser, logout } from '@/lib/data/laravel/auth/auth.api';
 import { env } from '@/lib/env';
 
 export async function GET(request: NextRequest) {
@@ -97,6 +97,8 @@ export async function DELETE() {
       success: true,
       message: 'Session deleted successfully',
     });
+
+    await logout();
 
     // Clear the auth cookie by setting it to empty with past expiration
     response.cookies.set(env.AUTH_COOKIE_NAME, '', {

@@ -9,7 +9,7 @@ import { headers } from 'next/headers';
 export async function checkSession(): Promise<{
   success: boolean;
   isAuthenticated: boolean;
-  user?: any;
+  user?: App.Data.User.UserData;
   message?: string;
 }> {
   try {

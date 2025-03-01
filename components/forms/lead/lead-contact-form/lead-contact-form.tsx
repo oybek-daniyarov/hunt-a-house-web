@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { InputField, SubmitButton } from '@/components/forms/fields';
 import { CheckboxField } from '@/components/forms/fields/fields';
+import { useAuth } from '@/components/providers/auth-provider';
 import { Form } from '@/components/ui/form';
 import { FormHeader } from '../form-header';
 import { ContactMethodInput } from './contact-method';
@@ -12,6 +13,7 @@ import { useLeadForm } from './use-lead-form';
 
 const LeadContactForm = () => {
   const { form, onSubmit } = useLeadForm();
+  const { isAuthenticated } = useAuth();
 
   return (
     <Form {...form}>
@@ -22,11 +24,13 @@ const LeadContactForm = () => {
         />
 
         <div className="space-y-3">
-          <InputField
-            name="email"
-            label="Email"
-            description="Your email address will be used to send you a lead activation link and create an account if you don't have one"
-          />
+          {!isAuthenticated && (
+            <InputField
+              name="email"
+              label="Email"
+              description="Your email address will be used to send you a lead activation link and create an account if you don't have one"
+            />
+          )}
 
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
             {CONTACT_METHODS.map((method) => (

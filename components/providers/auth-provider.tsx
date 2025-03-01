@@ -61,7 +61,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const logout = async (): Promise<boolean> => {
     try {
       // First clear the session cookie
-      const response = await clearSession();
+      await clearSession();
 
       // Then try to logout from the backend
       try {

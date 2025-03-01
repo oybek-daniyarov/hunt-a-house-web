@@ -36,10 +36,28 @@ export const useLeadForm = () => {
     mode: 'onBlur',
   });
 
+  const findContactMethod = (type: string) => {
+    return user?.contactMethods?.find((method) => method.type === type);
+  };
+
   useEffect(() => {
     if (user) {
       form.setValue('email', user.email);
       form.setValue('contact.phone', user.phone || '');
+      if (user.contactMethods && user.contactMethods.length > 0) {
+        const whatsappContactMethod = findContactMethod('whatsapp');
+        if (whatsappContactMethod) {
+          form.setValue('contact.whatsapp', whatsappContactMethod.value);
+        }
+        const telegramContactMethod = findContactMethod('telegram');
+        if (telegramContactMethod) {
+          form.setValue('contact.telegram', telegramContactMethod.value);
+        }
+        const facebookContactMethod = findContactMethod('facebook');
+        if (facebookContactMethod) {
+          form.setValue('contact.facebook', facebookContactMethod.value);
+        }
+      }
     }
   }, [user, form]);
 
@@ -86,6 +104,7 @@ export const useLeadForm = () => {
         // @ts-expect-error - contact is optional
         contact: data.contact,
         email: data.email,
+        maxViews: data.maxViews,
       });
 
       if (result.success) {

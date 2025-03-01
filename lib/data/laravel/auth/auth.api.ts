@@ -1,6 +1,6 @@
 'use server';
 
-import { get, post } from '@/lib/client/laravel/client';
+import { del, get, post } from '@/lib/client/laravel/client';
 import { ApiResult, handleApiResponse } from '@/lib/client/laravel/helpers/api';
 import { createUrl, routes } from '@/types/api-routes';
 
@@ -65,7 +65,7 @@ export async function resetPassword(
 export async function logout(): Promise<ApiResult<null>> {
   try {
     const url = createUrl(routes['auth.logout']);
-    const response = await post<ApiResult<null>>(url, {}, AUTH_TAGS);
+    const response = await del<ApiResult<null>>(url, AUTH_TAGS);
     return handleApiResponse(() => Promise.resolve(response));
   } catch (error) {
     return handleApiResponse(() => Promise.reject(error));

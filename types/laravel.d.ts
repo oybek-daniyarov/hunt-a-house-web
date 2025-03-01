@@ -1,3 +1,9 @@
+declare namespace App.Data {
+  export type ContactMethodData = {
+    type: string;
+    value: string;
+  };
+}
 declare namespace App.Data.Auth {
   export type CreateEmailAccountData = {
     email: string;
@@ -52,13 +58,9 @@ declare namespace App.Data.Lead {
   export type ActivateLeadResponseData = {
     success: boolean;
     message: string;
-    data: App.Data.Lead.LeadListData | null;
+    lead: App.Data.Lead.LeadListData | null;
     token: string | null;
     errors: Array<any> | null;
-  };
-  export type ContactMethodData = {
-    type: string;
-    value: string;
   };
   export type LeadFiltersData = {
     propertyTypes: Array<App.Data.Lead.OptionData>;
@@ -84,7 +86,7 @@ declare namespace App.Data.Lead {
     createdAt: string;
     isAuthenticated: boolean;
     isUserHadPurchasedLead: boolean;
-    contactMethods: Array<App.Data.Lead.ContactMethodData>;
+    contactMethods: Array<App.Data.ContactMethodData>;
   };
   export type OptionData = {
     id: string | number;
@@ -115,6 +117,7 @@ declare namespace App.Data.Lead.Payload {
     description: string;
     contact: Array<any>;
     email: string | null;
+    maxViews: number | null;
   };
 }
 declare namespace App.Data.Media {
@@ -142,11 +145,11 @@ declare namespace App.Data.User {
     userType: App.Enums.UserType;
     phone: string | null;
     status: App.Enums.UserStatus;
-    whatsappVerifiedAt: string | null;
     approvedAt: string | null;
     emailVerifiedAt: string | null;
     updatedAt: string | null;
     credits: number | null;
+    contactMethods: Array<App.Data.ContactMethodData>;
   };
 }
 declare namespace App.Data.User.Payload {
