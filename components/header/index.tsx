@@ -7,34 +7,6 @@ import DesktopNavigation from '@/components/header/navigation';
 import { ModeToggle } from '@/components/menu-toggle';
 import AuthButton from './auth-button';
 
-const navItems = [
-  {
-    label: 'Home',
-    href: '/',
-    target: false,
-  },
-  {
-    label: 'For Agents',
-    href: '/agent',
-    target: false,
-  },
-  {
-    label: 'For Clients',
-    href: '/client',
-    target: false,
-  },
-  {
-    label: 'Property Listings',
-    href: '/property-listings',
-    target: false,
-  },
-  {
-    label: 'About',
-    href: '/about',
-    target: false,
-  },
-];
-
 export default async function Header() {
   const data = await fetchSanitySite();
 

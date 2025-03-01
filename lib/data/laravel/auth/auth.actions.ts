@@ -1,6 +1,6 @@
 'use server';
 
-import { deleteToken, setToken } from '@/lib/client/laravel/cookies';
+import { deleteToken, setToken } from '@/lib/client/laravel';
 import {
   createErrorResponse,
   createSuccessResponse,
@@ -22,9 +22,7 @@ export async function registerAction(
       );
     }
 
-    await setToken({
-      token: response.data?.token || '',
-    });
+    await setToken({ token: response.data?.token || '' });
 
     return createSuccessResponse(response.data?.user, '/dashboard');
   } catch (error) {
@@ -45,9 +43,8 @@ export async function loginAction(
     );
   }
 
-  await setToken({
-    token: response.data?.token || '',
-  });
+  await setToken({ token: response.data?.token || '' });
+
   return createSuccessResponse(response.data?.user, '/dashboard');
 }
 
@@ -80,10 +77,10 @@ export async function logoutAction() {
     }
 
     // Return success even if backend fails, as we've deleted the token locally
-    return createSuccessResponse(null, '/login');
+    return createSuccessResponse(null, '/auth/login');
   } catch (error) {
     console.error('Logout failed:', error);
     // Still try to redirect to login even if there's an error
-    return createSuccessResponse(null, '/login');
+    return createSuccessResponse(null, '/auth/login');
   }
 }

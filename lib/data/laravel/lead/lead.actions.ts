@@ -1,7 +1,7 @@
 'use server';
 
 import { createErrorResponse } from '@/lib/client/laravel';
-import { setAuthToken } from '@/lib/client/laravel/auth';
+import { setSession } from '@/lib/client/laravel/auth';
 import { createSuccessResponse } from '@/lib/client/laravel/helpers';
 import { activateLead, createLead } from './lead.api';
 
@@ -36,7 +36,7 @@ export async function activateLeadAction(
     // Store the token if it exists via the API route
     if (response.data?.token) {
       try {
-        const tokenSet = await setAuthToken(response.data.token);
+        const tokenSet = await setSession(response.data.token);
         if (!tokenSet) {
           console.error('Failed to set auth token');
         }

@@ -20,9 +20,9 @@ import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
 import { LogoutMenuItem } from './logout-menu-item';
 
 export async function NavUser() {
-  const { data: user } = await getCurrentUser();
+  const { data: user, success } = await getCurrentUser();
 
-  if (!user) {
+  if (!success || !user) {
     return null;
   }
 

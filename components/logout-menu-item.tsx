@@ -1,21 +1,22 @@
 'use client';
 
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { LogOut } from 'lucide-react';
 
+import { useAuth } from '@/components/providers/auth-provider';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { handleFormSuccess } from '@/lib/client/laravel/helpers/form.helpers';
-import { logoutAction } from '@/lib/data/laravel/auth/auth.actions';
 
 export function LogoutMenuItem() {
   const router = useRouter();
+  const { logout } = useAuth();
 
   const handleLogout = async () => {
-    const result = await logoutAction();
+    const success = await logout();
 
-    if (result.success) {
+    if (success) {
       handleFormSuccess('You have been logged out successfully');
-      redirect('/auth/login');
+      router.push('/auth/login');
     }
   };
 

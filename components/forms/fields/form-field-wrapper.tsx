@@ -9,6 +9,7 @@ import {
 
 import {
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,14 +18,18 @@ import {
 
 interface FormFieldWrapperProps {
   name: string;
-  label: string;
+  label: React.ReactNode;
   children: (field: ControllerRenderProps<FieldValues, string>) => ReactNode;
+  reverseLabel?: boolean;
+  description?: React.ReactNode;
 }
 
 export function FormFieldWrapper({
   name,
   label,
   children,
+  description,
+  reverseLabel = false,
 }: FormFieldWrapperProps) {
   const { control } = useFormContext();
   return (
@@ -32,10 +37,23 @@ export function FormFieldWrapper({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem
+          className={
+            reverseLabel
+              ? 'flex flex-row-reverse flex-wrap items-center gap-2 space-y-0 justify-end'
+              : ''
+          }
+        >
           <FormLabel>{label}</FormLabel>
           <FormControl>{children(field)}</FormControl>
-          <FormMessage />
+          {description && (
+            <FormDescription
+              className={reverseLabel ? 'ml-auto basis-full' : ''}
+            >
+              {description}
+            </FormDescription>
+          )}
+          <FormMessage className={reverseLabel ? 'ml-auto basis-full' : ''} />
         </FormItem>
       )}
     />

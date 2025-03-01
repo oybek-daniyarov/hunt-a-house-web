@@ -1,6 +1,6 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
+import { deleteToken, getToken } from '@/lib/client/laravel';
 import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
 
 // Paths that are accessible to agents only
@@ -9,41 +9,104 @@ const AGENT_PATHS = ['/dashboard/leads'];
 // Paths that are accessible to users only
 const USER_PATHS = ['/dashboard/my-leads'];
 
-export async function middleware(request: NextRequest) {
-  try {
-    const { data: user } = await getCurrentUser();
+// Higher-order function to create auth middleware with custom options
+export function withAuth({
+  loginRedirectUrl = '/auth/login',
+  unauthorizedRedirectUrl = '/dashboard',
+  requireAuth = true,
+  requiredUserTypes = [],
+}: {
+  loginRedirectUrl?: string;
+  unauthorizedRedirectUrl?: string;
+  requireAuth?: boolean;
+  requiredUserTypes?: string[];
+} = {}) {
+  return async function authMiddleware(request: NextRequest) {
+    try {
+      // Check if auth cookie exists
+      const token = await getToken();
 
-    console.log('user', user);
+      // If no token and auth is required, redirect to login
+      if (!token && requireAuth) {
+        return NextResponse.redirect(new URL(loginRedirectUrl, request.url));
+      }
 
-    // If no user is logged in, redirect to login
-    if (!user) {
-      return NextResponse.redirect(new URL('/auth/login', request.url));
+      // If token exists, try to get user data
+      let user = null;
+      if (token) {
+        try {
+          const { data, success } = await getCurrentUser();
+          if (success && data) {
+            user = data;
+          }
+        } catch (error) {
+          console.error('Error fetching user data in middleware:', error);
+          // If auth is required and we couldn't get user data, redirect to login
+          if (requireAuth) {
+            return NextResponse.redirect(
+              new URL(loginRedirectUrl, request.url)
+            );
+          }
+        }
+      }
+
+      // If auth is required but no user was found, redirect to login
+      if (requireAuth && !user) {
+        token && (await deleteToken());
+        return NextResponse.redirect(new URL(loginRedirectUrl, request.url));
+      }
+
+      // If user exists and we have required user types, check if user has the required type
+      if (user && requiredUserTypes.length > 0) {
+        if (!requiredUserTypes.includes(user.userType)) {
+          return NextResponse.redirect(
+            new URL(unauthorizedRedirectUrl, request.url)
+          );
+        }
+      }
+
+      return NextResponse.next();
+    } catch (error) {
+      console.error('Auth middleware error:', error);
+      // If there's any error and auth is required, redirect to login
+      if (requireAuth) {
+        return NextResponse.redirect(new URL(loginRedirectUrl, request.url));
+      }
+      return NextResponse.next();
     }
-
-    const path = request.nextUrl.pathname;
-
-    // Check if the path is agent-only and user is not an agent
-    if (
-      AGENT_PATHS.some((p) => path.startsWith(p)) &&
-      user.userType !== 'agent'
-    ) {
-      return NextResponse.redirect(new URL('/dashboard', request.url));
-    }
-
-    // Check if the path is user-only and user is not a regular user
-    if (
-      USER_PATHS.some((p) => path.startsWith(p)) &&
-      user.userType !== 'user'
-    ) {
-      return NextResponse.redirect(new URL('/dashboard', request.url));
-    }
-
-    return NextResponse.next();
-  } catch (error) {
-    // If there's any error, redirect to login
-    return NextResponse.redirect(new URL('/auth/login', request.url));
-  }
+  };
 }
+
+// Create specialized middleware for different routes
+const agentMiddleware = withAuth({
+  requiredUserTypes: ['agent'],
+});
+
+const userMiddleware = withAuth({
+  requiredUserTypes: ['user'],
+});
+
+const defaultMiddleware = withAuth();
+
+// Main middleware function that routes to the appropriate specialized middleware
+export async function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname;
+
+  // Use agent middleware for agent-only paths
+  if (AGENT_PATHS.some((p) => path.startsWith(p))) {
+    return agentMiddleware(request);
+  }
+
+  // Use user middleware for user-only paths
+  if (USER_PATHS.some((p) => path.startsWith(p))) {
+    return userMiddleware(request);
+  }
+
+  // Use default middleware for all other dashboard paths
+  return defaultMiddleware(request);
+}
+
+// Configure middleware to run on dashboard routes
 export const config = {
   matcher: ['/dashboard/:path*'],
 };

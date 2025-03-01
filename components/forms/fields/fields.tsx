@@ -1,6 +1,7 @@
 import { NumberInput } from '@/components/forms/fields';
 import { FormFieldWrapper } from '@/components/forms/fields/form-field-wrapper';
 import { NumberInputProps } from '@/components/forms/fields/number-input';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { LocationSearch } from '@/components/ui/location-search';
 import MultipleSelector from '@/components/ui/multiple-selector';
@@ -14,7 +15,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 
 type NumberInputFieldProps = NumberInputProps & {
-  label: string;
+  label: React.ReactNode;
 };
 
 export const NumberInputField = ({
@@ -38,7 +39,7 @@ export const NumberInputField = ({
 
 type LocationSearchFieldProps = {
   name: string;
-  label: string;
+  label: React.ReactNode;
   placeholder?: string;
   maxSelected?: number;
 };
@@ -66,20 +67,31 @@ export const LocationSearchField = ({
 
 type InputFieldProps = {
   name: string;
-  label: string;
+  label: React.ReactNode;
+  type?: string;
+  min?: number;
+  max?: number;
+  description?: string;
 };
 
-export const InputField = ({ name, label }: InputFieldProps) => {
+export const InputField = ({
+  name,
+  label,
+  type,
+  min,
+  max,
+  description,
+}: InputFieldProps) => {
   return (
-    <FormFieldWrapper name={name} label={label}>
-      {(field) => <Input {...field} />}
+    <FormFieldWrapper name={name} label={label} description={description}>
+      {(field) => <Input {...field} type={type} min={min} max={max} />}
     </FormFieldWrapper>
   );
 };
 
 type TextareaFieldProps = {
   name: string;
-  label: string;
+  label: React.ReactNode;
 };
 
 export const TextareaField = ({ name, label }: TextareaFieldProps) => {
@@ -92,7 +104,7 @@ export const TextareaField = ({ name, label }: TextareaFieldProps) => {
 
 type SelectFieldProps = {
   name: string;
-  label: string;
+  label: React.ReactNode;
   options: { label: string; value: string }[];
 };
 
@@ -133,4 +145,34 @@ type MultipleSelectorFieldProps = {
   name: string;
   label: string;
   options: { label: string; value: string }[];
+};
+
+//checkbox
+type CheckboxFieldProps = {
+  name: string;
+  label: React.ReactNode;
+  description?: React.ReactNode;
+};
+
+export const CheckboxField = ({
+  name,
+  label,
+  description,
+}: CheckboxFieldProps) => {
+  return (
+    <FormFieldWrapper
+      name={name}
+      label={label}
+      reverseLabel
+      description={description}
+    >
+      {(field) => (
+        <Checkbox
+          {...field}
+          checked={field.value}
+          onCheckedChange={field.onChange}
+        />
+      )}
+    </FormFieldWrapper>
+  );
 };

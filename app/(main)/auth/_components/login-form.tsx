@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+import { useAuth } from '@/components/providers/auth-provider';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -47,6 +48,7 @@ export function LoginForm({
   'use no memo';
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { refreshAuth } = useAuth();
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -73,6 +75,7 @@ export function LoginForm({
       if (onSuccess) {
         onSuccess();
       } else if (result.redirect) {
+        await refreshAuth();
         router.push(result.redirect);
       }
     } finally {

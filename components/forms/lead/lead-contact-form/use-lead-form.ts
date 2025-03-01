@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import { useAuth } from '@/components/providers/auth-provider';
 import { useSteps } from '@/components/steps/step-provider';
 import { handleFormSuccess } from '@/lib/client/laravel/helpers/form.helpers';
 import { createLeadAction } from '@/lib/data/laravel/lead/lead.actions';
@@ -17,6 +18,7 @@ const SUCCESS_REDIRECT_PATH = '/dashboard/my-leads';
 
 export const useLeadForm = () => {
   const { updateStepData, stepData } = useSteps();
+  const { user } = useAuth();
   const router = useRouter();
   const form = useForm<LeadContactFormData>({
     resolver: zodResolver(leadContactFormSchema),
@@ -28,9 +30,18 @@ export const useLeadForm = () => {
         telegram: '',
       },
       email: '',
+      maxViews: 10,
+      terms: false,
     },
     mode: 'onBlur',
   });
+
+  useEffect(() => {
+    if (user) {
+      form.setValue('email', user.email);
+      form.setValue('contact.phone', user.phone || '');
+    }
+  }, [user, form]);
 
   // Watch the phone field to update WhatsApp
   const phoneValue = useWatch({

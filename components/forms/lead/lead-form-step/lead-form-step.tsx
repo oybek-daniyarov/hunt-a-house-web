@@ -10,6 +10,7 @@ import {
   SubmitButton,
   TextareaField,
 } from '@/components/forms/fields';
+import { FormHeader } from '@/components/forms/lead/form-header';
 import {
   LeadFormStepData,
   leadFormStepSchema,
@@ -63,8 +64,12 @@ export function LeadFormStep({ filters }: LeadFormStepProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <div className="grid grid-cols-2 gap-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormHeader
+          title="Property Details"
+          description="Please provide the details of the property you are interested in"
+        />
+        <div className="grid grid-cols-2 gap-3">
           <div className="col-span-2">
             <LocationSearchField name="location" label="Location*" />
           </div>

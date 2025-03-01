@@ -17,7 +17,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
       >
         {prefix && (
-          <span className="pl-3 text-muted-foreground flex-shrink-0">
+          <span className="px-3 text-muted-foreground flex-shrink-0">
             {prefix}
           </span>
         )}

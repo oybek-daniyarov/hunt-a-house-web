@@ -3,6 +3,13 @@ import { z } from 'zod';
 
 export const leadContactFormSchema = z.object({
   email: z.string().email('Please enter a valid email'),
+  terms: z
+    .boolean()
+    .refine((val) => val, 'Please accept the terms and conditions'),
+  maxViews: z
+    .number()
+    .min(1, 'Please enter a valid number')
+    .max(10, 'Max views must be less than 10'),
   contact: z
     .object({
       phone: z
