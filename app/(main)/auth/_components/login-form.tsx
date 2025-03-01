@@ -32,19 +32,9 @@ const loginSchema = z.object({
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
-interface LoginFormProps extends React.ComponentPropsWithoutRef<'div'> {
-  onSuccess?: () => void;
-  onForgotPassword?: () => void;
-  onRegister?: () => void;
-}
+interface LoginFormProps extends React.ComponentPropsWithoutRef<'div'> {}
 
-export function LoginForm({
-  className,
-  onSuccess,
-  onForgotPassword,
-  onRegister,
-  ...props
-}: LoginFormProps) {
+export function LoginForm({ className, ...props }: LoginFormProps) {
   'use no memo';
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -72,9 +62,7 @@ export function LoginForm({
 
       handleFormSuccess('You have been logged in successfully');
 
-      if (onSuccess) {
-        onSuccess();
-      } else if (result.redirect) {
+      if (result.redirect) {
         await refreshAuth();
         router.push(result.redirect);
       }
@@ -114,15 +102,7 @@ export function LoginForm({
                   <div className="flex items-center">
                     <FormLabel>Password</FormLabel>
                     <Link
-                      href={onForgotPassword ? '#' : '/auth/forgot-password'}
-                      onClick={(e) => {
-                        if (onForgotPassword) {
-                          e.preventDefault();
-                          onForgotPassword();
-                        } else {
-                          router.push('/auth/forgot-password');
-                        }
-                      }}
+                      href="/auth/forgot-password"
                       className="ml-auto text-sm underline-offset-4 hover:underline"
                     >
                       Forgot your password?
@@ -139,21 +119,6 @@ export function LoginForm({
           <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading ? 'Logging in...' : 'Login'}
           </Button>
-          <div className="text-center text-sm">
-            Don&apos;t have an account?{' '}
-            <Link
-              href={onRegister ? '#' : '/auth/register'}
-              onClick={(e) => {
-                if (onRegister) {
-                  e.preventDefault();
-                  onRegister();
-                }
-              }}
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Sign up
-            </Link>
-          </div>
         </form>
       </Form>
     </div>
