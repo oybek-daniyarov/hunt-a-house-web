@@ -12,31 +12,30 @@ export type Routes = {
   'auth.forgot-password': Route;
   'auth.login': Route;
   'auth.logout': Route;
+  'auth.me': Route;
   'auth.register': Route;
   'auth.reset-password': Route;
-  'auth.user': Route;
+  'auth.verify': Route;
 
   // leads routes
   'leads.activate': Route;
-  'leads.create': Route;
   'leads.filters': Route;
-  'leads.list': Route;
-  'leads.my-leads': Route;
+  'leads.index': Route;
+  'leads.mine': Route;
+  'leads.mine.update-status': Route;
   'leads.show': Route;
-  'leads.update-status': Route;
+  'leads.store': Route;
 
   // locations routes
   'locations.breadcrumbs': Route;
   'locations.by-path': Route;
   'locations.children': Route;
   'locations.descendants': Route;
+  'locations.index': Route;
   'locations.roots': Route;
   'locations.search': Route;
   'locations.show': Route;
   'locations.tree': Route;
-
-  // verification routes
-  'verification.verify': Route;
 };
 
 export const routes = {
@@ -53,6 +52,10 @@ export const routes = {
     path: 'api/v1/auth/logout',
     method: 'delete',
   },
+  'auth.me': {
+    path: 'api/v1/auth/me',
+    method: 'get',
+  },
   'auth.register': {
     path: 'api/v1/auth/register',
     method: 'post',
@@ -61,8 +64,8 @@ export const routes = {
     path: 'api/v1/auth/reset-password',
     method: 'post',
   },
-  'auth.user': {
-    path: 'api/v1/auth/user',
+  'auth.verify': {
+    path: 'api/v1/auth/email/verify/${id}/${hash}',
     method: 'get',
   },
 
@@ -71,46 +74,50 @@ export const routes = {
     path: 'api/v1/leads/activate',
     method: 'post',
   },
-  'leads.create': {
-    path: 'api/v1/leads',
-    method: 'post',
-  },
   'leads.filters': {
     path: 'api/v1/leads/filters',
     method: 'get',
   },
-  'leads.list': {
+  'leads.index': {
     path: 'api/v1/leads',
     method: 'get',
   },
-  'leads.my-leads': {
-    path: 'api/v1/leads/my-leads',
+  'leads.mine': {
+    path: 'api/v1/leads/mine',
     method: 'get',
+  },
+  'leads.mine.update-status': {
+    path: 'api/v1/leads/mine/${lead}/status',
+    method: 'patch',
   },
   'leads.show': {
-    path: 'api/v1/leads/${id}',
+    path: 'api/v1/leads/${lead}',
     method: 'get',
   },
-  'leads.update-status': {
-    path: 'api/v1/leads/my-leads/${lead}/status',
-    method: 'patch',
+  'leads.store': {
+    path: 'api/v1/leads',
+    method: 'post',
   },
 
   // locations routes
   'locations.breadcrumbs': {
-    path: 'api/v1/locations/${id}/breadcrumbs',
+    path: 'api/v1/locations/${location}/breadcrumbs',
     method: 'get',
   },
   'locations.by-path': {
-    path: 'api/v1/locations/path/${path}',
+    path: 'api/v1/locations/by-path/${path}',
     method: 'get',
   },
   'locations.children': {
-    path: 'api/v1/locations/${id}/children',
+    path: 'api/v1/locations/${location}/children',
     method: 'get',
   },
   'locations.descendants': {
-    path: 'api/v1/locations/${id}/descendants',
+    path: 'api/v1/locations/${location}/descendants',
+    method: 'get',
+  },
+  'locations.index': {
+    path: 'api/v1/locations',
     method: 'get',
   },
   'locations.roots': {
@@ -122,17 +129,11 @@ export const routes = {
     method: 'get',
   },
   'locations.show': {
-    path: 'api/v1/locations/${id}',
+    path: 'api/v1/locations/${location}',
     method: 'get',
   },
   'locations.tree': {
     path: 'api/v1/locations/tree',
-    method: 'get',
-  },
-
-  // verification routes
-  'verification.verify': {
-    path: 'api/v1/auth/email/verify/${id}/${hash}',
     method: 'get',
   },
 } as const;
@@ -164,7 +165,7 @@ export function createUrl<P extends Params = Record<string, never>>(
 
   // Replace path parameters
   const pathParams = new Set(
-    path.match(/\{(\w+)}/g)?.map((p) => p.slice(1, -1)) ?? []
+    path.match(/\{(\w+)\}/g)?.map((p) => p.slice(1, -1)) ?? []
   );
   const queryParams: Params = {};
 

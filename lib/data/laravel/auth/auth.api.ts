@@ -76,7 +76,7 @@ export async function getCurrentUser(): Promise<
   ApiResult<App.Data.User.UserData>
 > {
   try {
-    const url = createUrl(routes['auth.user']);
+    const url = createUrl(routes['auth.me']);
     const response = await get<ApiResult<App.Data.User.UserData>>(
       url,
       AUTH_TAGS
@@ -91,7 +91,7 @@ export async function verifyMagicLinkToken(
   data: App.Data.Auth.Payload.VerifyMagicLinkTokenPayloadData
 ): Promise<ApiResult<App.Data.Auth.MagicLinkData>> {
   try {
-    const url = createUrl(routes['verification.verify']);
+    const url = createUrl(routes['auth.verify']);
     const response = await post<ApiResult<App.Data.Auth.MagicLinkData>>(
       url,
       data,

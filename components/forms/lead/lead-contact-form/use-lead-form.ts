@@ -14,7 +14,7 @@ const SUCCESS_MESSAGE = 'Lead created successfully';
 const ERROR_MESSAGE = 'Failed to create lead';
 const ERROR_MESSAGE_UNEXPECTED =
   'An unexpected error occurred while creating the lead';
-const SUCCESS_REDIRECT_PATH = '/dashboard/my-leads';
+const SUCCESS_REDIRECT_PATH = '/dashboard/user/leads';
 
 export const useLeadForm = () => {
   const { updateStepData, stepData } = useSteps();

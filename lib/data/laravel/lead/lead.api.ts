@@ -11,7 +11,7 @@ const LEAD_TAGS = ['leads'] as string[];
 export async function getLeads(
   params: LeadFilterParams = {}
 ): Promise<PaginatedResponse<App.Data.Lead.LeadListData>> {
-  const url = createUrl(routes['leads.list'], {
+  const url = createUrl(routes['leads.index'], {
     page: params.page ? parseInt(params.page.toString()) : 1,
     perPage: 15,
     ...params,
@@ -19,26 +19,11 @@ export async function getLeads(
   return await list<App.Data.Lead.LeadListData>(url, LEAD_TAGS);
 }
 
-export async function getLead(
-  id: number
-): Promise<ApiResult<App.Data.Lead.LeadListData>> {
-  try {
-    const url = createUrl(routes['leads.show'], { id });
-    const response = await get<ApiResult<App.Data.Lead.LeadListData>>(
-      url,
-      LEAD_TAGS
-    );
-    return handleApiResponse(() => Promise.resolve(response));
-  } catch (error) {
-    return handleApiResponse(() => Promise.reject(error));
-  }
-}
-
 export async function createLead(
   data: App.Data.Lead.Payload.CreateLeadPayloadData
 ): Promise<ApiResult<App.Data.Lead.LeadListData>> {
   try {
-    const url = createUrl(routes['leads.create']);
+    const url = createUrl(routes['leads.store']);
     const response = await post<ApiResult<App.Data.Lead.LeadListData>>(
       url,
       data,
@@ -68,4 +53,19 @@ export async function activateLead(
   } catch (error) {
     return handleApiResponse(() => Promise.reject(error));
   }
+}
+
+type MineLeadsParams = {
+  page?: number;
+  status?: App.Enums.LeadStatus;
+};
+
+export async function getMineLeads(
+  params: MineLeadsParams = {}
+): Promise<PaginatedResponse<App.Data.Lead.LeadData>> {
+  const url = createUrl(routes['leads.mine'], {
+    page: params.page ? parseInt(params.page.toString()) : 1,
+    ...params,
+  });
+  return await list<App.Data.Lead.LeadData>(url, LEAD_TAGS);
 }

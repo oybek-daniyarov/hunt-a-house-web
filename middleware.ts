@@ -4,10 +4,10 @@ import { deleteToken, getToken } from '@/lib/client/laravel';
 import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
 
 // Paths that are accessible to agents only
-const AGENT_PATHS = ['/dashboard/leads'];
+const AGENT_PATH = '/dashboard/agent';
 
 // Paths that are accessible to users only
-const USER_PATHS = ['/dashboard/my-leads'];
+const USER_PATH = '/dashboard/user';
 
 // Higher-order function to create auth middleware with custom options
 export function withAuth({
@@ -93,12 +93,12 @@ export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   // Use agent middleware for agent-only paths
-  if (AGENT_PATHS.some((p) => path.startsWith(p))) {
+  if (path.startsWith(AGENT_PATH)) {
     return agentMiddleware(request);
   }
 
   // Use user middleware for user-only paths
-  if (USER_PATHS.some((p) => path.startsWith(p))) {
+  if (path.startsWith(USER_PATH)) {
     return userMiddleware(request);
   }
 

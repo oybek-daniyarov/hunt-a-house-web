@@ -62,6 +62,28 @@ declare namespace App.Data.Lead {
     token: string | null;
     errors: Array<any> | null;
   };
+  export type LeadData = {
+    id: string;
+    propertyTypeName: string;
+    activityTypeName: string;
+    locations: Array<App.Services.Location.Data.LocationData>;
+    description: string;
+    bedrooms: number | null;
+    bathrooms: number | null;
+    minSize: number | null;
+    maxSize: number | null;
+    minBudget: number | null;
+    maxBudget: number | null;
+    budgetFrequency: App.Enums.BudgetFrequency | null;
+    createdAt: string;
+    status: App.Enums.LeadStatus;
+    isActive: boolean;
+    activatedAt: string | null;
+    expiresAt: string | null;
+    closedAt: string | null;
+    contactMethods: Array<App.Data.ContactMethodData>;
+    owner: { id: string; name: string; email: string };
+  };
   export type LeadFiltersData = {
     propertyTypes: Array<App.Data.Lead.OptionData>;
     budgetFrequency: Array<App.Data.Lead.OptionData>;

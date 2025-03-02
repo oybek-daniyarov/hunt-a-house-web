@@ -106,11 +106,17 @@ type SelectFieldProps = {
   name: string;
   label: React.ReactNode;
   options: { label: string; value: string }[];
+  description?: React.ReactNode;
 };
 
-export const SelectField = ({ name, label, options }: SelectFieldProps) => {
+export const SelectField = ({
+  name,
+  label,
+  options,
+  description,
+}: SelectFieldProps) => {
   return (
-    <FormFieldWrapper name={name} label={label}>
+    <FormFieldWrapper name={name} label={label} description={description}>
       {(field) => (
         <Select {...field} onValueChange={field.onChange}>
           <SelectTrigger>

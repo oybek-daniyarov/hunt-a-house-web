@@ -30,5 +30,5 @@ export async function GET(request: NextRequest) {
 
   await setToken({ token: response.data?.token || '' });
 
-  return NextResponse.redirect(new URL('/dashboard/my-leads', request.url));
+  return NextResponse.redirect(new URL('/dashboard/user/leads', request.url));
 }

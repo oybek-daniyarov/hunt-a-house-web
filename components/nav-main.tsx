@@ -30,7 +30,7 @@ export async function NavMain() {
     },
     {
       title: 'My Leads',
-      url: '/dashboard/my-leads',
+      url: '/dashboard/user/leads',
       icon: FileText,
       userTypes: ['user'],
     },

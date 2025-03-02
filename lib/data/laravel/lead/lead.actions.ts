@@ -16,7 +16,7 @@ export async function createLeadAction(
       response.error?.errors
     );
   }
-  return createSuccessResponse(response.data, '/dashboard/leads');
+  return createSuccessResponse(response.data, '/dashboard/user/leads');
 }
 
 export async function activateLeadAction(
@@ -48,7 +48,7 @@ export async function activateLeadAction(
     }
 
     // Return success response
-    return createSuccessResponse(response.data, '/dashboard/leads');
+    return createSuccessResponse(response.data, '/dashboard/user/leads');
   } catch (error) {
     console.error('Lead activation API error:', error);
     return createErrorResponse(
