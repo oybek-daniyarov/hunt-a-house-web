@@ -6,6 +6,8 @@ import { COOKIE_OPTIONS } from '@/lib/client/laravel/contants';
 import { getCurrentUser, logout } from '@/lib/data/laravel/auth/auth.api';
 import { env } from '@/lib/env';
 
+export const runtime = 'nodejs';
+
 export async function GET(request: NextRequest) {
   try {
     // Get the auth token from cookies
@@ -91,20 +93,28 @@ export async function POST(request: NextRequest) {
 
 // Delete session
 export async function DELETE() {
-  // Create response with success message
-  const response = NextResponse.json({
-    success: true,
-    message: 'Session deleted successfully',
-  });
+  try {
+    // Create response with success message
+    const response = NextResponse.json({
+      success: true,
+      message: 'Session deleted successfully',
+    });
 
-  await logout();
+    await logout();
 
-  // Delete the auth token cookie
-  response.cookies.set(env.AUTH_COOKIE_NAME, '', {
-    ...COOKIE_OPTIONS,
-    maxAge: 0,
-    expires: new Date(0),
-  });
+    // Clear the auth cookie by setting it to empty with past expiration
+    response.cookies.set(env.AUTH_COOKIE_NAME, '', {
+      ...COOKIE_OPTIONS,
+      maxAge: 0,
+      expires: new Date(0),
+    });
 
-  return response;
+    return response;
+  } catch (error) {
+    console.error('Error deleting session:', error);
+    return NextResponse.json(
+      { success: false, message: 'Failed to delete session' },
+      { status: 500 }
+    );
+  }
 }
