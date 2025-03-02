@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { setToken } from '@/lib/client/laravel/cookies';
+import { setSession } from '@/lib/client/laravel/auth';
 import { activateLead } from '@/lib/data/laravel/lead/lead.api';
+
+export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -28,7 +30,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  await setToken({ token: response.data?.token || '' });
+  await setSession(response.data?.token || '');
 
   return NextResponse.redirect(new URL('/dashboard/user/leads', request.url));
 }

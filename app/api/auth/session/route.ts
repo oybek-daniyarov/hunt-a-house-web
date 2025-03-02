@@ -6,6 +6,8 @@ import { COOKIE_OPTIONS } from '@/lib/client/laravel/contants';
 import { getCurrentUser, logout } from '@/lib/data/laravel/auth/auth.api';
 import { env } from '@/lib/env';
 
+export const runtime = 'nodejs';
+
 export async function GET(request: NextRequest) {
   try {
     // Get the auth token from cookies
