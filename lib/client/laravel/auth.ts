@@ -1,24 +1,27 @@
-'use server';
-
-import { headers } from 'next/headers';
-
 /**
  * Checks if the user is authenticated by verifying the session
  * @returns Promise with authentication status and user data if available
  */
-export async function getSession(): Promise<{
+
+type GetSessionParams = {
+  headers?: Headers;
+};
+
+export async function getSession(params?: GetSessionParams): Promise<{
   success: boolean;
   isAuthenticated: boolean;
   user?: App.Data.User.UserData;
   message?: string;
 }> {
+  const headers = params?.headers;
+
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/session`,
       {
         method: 'GET',
         credentials: 'include', // Important: This forwards cookies with the request
-        headers: new Headers(await headers()),
+        ...(headers ? { headers } : {}),
         next: {
           tags: ['auth'],
         },
@@ -41,10 +44,18 @@ export async function getSession(): Promise<{
  * @param token The authentication token to set
  * @returns Promise with success status
  */
-export async function setSession(token: string): Promise<{
+
+type SetSessionParams = {
+  token: string;
+  headers?: Headers;
+};
+
+export async function setSession(params: SetSessionParams): Promise<{
   success: boolean;
   message?: string;
 }> {
+  const { token, headers } = params;
+
   try {
     if (!token) {
       return {
@@ -58,7 +69,7 @@ export async function setSession(token: string): Promise<{
       {
         method: 'POST',
         credentials: 'include', // Important: This forwards cookies with the request
-        headers: new Headers(await headers()),
+        ...(headers ? { headers } : {}),
         body: JSON.stringify({ token }),
         next: {
           tags: ['auth'],
@@ -84,21 +95,27 @@ export async function setSession(token: string): Promise<{
   }
 }
 
+type ClearSessionParams = {
+  headers?: Headers;
+};
+
 /**
  * Clears the authentication session
  * @returns Promise with success status
  */
-export async function clearSession(): Promise<{
+export async function clearSession(params?: ClearSessionParams): Promise<{
   success: boolean;
   message?: string;
 }> {
+  const headers = params?.headers;
+
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/session`,
       {
         method: 'DELETE',
         credentials: 'include', // Important: This forwards cookies with the request
-        headers: new Headers(await headers()),
+        ...(headers ? { headers } : {}),
         next: {
           tags: ['auth'],
         },

@@ -34,7 +34,9 @@ export function withAuth({
       // If token exists, try to get user data
       if (token) {
         try {
-          const { user: data, success } = await getSession();
+          const { user: data, success } = await getSession({
+            headers: request.headers,
+          });
           user = data;
           if (requireAuth && !success) {
             token && (await deleteToken());
