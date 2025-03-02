@@ -41,6 +41,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const sessionResponse = await getSession();
 
+      console.log('sessionResponse', sessionResponse);
+
       setIsAuthenticated(sessionResponse.isAuthenticated || false);
 
       if (sessionResponse.isAuthenticated && sessionResponse.user) {

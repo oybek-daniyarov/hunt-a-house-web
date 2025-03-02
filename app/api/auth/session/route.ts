@@ -29,6 +29,8 @@ export async function GET(request: NextRequest) {
     try {
       const userResponse = await getCurrentUser();
 
+      console.log('userResponse', userResponse);
+
       if (userResponse.success && userResponse.data) {
         // Return success with user data
         return NextResponse.json({
