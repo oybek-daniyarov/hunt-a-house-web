@@ -18,7 +18,7 @@ export async function getSession(): Promise<{
       {
         method: 'GET',
         credentials: 'include', // Important: This forwards cookies with the request
-        headers: await headers(),
+        headers: new Headers(await headers()),
         next: {
           tags: ['auth'],
         },
@@ -58,7 +58,7 @@ export async function setSession(token: string): Promise<{
       {
         method: 'POST',
         credentials: 'include', // Important: This forwards cookies with the request
-        headers: await headers(),
+        headers: new Headers(await headers()),
         body: JSON.stringify({ token }),
         next: {
           tags: ['auth'],
@@ -100,7 +100,7 @@ export async function clearSession(): Promise<{
       {
         method: 'DELETE',
         credentials: 'include', // Important: This forwards cookies with the request
-        headers: await headers(),
+        headers: new Headers(await headers()),
         next: {
           tags: ['auth'],
         },
