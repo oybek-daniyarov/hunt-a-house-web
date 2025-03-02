@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { deleteToken, getToken } from '@/lib/client/laravel';
+import { getToken } from '@/lib/client/laravel';
 import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
 
 // Paths that are accessible to agents only
@@ -52,7 +52,7 @@ export function withAuth({
 
       // If auth is required but no user was found, redirect to login
       if (requireAuth && !user) {
-        token && (await deleteToken());
+        //token && (await deleteToken());
         return NextResponse.redirect(new URL(loginRedirectUrl, request.url));
       }
 

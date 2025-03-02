@@ -67,7 +67,6 @@ export async function logoutAction() {
     // First try to delete the token locally
     await deleteToken();
 
-    // Then try to logout from the backend
     const response = await authApi.logout();
     if (!response.success) {
       console.warn(
