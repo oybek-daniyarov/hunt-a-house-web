@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { setSession } from '@/lib/client/laravel/auth';
+import { setToken } from '@/lib/client/laravel';
 import { activateLead } from '@/lib/data/laravel/lead/lead.api';
 
 export async function GET(request: NextRequest) {
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  await setSession({ token: response.data?.token || '' });
+  await setToken({ token: response.data?.token || '' });
 
   return NextResponse.redirect(new URL('/dashboard/user/leads', request.url));
 }
