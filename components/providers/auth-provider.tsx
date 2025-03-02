@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 
 import { checkSession, clearSession } from '@/lib/client/laravel/auth';
-import { logout as backendLogout } from '@/lib/data/laravel/auth/auth.api';
+import { logoutAction } from '@/lib/data/laravel/auth/auth.actions';
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -61,17 +61,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const logout = async (): Promise<boolean> => {
     try {
       // First clear the session cookie
-      await clearSession();
-
-      // Then try to logout from the backend
-      try {
-        await backendLogout();
-      } catch (backendError) {
-        console.warn(
-          'Backend logout failed, but session was cleared locally:',
-          backendError
-        );
-      }
+      await Promise.all([clearSession(), logoutAction()]);
 
       // Update local state
       setIsAuthenticated(false);
