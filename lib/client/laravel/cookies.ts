@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { decrypt, encrypt } from '@/lib/client/laravel/crypto';
@@ -47,7 +47,7 @@ export async function deleteToken(): Promise<void> {
     // Delete the cookie again with a different approach as fallback
     cookieStore.delete(env.AUTH_COOKIE_NAME);
 
-    revalidatePath('/');
+    revalidateTag('auth');
     console.log('Token deleted successfully');
   } catch (error) {
     console.error('Error deleting token:', error);

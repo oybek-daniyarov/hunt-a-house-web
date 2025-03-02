@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getToken } from '@/lib/client/laravel';
-import { checkSession } from '@/lib/client/laravel/auth';
+import { deleteToken, getToken } from '@/lib/client/laravel';
+import { getSession } from '@/lib/client/laravel/auth';
 
 // Paths that are accessible to agents only
 const AGENT_PATH = '/dashboard/agent';
@@ -33,10 +33,18 @@ export function withAuth({
       let user = null;
       // If token exists, try to get user data
       if (token) {
-        const { user: data, success } = await checkSession();
-        user = data;
-        if (requireAuth && !success) {
-          return NextResponse.redirect(new URL(loginRedirectUrl, request.url));
+        try {
+          const { user: data, success } = await getSession();
+          user = data;
+          if (requireAuth && !success) {
+            token && (await deleteToken());
+            console.log('Session cleared');
+            return NextResponse.redirect(
+              new URL(loginRedirectUrl, request.url)
+            );
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
         }
       }
 

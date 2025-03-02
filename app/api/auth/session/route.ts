@@ -44,8 +44,8 @@ export async function GET(request: NextRequest) {
 
     // Return basic success response if user data couldn't be fetched
     return NextResponse.json({
-      success: true,
-      isAuthenticated: true,
+      success: false,
+      isAuthenticated: false,
     });
   } catch (error) {
     console.error('Error checking authentication:', error);
@@ -93,28 +93,20 @@ export async function POST(request: NextRequest) {
 
 // Delete session
 export async function DELETE() {
-  try {
-    // Create response with success message
-    const response = NextResponse.json({
-      success: true,
-      message: 'Session deleted successfully',
-    });
+  // Create response with success message
+  const response = NextResponse.json({
+    success: true,
+    message: 'Session deleted successfully',
+  });
 
-    await logout();
+  await logout();
 
-    // Clear the auth cookie by setting it to empty with past expiration
-    response.cookies.set(env.AUTH_COOKIE_NAME, '', {
-      ...COOKIE_OPTIONS,
-      maxAge: 0,
-      expires: new Date(0),
-    });
+  // Delete the auth token cookie
+  response.cookies.set(env.AUTH_COOKIE_NAME, '', {
+    ...COOKIE_OPTIONS,
+    maxAge: 0,
+    expires: new Date(0),
+  });
 
-    return response;
-  } catch (error) {
-    console.error('Error deleting session:', error);
-    return NextResponse.json(
-      { success: false, message: 'Failed to delete session' },
-      { status: 500 }
-    );
-  }
+  return response;
 }

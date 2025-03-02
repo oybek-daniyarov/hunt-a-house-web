@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 
-import { checkSession, clearSession } from '@/lib/client/laravel/auth';
+import { clearSession, getSession } from '@/lib/client/laravel/auth';
 import { logoutAction } from '@/lib/data/laravel/auth/auth.actions';
 
 type AuthContextType = {
@@ -39,7 +39,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const refreshAuth = async (): Promise<void> => {
     setIsLoading(true);
     try {
-      const sessionResponse = await checkSession();
+      const sessionResponse = await getSession();
 
       setIsAuthenticated(sessionResponse.isAuthenticated || false);
 

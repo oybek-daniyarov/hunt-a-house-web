@@ -6,7 +6,7 @@ import { headers } from 'next/headers';
  * Checks if the user is authenticated by verifying the session
  * @returns Promise with authentication status and user data if available
  */
-export async function checkSession(): Promise<{
+export async function getSession(): Promise<{
   success: boolean;
   isAuthenticated: boolean;
   user?: App.Data.User.UserData;
@@ -19,6 +19,9 @@ export async function checkSession(): Promise<{
         method: 'GET',
         credentials: 'include', // Important: This forwards cookies with the request
         headers: await headers(),
+        next: {
+          tags: ['auth'],
+        },
       }
     );
 
@@ -57,6 +60,9 @@ export async function setSession(token: string): Promise<{
         credentials: 'include', // Important: This forwards cookies with the request
         headers: await headers(),
         body: JSON.stringify({ token }),
+        next: {
+          tags: ['auth'],
+        },
       }
     );
 
@@ -95,6 +101,9 @@ export async function clearSession(): Promise<{
         method: 'DELETE',
         credentials: 'include', // Important: This forwards cookies with the request
         headers: await headers(),
+        next: {
+          tags: ['auth'],
+        },
       }
     );
 

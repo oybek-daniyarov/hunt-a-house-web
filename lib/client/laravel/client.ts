@@ -59,11 +59,11 @@ export async function fetchWithAuth(
     response = await fetch(url, fetchOptions);
   } finally {
     if (response && response.status === 401) {
-      throw new Error('UNAUTHORIZED');
+      console.error('Unauthorized');
     }
   }
 
-  if (!response.ok) {
+  if (!response?.ok) {
     await handleErrorResponse(response);
   }
 
