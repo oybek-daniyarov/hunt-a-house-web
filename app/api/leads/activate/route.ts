@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  await setSession(response.data?.token || '');
+  await setSession({ token: response.data?.token || '' });
 
   return NextResponse.redirect(new URL('/dashboard/user/leads', request.url));
 }
