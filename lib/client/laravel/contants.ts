@@ -1,5 +1,5 @@
 import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
 export const COOKIE_OPTIONS: Partial<ResponseCookie> = {
-  maxAge: 30 * 24 * 60 * 60, // 30 days
+  expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
 };
