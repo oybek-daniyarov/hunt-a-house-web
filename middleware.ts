@@ -1,4 +1,3 @@
-import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { deleteToken, getToken } from '@/lib/client/laravel';
@@ -36,8 +35,9 @@ export function withAuth({
       if (token) {
         try {
           const { user: data, success } = await getSession({
-            headers: await headers(),
+            headers: request.headers,
           });
+          console.log('User data:', data);
           user = data;
           if (requireAuth && !success) {
             token && (await deleteToken());

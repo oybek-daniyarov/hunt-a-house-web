@@ -21,7 +21,7 @@ export async function getSession(params?: GetSessionParams): Promise<{
       {
         method: 'GET',
         credentials: 'include', // Important: This forwards cookies with the request
-        ...(headers ? { headers } : {}),
+        ...(headers ? { headers: new Headers(headers) } : {}),
         next: {
           tags: ['auth'],
         },
@@ -69,7 +69,7 @@ export async function setSession(params: SetSessionParams): Promise<{
       {
         method: 'POST',
         credentials: 'include', // Important: This forwards cookies with the request
-        ...(headers ? { headers } : {}),
+        ...(headers ? { headers: new Headers(headers) } : {}),
         body: JSON.stringify({ token }),
         next: {
           tags: ['auth'],
@@ -115,7 +115,7 @@ export async function clearSession(params?: ClearSessionParams): Promise<{
       {
         method: 'DELETE',
         credentials: 'include', // Important: This forwards cookies with the request
-        ...(headers ? { headers } : {}),
+        ...(headers ? { headers: new Headers(headers) } : {}),
         next: {
           tags: ['auth'],
         },
