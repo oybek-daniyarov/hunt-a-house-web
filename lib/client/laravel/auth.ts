@@ -74,8 +74,6 @@ export async function setSession(token: string): Promise<{
       };
     }
 
-    console.log('session set', response.headers);
-
     return await response.json();
   } catch (error) {
     console.error('Error setting session:', error);

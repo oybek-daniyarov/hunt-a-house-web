@@ -4,7 +4,6 @@ import * as React from 'react';
 import { useEffect } from 'react';
 
 import { clearSession, getSession } from '@/lib/client/laravel/auth';
-import { logoutAction } from '@/lib/data/laravel/auth/auth.actions';
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -41,8 +40,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const sessionResponse = await getSession();
 
-      console.log('sessionResponse', sessionResponse);
-
       setIsAuthenticated(sessionResponse.isAuthenticated || false);
 
       if (sessionResponse.isAuthenticated && sessionResponse.user) {
@@ -63,7 +60,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const logout = async (): Promise<boolean> => {
     try {
       // First clear the session cookie
-      await Promise.all([clearSession(), logoutAction()]);
+      await clearSession();
 
       // Update local state
       setIsAuthenticated(false);

@@ -7,14 +7,14 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
+import { getSession } from '@/lib/client/laravel/auth';
 
 export default async function DashboardLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  const user = await getCurrentUser();
+  const { user } = await getSession();
 
   if (!user) {
     redirect('/auth/login');
@@ -22,7 +22,7 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <AppSidebar user={user.data} />
+      <AppSidebar user={user} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
