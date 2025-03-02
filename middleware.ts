@@ -99,4 +99,5 @@ export async function middleware(request: NextRequest) {
 // Configure middleware to run on dashboard routes
 export const config = {
   matcher: ['/dashboard/:path*'],
+  runtime: 'nodejs',
 };
