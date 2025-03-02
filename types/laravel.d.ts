@@ -104,7 +104,7 @@ declare namespace App.Data.Lead {
     minBudget: number | null;
     maxBudget: number | null;
     budgetFrequency: App.Enums.BudgetFrequency | null;
-    user: App.Data.User.UserData | null;
+    agent: App.Data.User.UserData | null;
     createdAt: string;
     isAuthenticated: boolean;
     isUserHadPurchasedLead: boolean;

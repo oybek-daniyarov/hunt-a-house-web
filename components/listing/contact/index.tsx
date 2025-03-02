@@ -48,12 +48,12 @@ export default function ContactModal({ listings }: ContactModalProps) {
   if (!activeListing) return null;
 
   // Determine user state
-  const isAgent = activeListing.user?.userType === 'agent';
-  const credits = activeListing.user?.credits || 0;
+  const isAgent = activeListing.agent?.userType === 'agent';
+  const credits = activeListing.agent?.credits || 0;
   const isPurchased = activeListing.isUserHadPurchasedLead && isAgent;
 
   // User state logic:
-  // 1. If user has purchased the lead, show contact details
+  // 1. If user has purchased the lead, show contact details regardless of user type
   // 2. If user is an agent (with or without credits), show credit view
   // 3. Otherwise, user is a guest, show guest view
 
