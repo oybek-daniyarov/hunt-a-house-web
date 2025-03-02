@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { getToken } from '@/lib/client/laravel';
-import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
+import { checkSession } from '@/lib/client/laravel/auth';
 
 // Paths that are accessible to agents only
 const AGENT_PATH = '/dashboard/agent';
@@ -26,27 +26,17 @@ export function withAuth({
       // Check if auth cookie exists
       const token = await getToken();
 
-      // If no token and auth is required, redirect to login
+      // If no token and auth is required, redirect to log in
       if (!token && requireAuth) {
         return NextResponse.redirect(new URL(loginRedirectUrl, request.url));
       }
-
-      // If token exists, try to get user data
       let user = null;
+      // If token exists, try to get user data
       if (token) {
-        try {
-          const { data, success } = await getCurrentUser();
-          if (success && data) {
-            user = data;
-          }
-        } catch (error) {
-          console.error('Error fetching user data in middleware:', error);
-          // If auth is required and we couldn't get user data, redirect to login
-          if (requireAuth) {
-            return NextResponse.redirect(
-              new URL(loginRedirectUrl, request.url)
-            );
-          }
+        const { user: data, success } = await checkSession();
+        user = data;
+        if (requireAuth && !success) {
+          return NextResponse.redirect(new URL(loginRedirectUrl, request.url));
         }
       }
 
@@ -56,7 +46,7 @@ export function withAuth({
         return NextResponse.redirect(new URL(loginRedirectUrl, request.url));
       }
 
-      // If user exists and we have required user types, check if user has the required type
+      // If user exists, and we have required user types, check if user has the required type
       if (user && requiredUserTypes.length > 0) {
         if (!requiredUserTypes.includes(user.userType)) {
           return NextResponse.redirect(
