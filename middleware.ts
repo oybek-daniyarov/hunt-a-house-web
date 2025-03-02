@@ -37,7 +37,6 @@ export function withAuth({
           const { user: data, success } = await getSession({
             headers: request.headers,
           });
-          console.log('User data:', data);
           user = data;
           if (requireAuth && !success) {
             token && (await deleteToken());

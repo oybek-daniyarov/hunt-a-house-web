@@ -8,7 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
+import { getSession } from '@/lib/client/laravel/auth';
 
 type NavItem = {
   title: string;
@@ -19,7 +19,7 @@ type NavItem = {
 };
 
 export async function NavMain() {
-  const { data: user } = await getCurrentUser();
+  const { user } = await getSession();
 
   const items: NavItem[] = [
     {

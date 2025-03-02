@@ -16,11 +16,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { getCurrentUser } from '@/lib/data/laravel/auth/auth.api';
+import { getSession } from '@/lib/client/laravel/auth';
 import { LogoutMenuItem } from './logout-menu-item';
 
 export async function NavUser() {
-  const { data: user, success } = await getCurrentUser();
+  const { user, success } = await getSession();
 
   if (!success || !user) {
     return null;
