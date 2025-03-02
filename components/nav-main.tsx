@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import Link from 'next/link';
 import { Building2, FileText, Home, Users } from 'lucide-react';
 
@@ -19,7 +20,9 @@ type NavItem = {
 };
 
 export async function NavMain() {
-  const { user } = await getSession();
+  const { user } = await getSession({
+    headers: await headers(),
+  });
 
   const items: NavItem[] = [
     {

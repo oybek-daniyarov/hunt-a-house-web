@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import { CaretSortIcon, ComponentPlaceholderIcon } from '@radix-ui/react-icons';
 import { BadgeCheck, Bell, Sparkles } from 'lucide-react';
 
@@ -20,7 +21,9 @@ import { getSession } from '@/lib/client/laravel/auth';
 import { LogoutMenuItem } from './logout-menu-item';
 
 export async function NavUser() {
-  const { user, success } = await getSession();
+  const { user, success } = await getSession({
+    headers: await headers(),
+  });
 
   if (!success || !user) {
     return null;
