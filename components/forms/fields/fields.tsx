@@ -1,3 +1,5 @@
+import { Country } from 'react-phone-number-input';
+
 import { NumberInput } from '@/components/forms/fields';
 import { FormFieldWrapper } from '@/components/forms/fields/form-field-wrapper';
 import { NumberInputProps } from '@/components/forms/fields/number-input';
@@ -5,6 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { LocationSearch } from '@/components/ui/location-search';
 import MultipleSelector from '@/components/ui/multiple-selector';
+import { PhoneInput } from '@/components/ui/phone-input';
 import {
   Select,
   SelectContent,
@@ -179,6 +182,26 @@ export const CheckboxField = ({
           onCheckedChange={field.onChange}
         />
       )}
+    </FormFieldWrapper>
+  );
+};
+
+type PhoneInputFieldProps = {
+  name: string;
+  label: React.ReactNode;
+  description?: React.ReactNode;
+  defaultCountry?: Country;
+};
+
+export const PhoneInputField = ({
+  name,
+  label,
+  description,
+  defaultCountry = 'AE',
+}: PhoneInputFieldProps) => {
+  return (
+    <FormFieldWrapper name={name} label={label} description={description}>
+      {(field) => <PhoneInput {...field} defaultCountry={defaultCountry} />}
     </FormFieldWrapper>
   );
 };

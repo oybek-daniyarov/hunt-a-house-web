@@ -4,6 +4,22 @@ declare namespace App.Data {
     value: string;
   };
 }
+declare namespace App.Data.Agent.Payload {
+  export type CreateAgentPayloadData = {
+    name: string;
+    email: string;
+    phone: string | null;
+    companyName: string;
+    companyType: App.Enums.CompanyType;
+    companySize: number;
+    locationId: string;
+    address: string | null;
+    website: string | null;
+    reraNumber: string | null;
+    tradeLicense: string | null;
+    additionalInfo: string | null;
+  };
+}
 declare namespace App.Data.Auth {
   export type CreateEmailAccountData = {
     email: string;

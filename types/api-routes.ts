@@ -8,6 +8,9 @@ export interface Route {
 }
 
 export type Routes = {
+  // agents routes
+  'agents.store': Route;
+
   // auth routes
   'auth.forgot-password': Route;
   'auth.login': Route;
@@ -39,6 +42,12 @@ export type Routes = {
 };
 
 export const routes = {
+  // agents routes
+  'agents.store': {
+    path: 'api/v1/agents',
+    method: 'post',
+  },
+
   // auth routes
   'auth.forgot-password': {
     path: 'api/v1/auth/forgot-password',

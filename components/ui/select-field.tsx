@@ -22,6 +22,7 @@ interface SelectFieldProps {
   label: string;
   placeholder: string;
   options: Option[];
+  description?: string;
 }
 
 export function SelectField({
@@ -30,6 +31,7 @@ export function SelectField({
   label,
   placeholder,
   options,
+  description,
 }: SelectFieldProps) {
   return (
     <FormFieldWrapper control={control} name={name} label={label}>
