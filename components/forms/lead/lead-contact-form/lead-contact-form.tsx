@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { InputField, SubmitButton } from '@/components/forms/fields';
-import { CheckboxField } from '@/components/forms/fields/fields';
+import { CheckboxField, SelectField } from '@/components/forms/fields/fields';
 import { useAuth } from '@/components/providers/auth-provider';
 import { Form } from '@/components/ui/form';
 import { FormHeader } from '../form-header';
@@ -14,6 +14,13 @@ import { useLeadForm } from './use-lead-form';
 const LeadContactForm = () => {
   const { form, onSubmit } = useLeadForm();
   const { isAuthenticated } = useAuth();
+
+  const maxViewsOptions = Array.from({ length: 10 }, (_, i) => i + 1).map(
+    (value) => ({
+      label: `${value} views`,
+      value: value.toString(),
+    })
+  );
 
   return (
     <Form {...form}>
@@ -41,13 +48,11 @@ const LeadContactForm = () => {
               />
             ))}
           </div>
-          <InputField
+          <SelectField
             name="maxViews"
-            type="number"
             label="Max Views"
             description="Control your lead's visibility by setting how many agents can view it. More views means more potential matches, but you may receive more contacts. Choose between 1-10 agents."
-            min={1}
-            max={10}
+            options={maxViewsOptions}
           />
         </div>
 

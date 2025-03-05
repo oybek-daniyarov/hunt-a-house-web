@@ -7,7 +7,7 @@ export const leadContactFormSchema = z.object({
     .boolean()
     .refine((val) => val, 'Please accept the terms and conditions'),
   maxViews: z
-    .number()
+    .string()
     .min(1, 'Please enter a valid number')
     .max(10, 'Max views must be less than 10'),
   contact: z

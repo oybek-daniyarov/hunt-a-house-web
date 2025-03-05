@@ -30,7 +30,7 @@ export const useLeadForm = () => {
         telegram: '',
       },
       email: '',
-      maxViews: 10,
+      maxViews: '10',
       terms: false,
     },
     mode: 'onBlur',
@@ -104,7 +104,7 @@ export const useLeadForm = () => {
         // @ts-expect-error - contact is optional
         contact: data.contact,
         email: data.email,
-        maxViews: data.maxViews,
+        maxViews: Number(data.maxViews),
       });
 
       if (result.success) {
