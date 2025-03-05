@@ -75,6 +75,8 @@ type InputFieldProps = {
   min?: number;
   max?: number;
   description?: string;
+  placeholder?: string;
+  className?: string;
 };
 
 export const InputField = ({
@@ -84,10 +86,25 @@ export const InputField = ({
   min,
   max,
   description,
+  placeholder,
+  className,
 }: InputFieldProps) => {
   return (
-    <FormFieldWrapper name={name} label={label} description={description}>
-      {(field) => <Input {...field} type={type} min={min} max={max} />}
+    <FormFieldWrapper
+      name={name}
+      label={label}
+      description={description}
+      className={className}
+    >
+      {(field) => (
+        <Input
+          {...field}
+          type={type}
+          min={min}
+          max={max}
+          placeholder={placeholder}
+        />
+      )}
     </FormFieldWrapper>
   );
 };

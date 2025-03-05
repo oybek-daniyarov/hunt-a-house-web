@@ -1,10 +1,9 @@
 import { z } from 'zod';
 
 export const agentDetailsStepSchema = z.object({
-  address: z.string().optional().nullable(),
-  website: z.string().url('Please enter a valid URL').optional().nullable(),
-  reraNumber: z.string().optional().nullable(),
-  tradeLicense: z.string().optional().nullable(),
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Please enter a valid email'),
+  phone: z.string().min(1, 'Phone number is required'),
   additionalInfo: z.string().optional().nullable(),
   terms: z
     .boolean()

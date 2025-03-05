@@ -13,7 +13,6 @@ import {
   SelectField,
   SubmitButton,
 } from '@/components/forms/fields';
-import { PhoneInputField } from '@/components/forms/fields/fields';
 import { useSteps } from '@/components/steps/step-provider';
 import { Form } from '@/components/ui/form';
 
@@ -28,14 +27,16 @@ const mapCompanyTypeToLabel = (type: App.Enums.CompanyType) => {
 };
 
 export function AgentInfoStep({ locations }: AgentInfoStepProps) {
+  'use no memo';
   const { updateStepData, goToNextStep } = useSteps();
 
   const form = useForm<AgentInfoStepData>({
     resolver: zodResolver(agentInfoStepSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      phone: '',
+      address: '',
+      website: '',
+      reraNumber: '',
+      tradeLicense: '',
       companyName: '',
       companyType: companyTypes[0],
       companySize: '1',
@@ -75,14 +76,6 @@ export function AgentInfoStep({ locations }: AgentInfoStepProps) {
         />
         <div className="grid grid-cols-2 gap-3">
           <div className="col-span-2">
-            <InputField name="name" label="Full Name*" />
-          </div>
-
-          <InputField name="email" label="Email*" />
-
-          <PhoneInputField name="phone" label="Phone*" defaultCountry="AE" />
-
-          <div className="col-span-2">
             <InputField name="companyName" label="Company Name*" />
           </div>
 
@@ -98,16 +91,39 @@ export function AgentInfoStep({ locations }: AgentInfoStepProps) {
             options={companySizeOptions}
           />
 
-          <div className="col-span-2">
-            <SelectField
-              name="locationId"
-              label="Emirate*"
-              options={locations.map((location) => ({
-                label: location.name,
-                value: location.id.toString(),
-              }))}
-            />
-          </div>
+          <SelectField
+            name="locationId"
+            label="Emirate*"
+            options={locations.map((location) => ({
+              label: location.name,
+              value: location.id.toString(),
+            }))}
+          />
+
+          <InputField
+            name="website"
+            label="Website"
+            placeholder="https://example.com"
+          />
+
+          <InputField
+            name="reraNumber"
+            label="RERA Number"
+            description="Your Real Estate Regulatory Agency registration number"
+          />
+
+          <InputField
+            name="tradeLicense"
+            label="Trade License"
+            description="Your company trade license number"
+          />
+
+          <InputField
+            name="address"
+            label="Address"
+            description="Your office address"
+            className="col-span-2"
+          />
 
           {form.formState.errors.root && (
             <p className="col-span-2 text-sm font-medium text-destructive">

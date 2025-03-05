@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { cn } from '@/lib/utils';
 
 interface FormFieldWrapperProps {
   name: string;
@@ -22,6 +23,7 @@ interface FormFieldWrapperProps {
   children: (field: ControllerRenderProps<FieldValues, string>) => ReactNode;
   reverseLabel?: boolean;
   description?: React.ReactNode;
+  className?: string;
 }
 
 export function FormFieldWrapper({
@@ -30,6 +32,7 @@ export function FormFieldWrapper({
   children,
   description,
   reverseLabel = false,
+  className,
 }: FormFieldWrapperProps) {
   const { control } = useFormContext();
   return (
@@ -38,11 +41,12 @@ export function FormFieldWrapper({
       name={name}
       render={({ field }) => (
         <FormItem
-          className={
+          className={cn(
             reverseLabel
               ? 'flex flex-row-reverse flex-wrap items-center gap-2 space-y-0 justify-end'
-              : ''
-          }
+              : '',
+            className
+          )}
         >
           <FormLabel>{label}</FormLabel>
           <FormControl>{children(field)}</FormControl>

@@ -13,10 +13,6 @@ type AgentStepsProps = {
 type AgentStepData = {
   agentInfo: AgentInfoStepData;
   agentDetails: AgentDetailsStepData;
-  user: {
-    isAuthenticated: boolean;
-    user: App.Data.User.UserData | null;
-  };
 };
 
 const AgentSteps = ({ locations }: AgentStepsProps) => {
@@ -24,25 +20,21 @@ const AgentSteps = ({ locations }: AgentStepsProps) => {
 
   const initialData: AgentStepData = {
     agentInfo: {
-      name: '',
-      email: '',
-      phone: '',
       companyName: '',
       companyType: '',
       companySize: '1',
       locationId: '',
-    },
-    agentDetails: {
       address: '',
       website: '',
       reraNumber: '',
       tradeLicense: '',
+    },
+    agentDetails: {
+      name: '',
+      email: '',
+      phone: '',
       additionalInfo: '',
       terms: false,
-    },
-    user: {
-      isAuthenticated: false,
-      user: null,
     },
   };
 

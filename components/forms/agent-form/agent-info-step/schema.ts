@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
 export const agentInfoStepSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Please enter a valid email'),
-  phone: z.string().min(1, 'Phone number is required'),
+  address: z.string().optional().nullable(),
+  website: z.string().url('Please enter a valid URL'),
+  reraNumber: z.string().min(1, 'RERA number is required'),
+  tradeLicense: z.string().min(1, 'Trade license is required'),
   companyName: z.string().min(1, 'Company name is required'),
   companyType: z.string().min(1, 'Company type is required'),
   companySize: z.string().min(1, 'Company size is required'),

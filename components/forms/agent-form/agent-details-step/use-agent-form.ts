@@ -23,10 +23,9 @@ export const useAgentForm = () => {
   const form = useForm<AgentDetailsStepData>({
     resolver: zodResolver(agentDetailsStepSchema),
     defaultValues: {
-      address: '',
-      website: '',
-      reraNumber: '',
-      tradeLicense: '',
+      name: '',
+      email: '',
+      phone: '',
       additionalInfo: '',
       terms: false,
     },
@@ -36,18 +35,18 @@ export const useAgentForm = () => {
   const onSubmit = async (data: AgentDetailsStepData) => {
     try {
       const result = await createAgentAction({
-        name: stepData.agentInfo.name,
-        email: stepData.agentInfo.email,
-        phone: stepData.agentInfo.phone,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        additionalInfo: data.additionalInfo || null,
         companyName: stepData.agentInfo.companyName,
         companyType: stepData.agentInfo.companyType as App.Enums.CompanyType,
         companySize: stepData.agentInfo.companySize,
         locationId: stepData.agentInfo.locationId,
-        address: data.address || null,
-        website: data.website || null,
-        reraNumber: data.reraNumber || null,
-        tradeLicense: data.tradeLicense || null,
-        additionalInfo: data.additionalInfo || null,
+        address: stepData.agentInfo.address || null,
+        website: stepData.agentInfo.website || null,
+        reraNumber: stepData.agentInfo.reraNumber || null,
+        tradeLicense: stepData.agentInfo.tradeLicense || null,
       });
 
       if (result.success) {

@@ -10,6 +10,7 @@ const createAgentAction = async (
   data: App.Data.Agent.Payload.CreateAgentPayloadData
 ) => {
   const response = await createAgent(data);
+
   if (!response.success) {
     return createErrorResponse(
       response.error?.message || 'Create agent failed',

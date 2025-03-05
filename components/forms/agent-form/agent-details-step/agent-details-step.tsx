@@ -9,10 +9,15 @@ import {
   SubmitButton,
   TextareaField,
 } from '@/components/forms/fields';
-import { CheckboxField } from '@/components/forms/fields/fields';
+import {
+  CheckboxField,
+  PhoneInputField,
+} from '@/components/forms/fields/fields';
 import { Form } from '@/components/ui/form';
 
 export function AgentDetailsStep() {
+  'use no memo';
+
   const { form, onSubmit } = useAgentForm();
 
   return (
@@ -22,31 +27,13 @@ export function AgentDetailsStep() {
           title="Additional Details"
           description="Please provide additional information about your agency"
         />
+
         <div className="space-y-3">
-          <InputField
-            name="address"
-            label="Address"
-            description="Your office address"
-          />
+          <InputField name="name" label="Full Name*" />
 
-          <InputField
-            name="website"
-            label="Website"
-            description="Your company website"
-          />
+          <InputField name="email" label="Email*" />
 
-          <InputField
-            name="reraNumber"
-            label="RERA Number"
-            description="Your Real Estate Regulatory Agency registration number"
-          />
-
-          <InputField
-            name="tradeLicense"
-            label="Trade License"
-            description="Your company trade license number"
-          />
-
+          <PhoneInputField name="phone" label="Phone*" defaultCountry="AE" />
           <TextareaField name="additionalInfo" label="Additional Information" />
         </div>
 
