@@ -45,7 +45,7 @@ export default function RootLayout({
       <link rel="icon" href="/favicon.ico" />
       <body
         className={cn(
-          'min-h-screen flex flex-col bg-background font-sans antialiased overscroll-none',
+          'min-h-screen h-px flex flex-col bg-background font-sans antialiased overscroll-none',
           fontSans.variable
         )}
       >
