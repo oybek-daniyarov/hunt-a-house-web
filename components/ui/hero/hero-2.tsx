@@ -35,10 +35,15 @@ export default function Hero2({
     <div
       className={cn(
         'relative w-full dark:bg-background',
-        isFullScreen ? 'min-h-[calc(100vh-4rem)]' : 'py-20 lg:pt-40'
+        isFullScreen ? 'min-h-[calc(100vh-4rem)]' : 'py-20'
       )}
     >
-      <div className="container h-full flex flex-col justify-center">
+      <div
+        className={cn(
+          'container min-h flex flex-col justify-center',
+          isFullScreen && 'min-h-[calc(100vh-4rem)]'
+        )}
+      >
         <div className="text-center">
           {tagLine && (
             <motion.h1

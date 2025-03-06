@@ -171,6 +171,40 @@ declare namespace App.Data.Media {
     preview_url: string | null;
   };
 }
+declare namespace App.Data.Product.Dto {
+  export type PaymentHistoryData = {
+    id: number;
+    stripeId: string;
+    amount: { amount: number; currency: string };
+    status: App.Enums.PaymentStatus;
+    paymentMethodType: App.Enums.PaymentMethodType;
+    receiptUrl: string | null;
+    credits: number;
+    createdAt: string;
+  };
+  export type PaymentSuccessData = {
+    payment: Array<any>;
+    dashboardUrl: string;
+    receiptUrl: string | null;
+    formattedDate: string;
+    formattedAmount: string;
+    currency: string;
+    paymentId: string;
+    credits: number;
+    success: boolean;
+    error: string | null;
+  };
+  export type PurchaseResponseData = {
+    checkoutUrl: string;
+    success: boolean;
+    error: string | null;
+  };
+}
+declare namespace App.Data.Product.Payload {
+  export type PurchasePayloadData = {
+    quantity: number | null;
+  };
+}
 declare namespace App.Data.User {
   export type ContactData = {
     name: string;
@@ -227,6 +261,33 @@ declare namespace App.Enums {
     | 'closed'
     | 'expired';
   export type PaymentMethod = 'stripe' | 'bank_transfer' | 'crypto';
+  export type PaymentMethodType =
+    | 'card'
+    | 'link'
+    | 'alipay'
+    | 'bancontact'
+    | 'eps'
+    | 'giropay'
+    | 'ideal'
+    | 'p24'
+    | 'sepa_debit'
+    | 'sofort'
+    | 'afterpay_clearpay'
+    | 'klarna'
+    | 'paypal'
+    | 'apple_pay'
+    | 'google_pay'
+    | 'wechat_pay'
+    | 'unknown';
+  export type PaymentStatus =
+    | 'succeeded'
+    | 'processing'
+    | 'requires_payment_method'
+    | 'requires_confirmation'
+    | 'requires_action'
+    | 'requires_capture'
+    | 'canceled'
+    | 'failed';
   export type PropertyType = 'room' | 'apartment' | 'townhouse' | 'villa';
   export type TransactionType = 'purchase' | 'usage' | 'refund';
   export type UserStatus = 'pending' | 'active' | 'suspended' | 'banned';

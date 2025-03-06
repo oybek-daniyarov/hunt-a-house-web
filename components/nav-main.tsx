@@ -1,6 +1,6 @@
 import { headers } from 'next/headers';
 import Link from 'next/link';
-import { Building2, FileText, Home, Users } from 'lucide-react';
+import { CreditCard, FileText, Home, Users } from 'lucide-react';
 
 import {
   SidebarGroup,
@@ -44,9 +44,9 @@ export async function NavMain() {
       userTypes: ['agent'],
     },
     {
-      title: 'Properties',
-      url: '/dashboard/properties',
-      icon: Building2,
+      title: 'Buy Tokens',
+      url: '/dashboard/products',
+      icon: CreditCard,
       userTypes: ['agent'],
     },
     {

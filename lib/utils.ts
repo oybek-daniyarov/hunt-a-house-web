@@ -45,3 +45,10 @@ export function count(
   const num = typeof arr === 'number' ? arr : arr?.length || 0;
   return `${num || 0} ${num === 1 ? singular : plural || singular + 's'}`;
 }
+
+export function toMoney(amount: number, currency: string = 'AED') {
+  return new Intl.NumberFormat('en-AE', {
+    style: 'currency',
+    currency: currency,
+  }).format(amount);
+}

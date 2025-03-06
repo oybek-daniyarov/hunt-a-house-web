@@ -41,7 +41,7 @@ export default function Hero1({
         isFullScreen ? 'min-h-[calc(100vh-4rem)]' : 'py-20 lg:pt-40'
       )}
     >
-      <div className="container h-full">
+      <div className="container min-h-[calc(100vh-4rem)]">
         <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-10">
           <div className="flex flex-col justify-center">
             {tagLine && (

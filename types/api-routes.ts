@@ -39,6 +39,16 @@ export type Routes = {
   'locations.search': Route;
   'locations.show': Route;
   'locations.tree': Route;
+
+  // products routes
+  'products.cancel': Route;
+  'products.payment-detail': Route;
+  'products.payment-history': Route;
+  'products.purchase': Route;
+  'products.verify-payment': Route;
+
+  // webhooks routes
+  'webhooks.stripe': Route;
 };
 
 export const routes = {
@@ -144,6 +154,34 @@ export const routes = {
   'locations.tree': {
     path: 'api/v1/locations/tree',
     method: 'get',
+  },
+
+  // products routes
+  'products.cancel': {
+    path: 'api/v1/products/cancel',
+    method: 'get',
+  },
+  'products.payment-detail': {
+    path: 'api/v1/products/payments/${id}',
+    method: 'get',
+  },
+  'products.payment-history': {
+    path: 'api/v1/products/payment-history',
+    method: 'get',
+  },
+  'products.purchase': {
+    path: 'api/v1/products/purchase',
+    method: 'post',
+  },
+  'products.verify-payment': {
+    path: 'api/v1/products/verify-payment',
+    method: 'get',
+  },
+
+  // webhooks routes
+  'webhooks.stripe': {
+    path: 'api/v1/webhooks/stripe',
+    method: 'post',
   },
 } as const;
 
