@@ -12,7 +12,7 @@ import { CONTACT_METHODS } from './contact-methods';
 import { useLeadForm } from './use-lead-form';
 
 const LeadContactForm = () => {
-  const { form, onSubmit } = useLeadForm();
+  const { form, onSubmit, error } = useLeadForm();
   const { isAuthenticated } = useAuth();
 
   const maxViewsOptions = Array.from({ length: 10 }, (_, i) => i + 1).map(
@@ -31,6 +31,11 @@ const LeadContactForm = () => {
         />
 
         <div className="space-y-3">
+          {error && (
+            <div className="text-red-500 text-sm bg-red-50 p-2 rounded-md border border-red-100">
+              {error}
+            </div>
+          )}
           {!isAuthenticated && (
             <InputField
               name="email"

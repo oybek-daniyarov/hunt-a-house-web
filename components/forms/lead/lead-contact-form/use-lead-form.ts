@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
@@ -18,6 +18,7 @@ const SUCCESS_REDIRECT_PATH = '/dashboard/user/leads';
 
 export const useLeadForm = () => {
   const { updateStepData, stepData } = useSteps();
+  const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
   const router = useRouter();
   const form = useForm<LeadContactFormData>({
@@ -80,7 +81,7 @@ export const useLeadForm = () => {
 
   const onSubmit = async (data: LeadContactFormData) => {
     updateStepData({ data });
-
+    setError(null);
     try {
       const result = await createLeadAction({
         locations: stepData.lead.location,
@@ -112,15 +113,18 @@ export const useLeadForm = () => {
         router.push(SUCCESS_REDIRECT_PATH);
       } else {
         toast.error(result.error?.message || ERROR_MESSAGE);
+        setError(result.error?.message || ERROR_MESSAGE);
       }
     } catch (error) {
       console.error('Failed to create lead:', error);
       toast.error(ERROR_MESSAGE_UNEXPECTED);
+      setError(ERROR_MESSAGE_UNEXPECTED);
     }
   };
 
   return {
     form,
     onSubmit,
+    error,
   };
 };
