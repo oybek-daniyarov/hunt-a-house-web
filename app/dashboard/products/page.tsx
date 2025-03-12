@@ -10,8 +10,8 @@ const ProductsList = dynamic(() => import('./components/products-list'), {
 });
 
 export const metadata: Metadata = {
-  title: 'Products & Credits | HuntAHouse',
-  description: 'Purchase credits to access leads and grow your business',
+  title: 'Buy Tokens | HuntAHouse',
+  description: 'Purchase tokens to access leads and grow your business',
 };
 
 export default async function ProductsPage({
@@ -27,9 +27,9 @@ export default async function ProductsPage({
     <section className="my-8 px-4">
       <div className="max-w-3xl space-y-8">
         <div className="text-center sm:text-start">
-          <h1 className="text-2xl font-bold md:text-3xl">Products & Credits</h1>
+          <h1 className="text-2xl font-bold md:text-3xl">Buy Tokens</h1>
           <p className="text-muted-foreground">
-            Purchase credits to access leads and grow your business
+            Purchase tokens to access leads and grow your business
           </p>
         </div>
 
