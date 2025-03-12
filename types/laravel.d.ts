@@ -124,6 +124,7 @@ declare namespace App.Data.Lead {
     createdAt: string;
     isAuthenticated: boolean;
     isUserHadPurchasedLead: boolean;
+    creditCost: number;
     contactMethods: Array<App.Data.ContactMethodData>;
     owner: { id: string; name: string; email: string };
   };

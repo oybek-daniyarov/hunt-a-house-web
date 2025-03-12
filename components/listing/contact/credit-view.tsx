@@ -43,15 +43,17 @@ export function CreditView({ listing, credits = 0 }: CreditViewProps) {
               />
             </div>
             <div>
-              <p className="text-sm font-medium">Your Credits</p>
+              <p className="text-sm font-medium">Your Tokens</p>
               <p className="text-sm text-muted-foreground">
-                {credits} credit{credits !== 1 ? 's' : ''} available
+                {credits} token{credits !== 1 ? 's' : ''} available
               </p>
             </div>
           </div>
           <div className="text-right">
             <p className="text-sm font-medium">Cost</p>
-            <p className="text-sm text-muted-foreground">1 credit</p>
+            <p className="text-sm text-muted-foreground">
+              {listing?.creditCost}
+            </p>
           </div>
         </div>
 
@@ -86,8 +88,9 @@ export function CreditView({ listing, credits = 0 }: CreditViewProps) {
         </div>
       </div>
 
-      <p className="text-center text-sm text-muted-foreground">
-        Contact details will be instantly revealed after using 1 credit
+      <p className="text-center text-xs text-muted-foreground">
+        Contact details will be instantly revealed after using{' '}
+        {listing.creditCost} token{listing.creditCost !== 1 ? 's' : ''}
       </p>
     </div>
   );
