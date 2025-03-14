@@ -1,6 +1,7 @@
 ## [Unreleased]
 
 ### Added
+
 - Added support for Laravel paginated responses in the API client
 - Added new `list<T>` method to LaravelClient for handling paginated endpoints
 - Added `PaginatedResponse` and `PaginationLink` types to support Laravel's pagination structure
@@ -15,6 +16,7 @@
 - Added support for Laravel's query parameter format
 
 ### Changed
+
 - Modified `getLeads` to use the new `list` method instead of `get`
 - Updated type imports in LaravelClient to include PaginatedResponse
 - Refactored list method to accept a single options parameter
@@ -31,6 +33,7 @@
 - Improved filter parameter mapping with constants
 
 ### Technical Details
+
 - The new pagination support matches Laravel's standard pagination response format
 - Added proper typing for all pagination metadata including links, page numbers, and counts
 - Default pagination shows 15 items per page but can be customized
@@ -43,4 +46,4 @@
 - Improved error handling with proper type assertions
 - Separated concerns between filter building and API calls
 - Added type-safe filter field mappings
-- Improved maintainability with smaller, focused files 
+- Improved maintainability with smaller, focused files
