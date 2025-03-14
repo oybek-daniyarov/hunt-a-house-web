@@ -1,12 +1,14 @@
-export default function Page() {
-  return (
-    <>
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
-      </div>
-      <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-    </>
-  );
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
+
+import { getSession } from '@/lib/client/laravel/auth';
+
+export default async function Page() {
+  const { user } = await getSession({ headers: await headers() });
+
+  if (user?.userType === 'agent') {
+    return redirect('/dashboard/agent/leads');
+  }
+
+  return redirect('/dashboard/user/leads');
 }

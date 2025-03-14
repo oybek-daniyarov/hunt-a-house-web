@@ -27,6 +27,7 @@ export type Routes = {
   'leads.mine': Route;
   'leads.mine.update-status': Route;
   'leads.purchase': Route;
+  'leads.purchased': Route;
   'leads.show': Route;
   'leads.store': Route;
 
@@ -111,8 +112,12 @@ export const routes = {
     method: 'patch',
   },
   'leads.purchase': {
-    path: 'api/v1/leads/purchase/{leadId}',
+    path: 'api/v1/leads/purchase/{uuid}',
     method: 'post',
+  },
+  'leads.purchased': {
+    path: 'api/v1/leads/purchased',
+    method: 'get',
   },
   'leads.show': {
     path: 'api/v1/leads/{lead}',

@@ -1,6 +1,6 @@
 import { headers } from 'next/headers';
 import Link from 'next/link';
-import { CreditCard, FileText, Home, Users } from 'lucide-react';
+import { CreditCard, FileText } from 'lucide-react';
 
 import {
   SidebarGroup,
@@ -26,34 +26,22 @@ export async function NavMain() {
 
   const items: NavItem[] = [
     {
-      title: 'Dashboard',
-      url: '/dashboard',
-      icon: Home,
-      isActive: true,
-    },
-    {
       title: 'My Leads',
       url: '/dashboard/user/leads',
       icon: FileText,
       userTypes: ['user'],
     },
     {
-      title: 'Lead Management',
-      url: '/dashboard/leads',
+      title: 'My Leads',
+      url: '/dashboard/agent/leads',
       icon: FileText,
       userTypes: ['agent'],
     },
     {
       title: 'Buy Tokens',
-      url: '/dashboard/products',
+      url: '/dashboard/agent/tokens',
       icon: CreditCard,
       userTypes: ['agent'],
-    },
-    {
-      title: 'Users',
-      url: '/dashboard/users',
-      icon: Users,
-      userTypes: ['admin'],
     },
   ];
 

@@ -61,7 +61,10 @@ export function SuccessCard({ paymentData }: SuccessCardProps) {
 
         <CardFooter>
           <Button className="w-full" asChild>
-            <Link href="/dashboard" className="flex items-center gap-2">
+            <Link
+              href="/dashboard/agent/tokens"
+              className="flex items-center gap-2"
+            >
               <ArrowLeft className="h-4 w-4" />
               Back to Dashboard
             </Link>

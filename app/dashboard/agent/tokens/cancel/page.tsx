@@ -38,7 +38,7 @@ export default async function CancelPaymentPage() {
         </CardContent>
         <CardFooter className="flex justify-center">
           <Button asChild>
-            <Link href="/dashboard/products">Return to Products</Link>
+            <Link href="/dashboard/agent/tokens">Return to Tokens</Link>
           </Button>
         </CardFooter>
       </Card>

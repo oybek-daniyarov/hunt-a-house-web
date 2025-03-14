@@ -77,6 +77,32 @@ export async function getMineLeads(
   return await list<App.Data.Lead.LeadData>(url, LEAD_TAGS);
 }
 
+type PurchasedLeadsParams = {
+  page?: number;
+  status?: App.Enums.LeadStatus;
+};
+
+export async function getPurchasedLeads(
+  params: PurchasedLeadsParams = {}
+): Promise<PaginatedResponse<App.Data.Lead.LeadData>> {
+  const url = createUrl(routes['leads.purchased'], {
+    page: params.page ? parseInt(params.page.toString()) : 1,
+    ...params,
+  });
+  return await list<App.Data.Lead.LeadData>(url, LEAD_TAGS);
+}
+
+export async function getPurchasedLeadById(
+  id: string
+): Promise<App.Data.Lead.LeadData> {
+  const url = createUrl(routes['leads.show'], { lead: id });
+  return await get<App.Data.Lead.LeadData>(url, LEAD_TAGS);
+}
+
+export async function getLeadById(id: string): Promise<App.Data.Lead.LeadData> {
+  return getPurchasedLeadById(id);
+}
+
 export async function purchaseLead(leadId: string) {
   const url = createUrl(routes['leads.purchase'], { leadId });
   console.log('url', url);
@@ -97,6 +123,7 @@ export async function purchaseLead(leadId: string) {
   revalidatePath('/dashboard', 'layout');
   revalidatePath('/dashboard/user', 'layout');
   revalidatePath('/dashboard/user/leads');
+  revalidatePath('/dashboard/agent/leads'); // Revalidate the agent leads page
 
   return response;
 }
