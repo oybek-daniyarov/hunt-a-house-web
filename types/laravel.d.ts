@@ -136,6 +136,11 @@ declare namespace App.Data.Lead {
     id: number;
     name: string;
   };
+  export type PurchaseLeadResponseData = {
+    success: boolean;
+    message: string;
+    lead: App.Data.Lead.LeadData | null;
+  };
 }
 declare namespace App.Data.Lead.Payload {
   export type ActivateLeadPayloadData = {

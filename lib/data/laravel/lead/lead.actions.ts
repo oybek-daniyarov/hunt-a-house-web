@@ -5,7 +5,7 @@ import { headers } from 'next/headers';
 import { createErrorResponse } from '@/lib/client/laravel';
 import { setSession } from '@/lib/client/laravel/auth';
 import { createSuccessResponse } from '@/lib/client/laravel/helpers';
-import { activateLead, createLead } from './lead.api';
+import { activateLead, createLead, purchaseLead } from './lead.api';
 
 export async function createLeadAction(
   data: App.Data.Lead.Payload.CreateLeadPayloadData
@@ -58,6 +58,26 @@ export async function activateLeadAction(
     console.error('Lead activation API error:', error);
     return createErrorResponse(
       error instanceof Error ? error.message : 'Activate lead failed',
+      500
+    );
+  }
+}
+
+export async function purchaseLeadAction(leadId: string) {
+  try {
+    const response = await purchaseLead(leadId);
+
+    if (!response) {
+      return createErrorResponse('Failed to purchase lead', 422);
+    }
+
+    // Return success response with no redirect
+    // This allows the client to handle the response and potentially refresh the auth state
+    return createSuccessResponse(response);
+  } catch (error) {
+    console.error('Lead purchase API error:', error);
+    return createErrorResponse(
+      error instanceof Error ? error.message : 'Purchase lead failed',
       500
     );
   }

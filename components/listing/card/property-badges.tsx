@@ -26,7 +26,7 @@ export function PropertyBadges({
   };
 
   return (
-    <div className="flex items-start justify-between text-xs">
+    <div className="flex items-start justify-between text-xs gap-2">
       <Badge variant="secondary" size="sm">
         {propertyTypeName}
       </Badge>

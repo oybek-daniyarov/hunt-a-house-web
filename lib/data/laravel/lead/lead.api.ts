@@ -1,6 +1,13 @@
 'use server';
 
-import { get, list, post } from '@/lib/client/laravel/client';
+import { revalidatePath } from 'next/cache';
+
+import {
+  get,
+  list,
+  post,
+  revalidateTagsAsync,
+} from '@/lib/client/laravel/client';
 import { ApiResult, handleApiResponse } from '@/lib/client/laravel/helpers/api';
 import { PaginatedResponse } from '@/lib/client/laravel/types';
 import { createUrl, routes } from '@/types/api-routes';
@@ -68,4 +75,28 @@ export async function getMineLeads(
     ...params,
   });
   return await list<App.Data.Lead.LeadData>(url, LEAD_TAGS);
+}
+
+export async function purchaseLead(leadId: string) {
+  const url = createUrl(routes['leads.purchase'], { leadId });
+  console.log('url', url);
+
+  const response = await post<App.Data.Lead.PurchaseLeadResponseData>(
+    url,
+    null,
+    LEAD_TAGS
+  );
+
+  // Revalidate all relevant tags
+  await revalidateTagsAsync([...LEAD_TAGS, 'auth', 'user']);
+
+  // Revalidate all paths that might display user credit/token information
+  revalidatePath('/', 'layout'); // Revalidate the root layout which includes the header
+  revalidatePath('/api/auth/session'); // Revalidate the auth session API route
+  revalidatePath('/uae-property-listings');
+  revalidatePath('/dashboard', 'layout');
+  revalidatePath('/dashboard/user', 'layout');
+  revalidatePath('/dashboard/user/leads');
+
+  return response;
 }

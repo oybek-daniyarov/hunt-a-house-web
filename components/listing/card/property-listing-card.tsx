@@ -5,6 +5,7 @@ import {
   FaTelegram,
   FaWhatsapp,
 } from 'react-icons/fa';
+import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import { LocationDisplay } from '@/components/listing/card/location-display';
 import { PriceDisplay } from '@/components/listing/card/price-display';
@@ -28,13 +29,23 @@ const contactMethodIcons = {
 type ContactMethod = keyof typeof contactMethodIcons;
 
 export function PropertyListingCard({ listing }: PropertyListingCardProps) {
+  console.log('listing', listing);
   return (
     <Card className="rounded-xl shadow-none border bg-card text-card-foreground  bg-gradient-to-b from-muted/20 to-muted/10 transition-all dark:from-muted/20 dark:to-muted/10 dark:hover:from-muted/30 dark:hover:to-muted/20">
       <CardContent className="flex h-full flex-col p-4 gap-4">
-        <PropertyBadges
-          propertyTypeName={listing.propertyTypeName}
-          activityTypeName={listing.activityTypeName}
-        />
+        <div className="flex justify-between items-start gap-2">
+          <PropertyBadges
+            propertyTypeName={listing.propertyTypeName}
+            activityTypeName={listing.activityTypeName}
+          />
+
+          {listing.isUserHadPurchasedLead && (
+            <div className="flex items-center gap-1 text-primary bg-primary/10 px-2 py-1 rounded-md">
+              <IoCheckmarkCircle className="h-4 w-4" />
+              <span className="text-xs font-medium">Purchased</span>
+            </div>
+          )}
+        </div>
         <div className="space-y-2">
           {listing.description && (
             <p className="text-muted-foreground text-sm">

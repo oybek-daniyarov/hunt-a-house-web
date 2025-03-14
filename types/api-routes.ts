@@ -26,6 +26,7 @@ export type Routes = {
   'leads.index': Route;
   'leads.mine': Route;
   'leads.mine.update-status': Route;
+  'leads.purchase': Route;
   'leads.show': Route;
   'leads.store': Route;
 
@@ -84,7 +85,7 @@ export const routes = {
     method: 'post',
   },
   'auth.verify': {
-    path: 'api/v1/auth/email/verify/${id}/${hash}',
+    path: 'api/v1/auth/email/verify/{id}/{hash}',
     method: 'get',
   },
 
@@ -106,11 +107,15 @@ export const routes = {
     method: 'get',
   },
   'leads.mine.update-status': {
-    path: 'api/v1/leads/mine/${lead}/status',
+    path: 'api/v1/leads/mine/{lead}/status',
     method: 'patch',
   },
+  'leads.purchase': {
+    path: 'api/v1/leads/purchase/{leadId}',
+    method: 'post',
+  },
   'leads.show': {
-    path: 'api/v1/leads/${lead}',
+    path: 'api/v1/leads/{lead}',
     method: 'get',
   },
   'leads.store': {
@@ -120,19 +125,19 @@ export const routes = {
 
   // locations routes
   'locations.breadcrumbs': {
-    path: 'api/v1/locations/${location}/breadcrumbs',
+    path: 'api/v1/locations/{location}/breadcrumbs',
     method: 'get',
   },
   'locations.by-path': {
-    path: 'api/v1/locations/by-path/${path}',
+    path: 'api/v1/locations/by-path/{path}',
     method: 'get',
   },
   'locations.children': {
-    path: 'api/v1/locations/${location}/children',
+    path: 'api/v1/locations/{location}/children',
     method: 'get',
   },
   'locations.descendants': {
-    path: 'api/v1/locations/${location}/descendants',
+    path: 'api/v1/locations/{location}/descendants',
     method: 'get',
   },
   'locations.index': {
@@ -148,7 +153,7 @@ export const routes = {
     method: 'get',
   },
   'locations.show': {
-    path: 'api/v1/locations/${location}',
+    path: 'api/v1/locations/{location}',
     method: 'get',
   },
   'locations.tree': {
@@ -162,7 +167,7 @@ export const routes = {
     method: 'get',
   },
   'products.payment-detail': {
-    path: 'api/v1/products/payments/${id}',
+    path: 'api/v1/products/payments/{id}',
     method: 'get',
   },
   'products.payment-history': {
