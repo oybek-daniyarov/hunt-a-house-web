@@ -29,7 +29,6 @@ const contactMethodIcons = {
 type ContactMethod = keyof typeof contactMethodIcons;
 
 export function PropertyListingCard({ listing }: PropertyListingCardProps) {
-  console.log('listing', listing);
   return (
     <Card className="rounded-xl shadow-none border bg-card text-card-foreground  bg-gradient-to-b from-muted/20 to-muted/10 transition-all dark:from-muted/20 dark:to-muted/10 dark:hover:from-muted/30 dark:hover:to-muted/20">
       <CardContent className="flex h-full flex-col p-4 gap-4">

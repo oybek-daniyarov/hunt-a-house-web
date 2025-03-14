@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
-// Import PurchaseHistory directly since it's a server component
+import { Button } from '@/components/ui/button';
+import { PageContainer, PageHeader, Section } from '../../_components';
 import PurchaseHistory from './components/purchase-history';
 
 // Use dynamic import with loading fallback for components
@@ -24,28 +26,29 @@ export default async function ProductsPage({
   const page = params.page ? parseInt(params.page) : 1;
 
   return (
-    <section className="my-8 px-4">
-      <div className="max-w-3xl space-y-8">
-        <div className="text-center sm:text-start">
-          <h1 className="text-2xl font-bold md:text-3xl">Buy Tokens</h1>
-          <p className="text-muted-foreground">
-            Purchase tokens to access leads and grow your business
-          </p>
-        </div>
+    <PageContainer className="max-w-3xl" centered={false}>
+      <PageHeader
+        title="Buy Tokens"
+        description="Purchase tokens to access leads and grow your business"
+        textAlign="start"
+      />
 
-        {/* Stacked layout for all screen sizes */}
-        <div className="space-y-8">
-          <div>
-            <h2 className="mb-4 text-xl font-semibold">Available Packages</h2>
-            <ProductsList />
-          </div>
+      <Section title="Available Packages">
+        <ProductsList />
+      </Section>
 
-          <div>
-            <h2 className="mb-4 text-xl font-semibold">Purchase History</h2>
-            <PurchaseHistory page={page} />
-          </div>
-        </div>
-      </div>
-    </section>
+      <Section
+        title="Purchase History"
+        headerRight={
+          <Button variant="outline" asChild>
+            <Link href="/dashboard/agent/tokens/lead-purchases">
+              View Lead Purchases
+            </Link>
+          </Button>
+        }
+      >
+        <PurchaseHistory page={page} />
+      </Section>
+    </PageContainer>
   );
 }

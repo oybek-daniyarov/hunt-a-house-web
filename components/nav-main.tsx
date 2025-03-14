@@ -43,6 +43,12 @@ export async function NavMain() {
       icon: CreditCard,
       userTypes: ['agent'],
     },
+    {
+      title: 'Lead Purchases',
+      url: '/dashboard/agent/tokens/lead-purchases',
+      icon: FileText,
+      userTypes: ['agent'],
+    },
   ];
 
   // Filter items based on user type

@@ -103,9 +103,26 @@ export async function getLeadById(id: string): Promise<App.Data.Lead.LeadData> {
   return getPurchasedLeadById(id);
 }
 
+// Define the type for lead purchase params
+type LeadPurchaseParams = {
+  page?: number;
+};
+
+export async function getLeadPurchases(
+  params: LeadPurchaseParams = {}
+): Promise<PaginatedResponse<App.Data.Invoice.LeadPurchaseTransactionData>> {
+  const url = createUrl(routes['invoices.lead-purchases'], {
+    page: params.page ? parseInt(params.page.toString()) : 1,
+    ...params,
+  });
+  return await list<App.Data.Invoice.LeadPurchaseTransactionData>(
+    url,
+    LEAD_TAGS
+  );
+}
+
 export async function purchaseLead(leadId: string) {
-  const url = createUrl(routes['leads.purchase'], { leadId });
-  console.log('url', url);
+  const url = createUrl(routes['leads.purchase'], { uuid: leadId });
 
   const response = await post<App.Data.Lead.PurchaseLeadResponseData>(
     url,

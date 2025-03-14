@@ -111,8 +111,6 @@ async function PurchaseHistoryContent({ page = 1 }: PurchaseHistoryProps) {
     const response = await getPaymentHistory({ page });
     const payments = response.data;
 
-    console.log(payments);
-
     if (payments.length === 0) {
       return (
         <Card>

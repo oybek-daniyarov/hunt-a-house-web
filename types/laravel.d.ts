@@ -70,6 +70,21 @@ declare namespace App.Data.Auth.Payload {
     token: string;
   };
 }
+declare namespace App.Data.Invoice {
+  export type LeadPurchaseTransactionData = {
+    id: string;
+    purchaseDate: string;
+    creditsUsed: number;
+    invoiceUrl: string | null;
+    leadSummary: App.Data.Invoice.LeadSummaryData;
+  };
+  export type LeadSummaryData = {
+    id: string;
+    propertyTypeName: string;
+    activityTypeName: string;
+    locationSummary: string;
+  };
+}
 declare namespace App.Data.Lead {
   export type ActivateLeadResponseData = {
     success: boolean;
@@ -140,6 +155,8 @@ declare namespace App.Data.Lead {
     success: boolean;
     message: string;
     lead: App.Data.Lead.LeadData | null;
+    invoiceUrl: string | null;
+    leadViewId: string | null;
   };
 }
 declare namespace App.Data.Lead.Payload {

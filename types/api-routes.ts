@@ -20,6 +20,9 @@ export type Routes = {
   'auth.reset-password': Route;
   'auth.verify': Route;
 
+  // invoices routes
+  'invoices.lead-purchases': Route;
+
   // leads routes
   'leads.activate': Route;
   'leads.filters': Route;
@@ -87,6 +90,12 @@ export const routes = {
   },
   'auth.verify': {
     path: 'api/v1/auth/email/verify/{id}/{hash}',
+    method: 'get',
+  },
+
+  // invoices routes
+  'invoices.lead-purchases': {
+    path: 'api/v1/invoices/lead-purchases',
     method: 'get',
   },
 

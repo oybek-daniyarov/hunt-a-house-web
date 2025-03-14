@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import { ViewLead } from '@/components/ui/view-lead';
+import { PageContainer, PageHeader, Section } from '../../_components';
 import { LeadsTable } from './_components/leads-table';
 import { LeadsTableSkeleton } from './_components/leads-table-skeleton';
 
@@ -18,19 +19,19 @@ export default async function LeadsPage({
   const pageNumber = page ? parseInt(page) : 1;
 
   return (
-    <div className="flex flex-col gap-6">
+    <PageContainer>
       <ViewLead leadId={leadId} returnUrl="/dashboard/agent/leads" />
 
-      <div>
-        <h1 className="text-4xl font-bold">Leads</h1>
-        <p className="mt-2 text-gray-600">
-          View and manage your purchased leads
-        </p>
-      </div>
+      <PageHeader
+        title="Leads"
+        description="View and manage your purchased leads"
+      />
 
-      <Suspense fallback={<LeadsTableSkeleton />}>
-        <LeadsTable page={pageNumber} />
-      </Suspense>
-    </div>
+      <Section>
+        <Suspense fallback={<LeadsTableSkeleton />}>
+          <LeadsTable page={pageNumber} />
+        </Suspense>
+      </Section>
+    </PageContainer>
   );
 }

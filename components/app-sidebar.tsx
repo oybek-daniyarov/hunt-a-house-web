@@ -14,11 +14,9 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
-  user?: App.Data.User.UserData;
-};
+type AppSidebarProps = React.ComponentProps<typeof Sidebar>;
 
-export function AppSidebar({ user, ...props }: AppSidebarProps) {
+export function AppSidebar(props: AppSidebarProps) {
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
