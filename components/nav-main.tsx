@@ -1,6 +1,6 @@
 import { headers } from 'next/headers';
 import Link from 'next/link';
-import { CreditCard, FileText } from 'lucide-react';
+import { CreditCard, FileText, MessageSquare } from 'lucide-react';
 
 import {
   SidebarGroup,
@@ -48,6 +48,12 @@ export async function NavMain() {
       url: '/dashboard/agent/tokens/lead-purchases',
       icon: FileText,
       userTypes: ['agent'],
+    },
+    {
+      title: 'Chat',
+      url: '/dashboard/chat',
+      icon: MessageSquare,
+      userTypes: ['user', 'agent'],
     },
   ];
 

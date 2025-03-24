@@ -20,6 +20,20 @@ export type Routes = {
   'auth.reset-password': Route;
   'auth.verify': Route;
 
+  // chat routes
+  'chat.delete': Route;
+  'chat.mark-read': Route;
+  'chat.messages': Route;
+  'chat.recent': Route;
+  'chat.send': Route;
+  'chat.status.active': Route;
+  'chat.status.get': Route;
+  'chat.status.offline': Route;
+  'chat.status.online': Route;
+  'chat.status.update': Route;
+  'chat.unread-count': Route;
+  'chat.users': Route;
+
   // invoices routes
   'invoices.lead-purchases': Route;
 
@@ -90,6 +104,56 @@ export const routes = {
   },
   'auth.verify': {
     path: 'api/v1/auth/email/verify/{id}/{hash}',
+    method: 'get',
+  },
+
+  // chat routes
+  'chat.delete': {
+    path: 'api/v1/chat/messages/{messageId}',
+    method: 'delete',
+  },
+  'chat.mark-read': {
+    path: 'api/v1/chat/messages/{userId}/read',
+    method: 'patch',
+  },
+  'chat.messages': {
+    path: 'api/v1/chat/messages/{userId}',
+    method: 'get',
+  },
+  'chat.recent': {
+    path: 'api/v1/chat/recent',
+    method: 'get',
+  },
+  'chat.send': {
+    path: 'api/v1/chat/messages/{recipient}',
+    method: 'post',
+  },
+  'chat.status.active': {
+    path: 'api/v1/chat/status/active',
+    method: 'post',
+  },
+  'chat.status.get': {
+    path: 'api/v1/chat/status/{userId}',
+    method: 'get',
+  },
+  'chat.status.offline': {
+    path: 'api/v1/chat/status/offline',
+    method: 'post',
+  },
+  'chat.status.online': {
+    path: 'api/v1/chat/status/online',
+    method: 'post',
+  },
+  'chat.status.update': {
+    path: 'api/v1/chat/status',
+    method: 'post',
+  },
+  'chat.unread-count': {
+    path: 'api/v1/chat/messages/unread/count',
+    method: 'get',
+  },
+  'chat.users': {
+    path: 'api/v1/chat/users',
     method: 'get',
   },
 

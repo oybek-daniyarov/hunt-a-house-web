@@ -70,6 +70,52 @@ declare namespace App.Data.Auth.Payload {
     token: string;
   };
 }
+declare namespace App.Data.Chat {
+  export type AttachmentData = {
+    id: number;
+    name: string;
+    url: string;
+    mimTeype: string;
+    size: number;
+  };
+  export type ChatMessageData = {
+    id: number | null;
+    senderId: number;
+    recipientId: number;
+    message: string | null;
+    attachments: Array<App.Data.Chat.AttachmentData>;
+    sender: App.Data.Chat.ChatUserData | null;
+    recipient: App.Data.Chat.ChatUserData | null;
+    readAt: string | null;
+    createdAt: string | null;
+  };
+  export type ChatUserData = {
+    id: any;
+    name: string;
+    email: string;
+    avatarUrl: string | null;
+    isOnline: boolean;
+    lastActiveAt: string | null;
+  };
+  export type UserOnlineStatusData = {
+    id: any | null;
+    userId: any;
+    isOnline: boolean;
+    lastActiveAt: string | null;
+  };
+}
+declare namespace App.Data.Chat.Payload {
+  export type FileUploadData = {
+    file: any;
+  };
+  export type SendMessagePayloadData = {
+    message: string | null;
+    attachments: Array<App.Data.Chat.Payload.FileUploadData> | null;
+  };
+  export type UpdateUserStatusPayloadData = {
+    isOnline: boolean;
+  };
+}
 declare namespace App.Data.Invoice {
   export type LeadPurchaseTransactionData = {
     id: string;

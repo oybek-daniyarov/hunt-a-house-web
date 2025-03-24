@@ -11,6 +11,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'http',
+        hostname: 'huntahouse.test',
+      },
+      {
+        protocol: 'https',
+        hostname: 'staging.api.huntahouse.com',
+      },
     ],
   },
   logging: {

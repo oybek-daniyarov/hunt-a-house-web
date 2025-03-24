@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 
 export default function AuthButton() {
   const { isAuthenticated, isLoading, user } = useAuth();
-
   const isAgent = user?.userType === 'agent';
 
   if (isLoading) {

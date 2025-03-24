@@ -110,6 +110,31 @@ export async function post<T>(
   return response.json();
 }
 
+export async function postFormData<T>(
+  path: string,
+  formData: FormData,
+  tags?: string[]
+): Promise<T> {
+  const token = await getToken();
+  const headers: HeadersInit = {
+    Accept: 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+
+  const response = await fetch(baseUrl + path, {
+    method: 'POST',
+    headers,
+    body: formData,
+    next: tags ? { tags } : undefined,
+  });
+
+  if (!response.ok) {
+    await handleErrorResponse(response);
+  }
+
+  return response.json();
+}
+
 export async function put<T>(
   path: string,
   data: any,
