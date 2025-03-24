@@ -24,7 +24,7 @@ interface EchoContextType {
 const appKey = process.env.NEXT_PUBLIC_REVERB_APP_KEY;
 const appId = process.env.NEXT_PUBLIC_REVERB_APP_ID;
 const host = process.env.NEXT_PUBLIC_REVERB_HOST || 'localhost';
-const port = parseInt(process.env.NEXT_PUBLIC_REVERB_PORT || '8080');
+const port = process.env.NEXT_PUBLIC_REVERB_PORT;
 const forceTLS =
   (process.env.NEXT_PUBLIC_REVERB_FORCE_TLS || 'false') === 'true';
 
@@ -38,8 +38,8 @@ export const EchoProvider = ({ children }: { children: ReactNode }) => {
       broadcaster: 'reverb',
       key: appKey,
       wsHost: host,
-      wsPort: port,
-      wssPort: port,
+      ...(port && { wsPort: port }),
+      ...(port && { wssPort: port }),
       forceTLS: forceTLS,
       enabledTransports: ['ws', 'wss'],
       authEndpoint: '/api/broadcasting/auth',
