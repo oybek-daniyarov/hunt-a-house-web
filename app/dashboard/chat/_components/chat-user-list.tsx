@@ -57,7 +57,7 @@ const ChatUserList = () => {
         <div className="flex items-center justify-between">
           <h2 className="text-base font-medium">Messages</h2>
           <div className="flex h-5 items-center rounded-full bg-primary/10 dark:bg-primary/20 px-3 text-xs font-medium text-primary dark:text-primary-foreground">
-            {users.length} Online
+            {users?.length} Online
           </div>
         </div>
 
@@ -77,7 +77,7 @@ const ChatUserList = () => {
       </div>
 
       <div className="h-full overflow-y-auto">
-        {filteredUsers?.length > 0 ? (
+        {filteredUsers?.length && filteredUsers.length > 0 ? (
           <div className="space-y-1 p-3">
             {filteredUsers.map((chatUser) => (
               <UserItem

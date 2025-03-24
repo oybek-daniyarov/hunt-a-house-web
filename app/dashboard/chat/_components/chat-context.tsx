@@ -25,7 +25,7 @@ type ChatFile = {
 
 type ChatContextType = {
   selectedUser: App.Data.Chat.ChatUserData | null;
-  users: App.Data.Chat.ChatUserData[];
+  users?: App.Data.Chat.ChatUserData[];
   messages: App.Data.Chat.ChatMessageData[];
   message: string;
   setMessage: (message: string) => void;
