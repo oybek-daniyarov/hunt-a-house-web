@@ -96,6 +96,7 @@ declare namespace App.Data.Chat {
     avatarUrl: string | null;
     isOnline: boolean;
     lastActiveAt: string | null;
+    unreadCount: number | null;
   };
   export type UserOnlineStatusData = {
     id: any | null;

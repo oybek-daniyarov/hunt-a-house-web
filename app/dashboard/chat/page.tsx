@@ -14,8 +14,6 @@ const ChatPage = async (params: ChatPageProps) => {
   const messages = id ? await getMessages(id) : null;
   const activeUser = id ? users.find((user) => user.id === id) : null;
 
-  console.log('users', users);
-
   return (
     <div className="rounded-xl h-full overflow-hidden border border-border shadow-sm dark:shadow-lg dark:shadow-primary/5">
       <ChatProvider

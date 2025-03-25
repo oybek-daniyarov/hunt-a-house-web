@@ -82,6 +82,7 @@ export async function get<T>(path: string, tags?: string[]): Promise<T> {
   const response = await fetch(baseUrl + path, {
     headers: await getHeaders(),
     next: tags ? { tags } : undefined,
+    cache: 'force-cache',
   });
 
   if (!response.ok) {

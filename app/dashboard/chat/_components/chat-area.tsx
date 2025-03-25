@@ -15,6 +15,7 @@ import {
 import { useChat } from '@/app/dashboard/chat/_components/chat-context';
 import MessageBubble from '@/app/dashboard/chat/_components/message-bubble';
 import { ChatMessageList } from '@/components/chat/chat-message-list';
+import { cn } from '@/lib/utils';
 
 const FilePreview = ({
   file,
@@ -99,7 +100,6 @@ const ChatArea = () => {
           </div>
         ) : (
           <>
-            {/* Chat Header - Made sticky */}
             <div className="border-b border-border bg-background/80 backdrop-blur-sm px-4 py-3 flex items-center">
               <div className="flex items-center">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 dark:bg-primary/20 text-primary">
@@ -108,9 +108,14 @@ const ChatArea = () => {
                 <div className="ms-3">
                   <h3 className="font-medium text-sm">{selectedUser.name}</h3>
                   <div className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                    <span
+                      className={cn(
+                        'h-2 w-2 rounded-full',
+                        selectedUser.isOnline ? 'bg-green-500' : 'bg-red-500'
+                      )}
+                    ></span>
                     <span className="text-xs text-muted-foreground">
-                      Online
+                      {selectedUser.isOnline ? 'Online' : 'Offline'}
                     </span>
                   </div>
                 </div>

@@ -12,6 +12,7 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useAuth } from '@/components/providers/auth-provider';
+import { revalidateTagsAsync } from '@/lib/client/laravel';
 import { sendMessage } from '@/lib/data/laravel/chat/chat.api';
 import { useChannel } from '@/lib/echo/use-channel';
 
@@ -57,11 +58,9 @@ export const ChatProvider = ({
   const [message, setMessage] = useState<string>('');
   const [files, setFiles] = useState<ChatFile[]>([]);
 
-  const addMessageToConversation = (
+  const addMessageToConversation = async (
     newMessage: App.Data.Chat.ChatMessageData
   ) => {
-    if (!selectedUser?.id) return;
-
     setMessages((prev) => {
       if (prev.some((msg) => msg.id === newMessage.id)) return prev;
 
@@ -84,10 +83,11 @@ export const ChatProvider = ({
   useChannel(
     `chat.${user?.id}`,
     'chat.message.sent',
-    (data) => {
-      if (Number(data.senderId) !== Number(selectedUser?.id)) return;
+    async (data) => {
+      if (Number(data.recipientId) !== Number(user?.id)) return;
 
       addMessageToConversation(data);
+      await revalidateTagsAsync('chat');
     },
     'private',
     user?.id ? true : false
@@ -103,6 +103,16 @@ export const ChatProvider = ({
     },
     'private',
     selectedUser?.id ? true : false
+  );
+
+  useChannel(
+    `user-status`,
+    'chat.user.status.changed',
+    async () => {
+      await revalidateTagsAsync('chat');
+    },
+    'public',
+    user?.id ? true : false
   );
 
   // File handling functions

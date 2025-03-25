@@ -6,7 +6,8 @@ type ChannelType = 'public' | 'private';
 type ChannelNames =
   | 'user-status'
   | 'presence-online-users'
-  | `chat.${number | string}`;
+  | `chat.${number | string}`
+  | `chat.sender.${number | string}`;
 
 interface EventPayloads {
   'chat.message.sent': App.Data.Chat.ChatMessageData;

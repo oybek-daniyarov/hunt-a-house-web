@@ -1,3 +1,5 @@
+'use server';
+
 import { get, post, postFormData } from '@/lib/client/laravel';
 import { createUrl, routes } from '@/types/api-routes';
 
