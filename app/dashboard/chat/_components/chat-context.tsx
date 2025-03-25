@@ -85,9 +85,11 @@ export const ChatProvider = ({
     'chat.message.sent',
     async (data) => {
       if (Number(data.recipientId) !== Number(user?.id)) return;
+      await revalidateTagsAsync('chat');
+
+      if (Number(data.senderId) !== Number(selectedUser?.id)) return;
 
       addMessageToConversation(data);
-      await revalidateTagsAsync('chat');
     },
     'private',
     user?.id ? true : false
@@ -97,8 +99,7 @@ export const ChatProvider = ({
     `chat.${selectedUser?.id}`,
     'chat.message.sent',
     (data) => {
-      if (Number(data.senderId) !== Number(user?.id)) return;
-
+      if (Number(data.recipientId) !== Number(selectedUser?.id)) return;
       addMessageToConversation(data);
     },
     'private',
