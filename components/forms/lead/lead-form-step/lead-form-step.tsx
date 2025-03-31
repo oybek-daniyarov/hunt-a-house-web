@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
@@ -17,6 +18,7 @@ import {
 } from '@/components/forms/lead/lead-form-step/schema';
 import { useSteps } from '@/components/steps/step-provider';
 import { Form } from '@/components/ui/form';
+import { AIGenerateModal } from './ai-generate-modal';
 
 const convertToOptions = (items: { id: number | string; name: string }[]) => {
   return items.map((item) => ({
@@ -31,6 +33,7 @@ type LeadFormStepProps = {
 
 export function LeadFormStep({ filters }: LeadFormStepProps) {
   'use no memo';
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { updateStepData, goToNextStep } = useSteps();
   const form = useForm<LeadFormStepData>({
     resolver: zodResolver(leadFormStepSchema),
@@ -64,6 +67,14 @@ export function LeadFormStep({ filters }: LeadFormStepProps) {
 
   return (
     <Form {...form}>
+      <AIGenerateModal
+        form={form}
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        propertyTypeOptions={propertyTypeOptions}
+        activityTypeOptions={activityTypeOptions}
+      />
+
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormHeader
           title="Property Details"
