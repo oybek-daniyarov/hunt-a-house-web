@@ -26,21 +26,18 @@ const contactDetails = [
     label: 'Phone',
     getValue: (contact: ContactDetailsProps['contact']) => contact.phone,
     color: 'text-green-500',
-    bgColor: 'bg-green-500/10',
   },
   {
     icon: IoLogoWhatsapp,
     label: 'WhatsApp',
     getValue: (contact: ContactDetailsProps['contact']) => contact.whatsapp,
     color: 'text-blue-500',
-    bgColor: 'bg-blue-500/10',
   },
   {
     icon: SiTelegram,
     label: 'Telegram',
     getValue: (contact: ContactDetailsProps['contact']) => contact.telegram,
     color: 'text-purple-500',
-    bgColor: 'bg-purple-500/10',
   },
   {
     icon: IoLogoFacebook,
@@ -48,7 +45,6 @@ const contactDetails = [
     getValue: (contact: ContactDetailsProps['contact']) =>
       contact.facebook || '',
     color: 'text-blue-600',
-    bgColor: 'bg-blue-600/10',
     condition: (contact: ContactDetailsProps['contact']) => !!contact.facebook,
   },
 ];
@@ -70,12 +66,7 @@ export function ContactDetails({ contact }: ContactDetailsProps) {
           .filter((detail) => !detail.condition || detail.condition(contact))
           .map(({ icon: Icon, label, getValue, color }) => (
             <div key={label} className="group flex items-center gap-2">
-              <div
-                className={cn(
-                  'rounded-full p-2 bg-opacity-10',
-                  color.replace('text-', 'bg-')
-                )}
-              >
+              <div className={cn('rounded-full p-2 bg-opacity-10')}>
                 <Icon className={cn('h-4 w-4', color)} />
               </div>
               <div className="flex-1 min-w-0">

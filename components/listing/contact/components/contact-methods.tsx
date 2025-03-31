@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import {
   IoCall,
+  IoChatbubblesOutline,
   IoLogoFacebook,
   IoLogoWhatsapp,
   IoShareSocialOutline,
@@ -69,6 +71,15 @@ const getMessageText = (listing: App.Data.Lead.LeadListData) => {
 
 const contactMethods = [
   {
+    icon: IoChatbubblesOutline,
+    label: 'Chat Now',
+    href: (
+      contact: ContactMethodsProps['contact'],
+      listing: App.Data.Lead.LeadListData
+    ) => `/dashboard/chat?id=${listing.owner.id}`,
+    color: 'text-green-500',
+  },
+  {
     icon: IoCall,
     label: 'Call Now',
     href: (contact: ContactMethodsProps['contact']) => `tel:${contact.phone}`,
@@ -84,7 +95,6 @@ const contactMethods = [
     ) =>
       `https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, '')}?text=${getMessageText(listing)}`,
     color: 'text-blue-500',
-    bgColor: 'bg-blue-500/10',
     external: true,
   },
   {
@@ -96,7 +106,6 @@ const contactMethods = [
     ) =>
       `https://t.me/${contact.telegram.replace('@', '')}?text=${getMessageText(listing)}`,
     color: 'text-purple-500',
-    bgColor: 'bg-purple-500/10',
     external: true,
   },
   {
@@ -105,7 +114,6 @@ const contactMethods = [
     href: (contact: ContactMethodsProps['contact']) =>
       `https://www.facebook.com/${contact.facebook}`,
     color: 'text-blue-600',
-    bgColor: 'bg-blue-600/10',
     external: true,
     condition: (contact: ContactMethodsProps['contact']) => !!contact.facebook,
   },
@@ -128,7 +136,7 @@ export function ContactMethods({ listing, contact }: ContactMethodsProps) {
                 variant="outline"
                 className="h-12 justify-between bg-background hover:bg-muted/5 transition-colors dark:bg-muted/5 dark:hover:bg-muted/10 dark:border-muted/20"
               >
-                <a
+                <Link
                   href={
                     typeof href === 'function' ? href(contact, listing) : href
                   }
@@ -138,11 +146,7 @@ export function ContactMethods({ listing, contact }: ContactMethodsProps) {
                 >
                   <div className="flex items-center gap-2">
                     <div
-                      className={cn(
-                        'rounded-full p-2',
-                        bgColor,
-                        'dark:bg-opacity-20'
-                      )}
+                      className={cn('rounded-full p-2', 'dark:bg-opacity-20')}
                     >
                       <Icon
                         className={cn('h-4 w-4', color, 'dark:text-white')}
@@ -155,7 +159,7 @@ export function ContactMethods({ listing, contact }: ContactMethodsProps) {
                   {external && (
                     <IoShareSocialOutline className="h-4 w-4 text-muted-foreground dark:text-white/70" />
                   )}
-                </a>
+                </Link>
               </Button>
             ))}
         </div>

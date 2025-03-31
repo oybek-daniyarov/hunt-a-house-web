@@ -72,12 +72,7 @@ export function ContactDetails({ contact }: ContactDetailsProps) {
           .filter((detail) => !detail.condition || detail.condition(contact))
           .map(({ icon: Icon, label, getValue, color }) => (
             <div key={label} className="group flex items-center gap-2">
-              <div
-                className={cn(
-                  'rounded-full p-2 bg-opacity-10',
-                  color.replace('text-', 'bg-')
-                )}
-              >
+              <div className={cn('rounded-full p-2 bg-opacity-10')}>
                 <Icon className={cn('h-4 w-4', color)} />
               </div>
               <div className="flex-1 min-w-0">
