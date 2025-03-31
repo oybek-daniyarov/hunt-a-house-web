@@ -5,8 +5,7 @@ import { generateObject } from 'ai';
 import { leadFormStepSchema } from '@/components/forms/lead/lead-form-step/schema';
 import { getLeadFilters } from '@/lib/data/laravel/lead/lead.api';
 
-export const maxDuration = 30;
-export const runtime = 'edge'; // Optimize for edge runtime
+export const runtime = 'nodejs';
 
 const model = google('gemini-2.0-flash-exp');
 
