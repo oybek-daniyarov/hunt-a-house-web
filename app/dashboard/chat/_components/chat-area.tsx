@@ -134,7 +134,7 @@ const ChatArea = () => {
                 <Link
                   href={`/dashboard/chat?id=${selectedLead.lead?.id}&view=lead`}
                 >
-                  View lead
+                  View listing
                 </Link>
               </Button>
             </div>

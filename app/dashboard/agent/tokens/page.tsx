@@ -42,7 +42,7 @@ export default async function ProductsPage({
         headerRight={
           <Button variant="outline" asChild>
             <Link href="/dashboard/agent/tokens/lead-purchases">
-              View Lead Purchases
+              View Listing Purchases
             </Link>
           </Button>
         }

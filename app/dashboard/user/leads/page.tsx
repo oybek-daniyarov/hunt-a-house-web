@@ -5,8 +5,8 @@ import { LeadsTable } from './_components/leads-table';
 import { LeadsTableSkeleton } from './_components/leads-table-skeleton';
 
 export const metadata = {
-  title: 'My Leads',
-  description: 'View and manage your property leads',
+  title: 'My Listings',
+  description: 'View and manage your property listings',
 };
 
 export default async function MyLeadsPage({
@@ -20,8 +20,8 @@ export default async function MyLeadsPage({
   return (
     <PageContainer>
       <PageHeader
-        title="My Leads"
-        description="View and manage your property leads"
+        title="My Listings"
+        description="View and manage your property listings"
       />
       <Section>
         <Suspense fallback={<LeadsTableSkeleton />}>

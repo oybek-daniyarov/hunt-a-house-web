@@ -139,7 +139,7 @@ export function LeadsTableClient({ leads, page }: LeadsTableClientProps) {
                       }}
                     >
                       <Eye className="h-4 w-4" />
-                      <span className="sr-only">View lead details</span>
+                      <span className="sr-only">View listing details</span>
                     </Button>
                   </TableCell>
                 </TableRow>
