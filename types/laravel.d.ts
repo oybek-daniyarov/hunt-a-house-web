@@ -78,14 +78,22 @@ declare namespace App.Data.Chat {
     mimTeype: string;
     size: number;
   };
+  export type ChatData = {
+    id: string;
+    lead: App.Data.Chat.ChatLeadData | null;
+    user: App.Data.Chat.ChatUserData | null;
+  };
+  export type ChatLeadData = {
+    id: string;
+    name: string;
+  };
   export type ChatMessageData = {
     id: number | null;
+    leadId: string | null;
     senderId: number;
     recipientId: number;
     message: string | null;
     attachments: Array<App.Data.Chat.AttachmentData>;
-    sender: App.Data.Chat.ChatUserData | null;
-    recipient: App.Data.Chat.ChatUserData | null;
     readAt: string | null;
     createdAt: string | null;
   };
@@ -143,6 +151,7 @@ declare namespace App.Data.Lead {
   export type LeadData = {
     id: string;
     propertyTypeName: string;
+    shortName: string;
     activityTypeName: string;
     locations: Array<App.Services.Location.Data.LocationData>;
     description: string;
@@ -227,6 +236,16 @@ declare namespace App.Data.Lead.Payload {
     contact: Array<any>;
     email: string | null;
     maxViews: number | null;
+  };
+  export type UpdateLeadPayloadData = {
+    status: App.Enums.LeadStatus | null;
+    maxViews: number | null;
+  };
+}
+declare namespace App.Data.Lead.Response {
+  export type ShowLeadResponseData = {
+    data: App.Data.Lead.LeadListData;
+    access: App.Enums.LeadViewEnum;
   };
 }
 declare namespace App.Data.Media {
@@ -330,6 +349,7 @@ declare namespace App.Enums {
     | 'on_hold'
     | 'closed'
     | 'expired';
+  export type LeadViewEnum = 'guest' | 'purchased' | 'authenticated';
   export type PaymentMethod = 'stripe' | 'bank_transfer' | 'crypto';
   export type PaymentMethodType =
     | 'card'

@@ -89,18 +89,15 @@ export async function getPurchasedLeads(
     page: params.page ? parseInt(params.page.toString()) : 1,
     ...params,
   });
+  console.log(url);
   return await list<App.Data.Lead.LeadData>(url, LEAD_TAGS);
 }
 
-export async function getPurchasedLeadById(
+export async function getLeadById(
   id: string
-): Promise<App.Data.Lead.LeadData> {
+): Promise<App.Data.Lead.Response.ShowLeadResponseData> {
   const url = createUrl(routes['leads.show'], { lead: id });
-  return await get<App.Data.Lead.LeadData>(url, LEAD_TAGS);
-}
-
-export async function getLeadById(id: string): Promise<App.Data.Lead.LeadData> {
-  return getPurchasedLeadById(id);
+  return await get<App.Data.Lead.Response.ShowLeadResponseData>(url, LEAD_TAGS);
 }
 
 // Define the type for lead purchase params

@@ -1,9 +1,9 @@
+import { SearchParams } from 'nuqs/server';
+
 import Blocks from '@/components/blocks';
 import MissingSanityPage from '@/components/ui/missing-sanity-page';
 import { generatePageMetadata } from '@/lib/metadata';
 import { fetchSanityPageBySlug } from './actions';
-
-export const dynamic = 'force-static';
 
 export async function generateMetadata() {
   const page = await fetchSanityPageBySlug({ slug: 'index' });
@@ -11,12 +11,17 @@ export async function generateMetadata() {
   return generatePageMetadata({ page, slug: 'index' });
 }
 
-export default async function IndexPage() {
+type Props = {
+  searchParams: Promise<SearchParams>;
+};
+
+export default async function IndexPage(props: Props) {
   const page = await fetchSanityPageBySlug({ slug: 'index' });
+  const searchParams = await props.searchParams;
 
   if (!page) {
     return MissingSanityPage({ document: 'page', slug: 'index' });
   }
 
-  return <Blocks blocks={page?.blocks} />;
+  return <Blocks blocks={page?.blocks} searchParams={searchParams} />;
 }

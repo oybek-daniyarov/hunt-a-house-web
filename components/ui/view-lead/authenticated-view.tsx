@@ -1,4 +1,5 @@
 import { useTransition } from 'react';
+import Link from 'next/link';
 import {
   IoCardOutline,
   IoCash,
@@ -7,23 +8,26 @@ import {
 } from 'react-icons/io5';
 import { toast } from 'sonner';
 
-import { PropertyInfo } from '@/components/listing/contact/components/property-info';
+import { useAuth } from '@/components/providers/auth-provider';
 import { Button } from '@/components/ui/button';
 import { purchaseLeadAction } from '@/lib/data/laravel/lead/lead.actions';
 import { cn } from '@/lib/utils';
 
 interface CreditViewProps {
   listing: App.Data.Lead.LeadListData;
-  credits?: number;
 }
 
-export function CreditView({ listing, credits = 0 }: CreditViewProps) {
-  const hasCredits = credits >= listing.creditCost;
+export function AuthenticatedView({ listing }: CreditViewProps) {
   const [isPending, startTransition] = useTransition();
   const isPurchased = listing.isUserHadPurchasedLead;
 
+  const { user } = useAuth();
+
+  const hasCredits = user?.credits && user.credits >= listing.creditCost;
+  const credits = user?.credits || 0;
+
   const handlePurchaseLead = () => {
-    if (!hasCredits || !listing.id || isPurchased) return;
+    if (!user || !listing.id || isPurchased) return;
 
     // Use startTransition to indicate that we're starting an async operation
     startTransition(async () => {
@@ -47,18 +51,6 @@ export function CreditView({ listing, credits = 0 }: CreditViewProps) {
 
   return (
     <div className="space-y-8">
-      <div className="overflow-hidden rounded-lg bg-gradient-to-br from-background to-muted/50">
-        <div className="space-y-4 p-4">
-          <PropertyInfo listing={listing} />
-
-          {listing.description && (
-            <p className="text-sm text-muted-foreground border-t pt-4">
-              {listing.description}
-            </p>
-          )}
-        </div>
-      </div>
-
       <div className="space-y-6">
         {isPurchased ? (
           <div className="flex items-center justify-center gap-2 p-4 rounded-lg bg-primary/10 text-primary">
@@ -100,20 +92,7 @@ export function CreditView({ listing, credits = 0 }: CreditViewProps) {
         )}
 
         <div className="space-y-3">
-          {isPurchased ? (
-            <Button
-              size="lg"
-              className="relative w-full h-12 bg-primary hover:bg-primary/90 transition-colors"
-              onClick={() => {
-                // Navigate to the lead details page or show contact info
-                if (listing.id) {
-                  window.location.href = `/dashboard/user/leads/${listing.id}`;
-                }
-              }}
-            >
-              <span className="text-sm font-medium">View Contact Details</span>
-            </Button>
-          ) : hasCredits ? (
+          {hasCredits ? (
             <Button
               size="lg"
               className="relative w-full h-12 bg-primary hover:bg-primary/90 transition-colors"
@@ -164,9 +143,12 @@ export function CreditView({ listing, credits = 0 }: CreditViewProps) {
                 variant="outline"
                 size="lg"
                 className="w-full h-12 hover:bg-muted/5 transition-colors"
+                asChild
               >
-                <IoCardOutline className="mr-2 h-4 w-4" />
-                <span className="text-sm font-medium">Purchase Credits</span>
+                <Link href="/dashboard/agent/tokens">
+                  <IoCardOutline className="mr-2 h-4 w-4" />
+                  <span className="text-sm font-medium">Purchase Credits</span>
+                </Link>
               </Button>
             </>
           )}

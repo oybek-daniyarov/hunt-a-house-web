@@ -1,102 +1,75 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
-import { PropertyDetails } from '@/components/listing/contact/components/property-details';
-import { PropertyInfo } from '@/components/listing/contact/components/property-info';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { ContactDetails } from '@/components/ui/view-lead/contact-details';
+import { AuthenticatedView } from '@/components/ui/view-lead/authenticated-view';
 import { ContactMethods } from '@/components/ui/view-lead/contact-methods';
+import { GuestView } from '@/components/ui/view-lead/guest-view';
+import { PropertyDetails } from '@/components/ui/view-lead/property-details';
+import { PropertyInfo } from '@/components/ui/view-lead/property-info';
 
 interface ViewLeadDialogProps {
-  lead: App.Data.Lead.LeadData;
+  lead: App.Data.Lead.Response.ShowLeadResponseData;
   open: boolean;
-  returnUrl: string;
   onClose?: () => void;
 }
 
-// Helper function to get contact method value by type
-const getContactMethodValue = (
-  contactMethods: App.Data.ContactMethodData[],
-  type: string
-): string => {
-  const method = contactMethods.find((method) => method.type === type);
-  return method?.value || '';
+const components: Record<App.Enums.LeadViewEnum, React.ComponentType<any>> = {
+  guest: GuestView,
+  purchased: ContactMethods,
+  authenticated: AuthenticatedView,
 };
 
-export function ViewLeadDialog({
-  lead,
-  open,
-  returnUrl,
-  onClose,
-}: ViewLeadDialogProps) {
+export function ViewLeadDialog({ lead, open, onClose }: ViewLeadDialogProps) {
   const router = useRouter();
-
-  // Create contact object from lead data
-  const contact = {
-    name: lead.owner.name,
-    phone: getContactMethodValue(lead.contactMethods, 'phone'),
-    whatsapp: getContactMethodValue(lead.contactMethods, 'whatsapp'),
-    telegram: getContactMethodValue(lead.contactMethods, 'telegram'),
-    facebook: getContactMethodValue(lead.contactMethods, 'facebook'),
-  };
-
-  // Create a listing object that matches the expected shape for the components
-  const listing = {
-    ...lead,
-    agent: null,
-    isAuthenticated: true,
-    isUserHadPurchasedLead: true,
-    creditCost: 0,
-  };
+  const pathname = usePathname();
+  //remove the leadId from the url
 
   const handleClose = () => {
     if (onClose) {
       onClose();
     } else {
-      router.push(returnUrl);
+      router.push(pathname);
     }
   };
+
+  const access = lead.access ? lead.access : 'guest';
+
+  const Component = components[access];
 
   return (
     <Dialog open={open} onOpenChange={(open) => !open && handleClose()}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle className="text-xl font-semibold">
-            Lead Details
+            Listing Details
           </DialogTitle>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 -mx-6 mt-4">
-          <div className="col-span-1 lg:col-span-2 space-y-8 px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 -mx-6 mt-4">
+          <div className="col-span-1 lg:col-span-7 space-y-8 px-6">
             <div className="space-y-4">
-              <PropertyInfo listing={listing} />
+              <PropertyInfo listing={lead.data} />
 
-              {lead.description && (
+              {lead.data.description && (
                 <p className="text-sm text-muted-foreground">
-                  {lead.description}
+                  {lead.data.description}
                 </p>
               )}
 
-              <PropertyDetails listing={listing} />
+              <PropertyDetails listing={lead.data} />
             </div>
           </div>
 
           {/* Quick Actions - Right Side */}
-          <div className="col-span-1 space-y-4 px-6">
-            <ContactMethods listing={listing} contact={contact} />
-
-            <p className="text-center text-sm text-muted-foreground">
-              Available during business hours (9 AM - 6 PM GST)
-            </p>
-          </div>
-          <div className="col-span-3 space-y-4 px-6">
-            <ContactDetails contact={contact} />
+          <div className="px-6 col-span-1 lg:col-span-5">
+            <Component listing={lead.data} />
           </div>
         </div>
       </DialogContent>

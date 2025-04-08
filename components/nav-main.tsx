@@ -26,7 +26,7 @@ export async function NavMain() {
 
   const items: NavItem[] = [
     {
-      title: 'My Leads',
+      title: 'My Listings',
       url: '/dashboard/user/leads',
       icon: FileText,
       userTypes: ['user'],

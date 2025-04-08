@@ -20,7 +20,7 @@ export default async function LeadsPage({
 
   return (
     <PageContainer>
-      <ViewLead leadId={leadId} returnUrl="/dashboard/agent/leads" />
+      <ViewLead leadId={leadId} />
 
       <PageHeader
         title="Leads"

@@ -1,8 +1,10 @@
 import { Suspense } from 'react';
 import { stegaClean } from 'next-sanity';
+import { SearchParams } from 'nuqs/server';
 
 import { CarouselLeadListingRow } from '@/components/ui/carousel/carousel-lead-listing-row';
 import SectionContainer from '@/components/ui/section-container';
+import { ViewLead } from '@/components/ui/view-lead';
 import { getLeads } from '@/lib/data/laravel/lead/lead.api';
 
 interface CarouselLeadListingProps {
@@ -20,6 +22,7 @@ interface CarouselLeadListingProps {
     | 'transparent';
   speed: number;
   pauseOnHover: boolean;
+  searchParams: SearchParams;
 }
 
 export default async function CarouselLeadListing({
@@ -27,8 +30,11 @@ export default async function CarouselLeadListing({
   colorVariant,
   speed = 50,
   pauseOnHover = true,
-}: Partial<CarouselLeadListingProps>) {
+  searchParams,
+}: CarouselLeadListingProps) {
   const color = stegaClean(colorVariant);
+
+  console.log('leadId', searchParams);
 
   return (
     <SectionContainer color={color} padding={padding}>
@@ -41,6 +47,9 @@ export default async function CarouselLeadListing({
         <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background"></div>
         <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background"></div>
       </div>
+      {searchParams?.leadId && (
+        <ViewLead leadId={searchParams.leadId as string} />
+      )}
     </SectionContainer>
   );
 }

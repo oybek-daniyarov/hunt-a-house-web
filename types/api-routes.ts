@@ -21,7 +21,7 @@ export type Routes = {
   'auth.verify': Route;
 
   // chat routes
-  'chat.delete': Route;
+  'chat.leads': Route;
   'chat.mark-read': Route;
   'chat.messages': Route;
   'chat.recent': Route;
@@ -32,7 +32,6 @@ export type Routes = {
   'chat.status.online': Route;
   'chat.status.update': Route;
   'chat.unread-count': Route;
-  'chat.users': Route;
 
   // invoices routes
   'invoices.lead-purchases': Route;
@@ -42,7 +41,7 @@ export type Routes = {
   'leads.filters': Route;
   'leads.index': Route;
   'leads.mine': Route;
-  'leads.mine.update-status': Route;
+  'leads.mine.update': Route;
   'leads.purchase': Route;
   'leads.purchased': Route;
   'leads.show': Route;
@@ -108,16 +107,16 @@ export const routes = {
   },
 
   // chat routes
-  'chat.delete': {
-    path: 'api/v1/chat/messages/{messageId}',
-    method: 'delete',
+  'chat.leads': {
+    path: 'api/v1/chat/leads',
+    method: 'get',
   },
   'chat.mark-read': {
-    path: 'api/v1/chat/messages/{userId}/read',
+    path: 'api/v1/chat/messages/{leadId}/read',
     method: 'patch',
   },
   'chat.messages': {
-    path: 'api/v1/chat/messages/{userId}',
+    path: 'api/v1/chat/messages/{leadId}',
     method: 'get',
   },
   'chat.recent': {
@@ -125,7 +124,7 @@ export const routes = {
     method: 'get',
   },
   'chat.send': {
-    path: 'api/v1/chat/messages/{recipient}',
+    path: 'api/v1/chat/messages/{leadId}',
     method: 'post',
   },
   'chat.status.active': {
@@ -152,10 +151,6 @@ export const routes = {
     path: 'api/v1/chat/messages/unread/count',
     method: 'get',
   },
-  'chat.users': {
-    path: 'api/v1/chat/users',
-    method: 'get',
-  },
 
   // invoices routes
   'invoices.lead-purchases': {
@@ -180,8 +175,8 @@ export const routes = {
     path: 'api/v1/leads/mine',
     method: 'get',
   },
-  'leads.mine.update-status': {
-    path: 'api/v1/leads/mine/{lead}/status',
+  'leads.mine.update': {
+    path: 'api/v1/leads/mine/{ulid}',
     method: 'patch',
   },
   'leads.purchase': {

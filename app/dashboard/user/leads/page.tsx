@@ -23,7 +23,6 @@ export default async function MyLeadsPage({
         title="My Leads"
         description="View and manage your property leads"
       />
-
       <Section>
         <Suspense fallback={<LeadsTableSkeleton />}>
           <LeadsTable page={pageNumber} editLeadId={edit} />

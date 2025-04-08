@@ -5,11 +5,10 @@ import {
   IoNotifications,
   IoShield,
   IoStar,
-  IoStatsChart,
 } from 'react-icons/io5';
 
 import { Button } from '@/components/ui/button';
-import { DialogDescription } from '@/components/ui/dialog';
+import { DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
 const benefits = [
   {
@@ -32,21 +31,14 @@ const benefits = [
     title: 'Quality Leads',
     description: 'Genuine property owners with intent to sell',
   },
-  {
-    icon: IoStatsChart,
-    title: 'Market Data',
-    description: 'Track property values and owner trends',
-  },
 ];
 
 export function GuestView() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       <div className="space-y-2">
-        <h2 className="text-xl font-medium tracking-tight">
-          Connect with Property Owners
-        </h2>
-        <DialogDescription className="text-sm leading-relaxed text-muted-foreground">
+        <DialogTitle>Connect with Property Owners</DialogTitle>
+        <DialogDescription>
           Join UAE&apos;s premier agent platform for direct access to verified
           property owners and exclusive listings.
         </DialogDescription>
@@ -56,11 +48,13 @@ export function GuestView() {
         {benefits.map(({ icon: Icon, title, description }) => (
           <div
             key={title}
-            className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-background to-muted/50 p-3 transition-all hover:from-muted/5 hover:to-muted/10"
+            className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-background to-muted/50 p-2 transition-all hover:from-muted/5 hover:to-muted/10"
           >
             <div className="flex gap-3">
-              <div className="rounded-full bg-primary/5 p-2 group-hover:bg-primary/10 transition-colors">
-                <Icon className="h-4 w-4 text-primary" />
+              <div>
+                <div className="rounded-full bg-primary/5 p-2 group-hover:bg-primary/10 transition-colors">
+                  <Icon className="h-4 w-4 text-primary" />
+                </div>
               </div>
               <div>
                 <h3 className="text-sm font-medium leading-none">{title}</h3>

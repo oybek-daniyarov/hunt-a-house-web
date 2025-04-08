@@ -9,6 +9,7 @@ export const filterParsers = {
   price: parseAsString.withDefault(''),
   sort: parseAsString.withDefault('newest'),
   page: parseAsInteger.withDefault(1),
+  listingId: parseAsString.withDefault(''),
 };
 
 export const loadSearchParams = createLoader(filterParsers);

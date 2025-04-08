@@ -3,8 +3,8 @@ import { SearchParams } from 'nuqs/server';
 
 import { LaravelPagination } from '@/components/laravel/pagination';
 import { PropertyListingCard } from '@/components/listing/card/property-listing-card';
-import ContactModal from '@/components/listing/contact';
 import { loadSearchParams } from '@/components/ui/grid-property-listing/search-params';
+import { ViewLead } from '@/components/ui/view-lead';
 import { getLeads } from '@/lib/data/laravel/lead/lead.api';
 import { cn } from '@/lib/utils';
 import NoResultsFound from './no-results-found';
@@ -55,11 +55,11 @@ export default async function PropertyGrid({
             lastPage={response.last_page}
             total={response.total}
           />
-          <ContactModal listings={response.data} />
         </>
       ) : (
         <NoResultsFound />
       )}
+      <ViewLead leadId={filtersParams.listingId} />
     </>
   );
 }

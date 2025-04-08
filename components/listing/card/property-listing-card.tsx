@@ -5,7 +5,7 @@ import {
   FaTelegram,
   FaWhatsapp,
 } from 'react-icons/fa';
-import { IoCheckmarkCircle } from 'react-icons/io5';
+import { IoLockClosed, IoLockOpen } from 'react-icons/io5';
 
 import { LocationDisplay } from '@/components/listing/card/location-display';
 import { PriceDisplay } from '@/components/listing/card/price-display';
@@ -38,10 +38,13 @@ export function PropertyListingCard({ listing }: PropertyListingCardProps) {
             activityTypeName={listing.activityTypeName}
           />
 
-          {listing.isUserHadPurchasedLead && (
-            <div className="flex items-center gap-1 text-primary bg-primary/10 px-2 py-1 rounded-md">
-              <IoCheckmarkCircle className="h-4 w-4" />
-              <span className="text-xs font-medium">Purchased</span>
+          {listing.isUserHadPurchasedLead ? (
+            <div className="flex items-center text-green-500">
+              <IoLockOpen className="h-5 w-5" />
+            </div>
+          ) : (
+            <div className="flex items-center text-foreground">
+              <IoLockClosed className="h-5 w-5" />
             </div>
           )}
         </div>

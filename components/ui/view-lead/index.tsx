@@ -5,10 +5,13 @@ export { ViewLeadDialog };
 
 interface ViewLeadProps {
   leadId?: string;
-  returnUrl: string;
 }
 
-export async function ViewLead({ leadId, returnUrl }: ViewLeadProps) {
+export async function ViewLead({ leadId }: ViewLeadProps) {
+  if (!leadId) {
+    return null;
+  }
+
   // Fetch the lead if leadId is provided
   let viewLead;
   if (leadId) {
@@ -19,11 +22,5 @@ export async function ViewLead({ leadId, returnUrl }: ViewLeadProps) {
     }
   }
 
-  return (
-    <>
-      {viewLead && (
-        <ViewLeadDialog lead={viewLead} open={!!leadId} returnUrl={returnUrl} />
-      )}
-    </>
-  );
+  return <>{viewLead && <ViewLeadDialog lead={viewLead} open={!!leadId} />}</>;
 }

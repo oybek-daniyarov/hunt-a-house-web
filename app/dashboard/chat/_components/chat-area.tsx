@@ -15,6 +15,7 @@ import {
 import { useChat } from '@/app/dashboard/chat/_components/chat-context';
 import MessageBubble from '@/app/dashboard/chat/_components/message-bubble';
 import { ChatMessageList } from '@/components/chat/chat-message-list';
+import { useAuth } from '@/components/providers/auth-provider';
 import { cn } from '@/lib/utils';
 
 const FilePreview = ({
@@ -62,7 +63,7 @@ const FilePreview = ({
 
 const ChatArea = () => {
   const {
-    selectedUser,
+    selectedLead,
     messages,
     message,
     setMessage,
@@ -71,6 +72,8 @@ const ChatArea = () => {
     removeFile,
     sendMessageHandler,
   } = useChat();
+
+  const { user } = useAuth();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
@@ -88,7 +91,7 @@ const ChatArea = () => {
   return (
     <div className="col-span-2 flex flex-col bg-background">
       <div className="flex flex-col w-full h-full">
-        {!selectedUser ? (
+        {!selectedLead ? (
           <div className="flex h-full flex-col items-center justify-center p-6 text-center">
             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted dark:bg-muted/30">
               <MessageCircle size={30} className="text-muted-foreground" />
@@ -106,16 +109,20 @@ const ChatArea = () => {
                   <User size={18} />
                 </div>
                 <div className="ms-3">
-                  <h3 className="font-medium text-sm">{selectedUser.name}</h3>
+                  <h3 className="font-medium text-sm">
+                    {selectedLead?.lead?.name}
+                  </h3>
                   <div className="flex items-center gap-1.5">
                     <span
                       className={cn(
                         'h-2 w-2 rounded-full',
-                        selectedUser.isOnline ? 'bg-green-500' : 'bg-red-500'
+                        selectedLead.user?.isOnline
+                          ? 'bg-green-500'
+                          : 'bg-red-500'
                       )}
                     ></span>
                     <span className="text-xs text-muted-foreground">
-                      {selectedUser.isOnline ? 'Online' : 'Offline'}
+                      {selectedLead.user?.isOnline ? 'Online' : 'Offline'}
                     </span>
                   </div>
                 </div>
@@ -129,7 +136,7 @@ const ChatArea = () => {
                     <MessageBubble
                       key={msg.id || `msg-${index}`}
                       message={msg}
-                      isCurrentUser={selectedUser.id === msg.senderId}
+                      isCurrentUser={user?.id === msg.recipientId}
                     />
                   ))}
                 </ChatMessageList>
@@ -219,7 +226,7 @@ const ChatArea = () => {
                   onChange={(e) => setMessage(e.target.value)}
                   onKeyDown={handleKeyPress}
                   className="flex-1 bg-transparent outline-none py-3 text-sm ms-2"
-                  placeholder={`Message ${selectedUser.name}...`}
+                  placeholder={`Message ${selectedLead.lead?.name}...`}
                 />
                 <button
                   onClick={sendMessageHandler}

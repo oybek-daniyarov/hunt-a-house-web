@@ -7,7 +7,7 @@ const CHAT_TAGS = ['chat'];
 
 export const sendMessage = async (
   payload: App.Data.Chat.Payload.SendMessagePayloadData,
-  userId: number
+  leadId: string
 ) => {
   // If there are files, use FormData approach
   if (payload.attachments && payload.attachments.length > 0) {
@@ -25,7 +25,7 @@ export const sendMessage = async (
     });
 
     const response = await postFormData<App.Data.Chat.ChatMessageData>(
-      createUrl(routes['chat.send'], { recipient: userId }),
+      createUrl(routes['chat.send'], { leadId }),
       formData,
       CHAT_TAGS
     );
@@ -34,22 +34,22 @@ export const sendMessage = async (
 
   // Otherwise use regular JSON approach
   const response = await post<App.Data.Chat.ChatMessageData>(
-    createUrl(routes['chat.send'], { recipient: userId.toString() }),
+    createUrl(routes['chat.send'], { leadId }),
     payload,
     CHAT_TAGS
   );
   return response;
 };
 
-export const getMessages = async (recipient: number) =>
+export const getMessages = async (leadId: string) =>
   get<App.Data.Chat.ChatMessageData[]>(
-    createUrl(routes['chat.messages'], { userId: recipient.toString() }),
+    createUrl(routes['chat.messages'], { leadId }),
     CHAT_TAGS
   );
 
-export const getUsers = async () => {
-  const response = await get<App.Data.Chat.ChatUserData[]>(
-    createUrl(routes['chat.users']),
+export const getLeads = async () => {
+  const response = await get<App.Data.Chat.ChatData[]>(
+    createUrl(routes['chat.leads']),
     CHAT_TAGS
   );
   return response;

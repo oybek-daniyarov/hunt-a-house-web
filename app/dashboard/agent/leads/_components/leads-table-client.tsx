@@ -14,21 +14,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { PaginatedResponse } from '@/lib/client/laravel/types';
 import {
   formatCurrency,
   formatSize,
   formatToThousands,
 } from '@/lib/utils/format-number';
-
-type PaginatedResponse<T> = {
-  data: T[];
-  current_page: number;
-  from: number;
-  last_page: number;
-  per_page: number;
-  to: number;
-  total: number;
-};
 
 interface LeadsTableClientProps {
   leads: PaginatedResponse<App.Data.Lead.LeadData>;

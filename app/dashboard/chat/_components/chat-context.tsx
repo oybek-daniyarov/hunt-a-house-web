@@ -25,8 +25,8 @@ type ChatFile = {
 };
 
 type ChatContextType = {
-  selectedUser: App.Data.Chat.ChatUserData | null;
-  users?: App.Data.Chat.ChatUserData[];
+  selectedLead: App.Data.Chat.ChatData | null;
+  leads?: App.Data.Chat.ChatData[];
   messages: App.Data.Chat.ChatMessageData[];
   message: string;
   setMessage: (message: string) => void;
@@ -40,13 +40,13 @@ const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 export const ChatProvider = ({
   children,
-  selectedUser = null,
+  selectedLead = null,
   initialMessages = [],
-  users,
+  leads,
 }: {
   children: ReactNode;
-  users: App.Data.Chat.ChatUserData[];
-  selectedUser?: App.Data.Chat.ChatUserData | null;
+  leads: App.Data.Chat.ChatData[];
+  selectedLead?: App.Data.Chat.ChatData | null;
   initialMessages?: App.Data.Chat.ChatMessageData[];
 }) => {
   const router = useRouter();
@@ -66,13 +66,7 @@ export const ChatProvider = ({
 
       // Remove any temporary messages that match this confirmed message
       const withoutTempMessages = prev.filter(
-        (msg) =>
-          !(
-            msg.id?.toString().startsWith('temp-') &&
-            msg.message === newMessage.message &&
-            msg.senderId === newMessage.senderId &&
-            msg.recipientId === newMessage.recipientId
-          )
+        (msg) => !msg.id?.toString().startsWith('temp-')
       );
 
       return [...withoutTempMessages, newMessage];
@@ -81,29 +75,13 @@ export const ChatProvider = ({
 
   // Chat channel subscriptions
   useChannel(
-    `chat.${user?.id}`,
+    `chat.lead.${selectedLead?.id}`,
     'chat.message.sent',
     async (data) => {
-      if (Number(data.recipientId) !== Number(user?.id)) return;
-      await revalidateTagsAsync('chat');
-
-      if (Number(data.senderId) !== Number(selectedUser?.id)) return;
-
       addMessageToConversation(data);
     },
     'private',
     user?.id ? true : false
-  );
-
-  useChannel(
-    `chat.${selectedUser?.id}`,
-    'chat.message.sent',
-    (data) => {
-      if (Number(data.recipientId) !== Number(selectedUser?.id)) return;
-      addMessageToConversation(data);
-    },
-    'private',
-    selectedUser?.id ? true : false
   );
 
   useChannel(
@@ -153,12 +131,7 @@ export const ChatProvider = ({
 
   // Send a message
   const sendMessageHandler = useCallback(async () => {
-    if (
-      (!message.trim() && files.length === 0) ||
-      !user?.id ||
-      !selectedUser?.id
-    )
-      return;
+    if (!message.trim() && files.length === 0) return;
 
     try {
       const trimmedMessage = message.trim();
@@ -168,42 +141,31 @@ export const ChatProvider = ({
         file: fileObj.file,
       }));
 
-      // Optimistically add message to UI (only for text, files will show after server response)
-      const optimisticMessage: App.Data.Chat.ChatMessageData = {
-        // @ts-ignore
-        id: `temp-${Date.now()}`,
-        message: trimmedMessage,
-        senderId: user.id,
-        recipientId: selectedUser.id,
-        createdAt: new Date().toISOString(),
-        attachments: [],
-      };
-
-      setMessages((prev) => [...prev, optimisticMessage]);
       setMessage('');
       setFiles([]);
 
       // Send to server
-      await sendMessage(
-        {
-          message: trimmedMessage || null,
-          attachments: attachments.length > 0 ? attachments : null,
-        },
-        selectedUser.id
-      );
+      selectedLead?.id &&
+        (await sendMessage(
+          {
+            message: trimmedMessage || null,
+            attachments: attachments.length > 0 ? attachments : null,
+          },
+          selectedLead?.id
+        ));
     } catch (error) {
       console.error('Failed to send message:', error);
     }
-  }, [message, files, selectedUser, user]);
+  }, [message, files, selectedLead]);
 
   // Update URL when active user changes
   useEffect(() => {
-    if (selectedUser?.id) {
+    if (selectedLead?.id) {
       const params = new URLSearchParams(searchParams.toString());
-      params.set('id', selectedUser.id.toString());
+      params.set('id', selectedLead.id);
       router.push(`?${params.toString()}`, { scroll: false });
     }
-  }, [selectedUser?.id, router, searchParams]);
+  }, [selectedLead?.id, router, searchParams]);
 
   // Clean up object URLs when component unmounts
   useEffect(() => {
@@ -218,14 +180,14 @@ export const ChatProvider = ({
 
   useEffect(() => {
     setMessages(initialMessages);
-  }, [selectedUser?.id]);
+  }, [initialMessages, selectedLead?.user?.id]);
 
   const value = useMemo(
     () => ({
-      selectedUser,
+      selectedLead,
       messages,
       message,
-      users,
+      leads,
       setMessage,
       files,
       addFiles,
@@ -233,10 +195,10 @@ export const ChatProvider = ({
       sendMessageHandler,
     }),
     [
-      selectedUser,
+      selectedLead,
       messages,
       message,
-      users,
+      leads,
       files,
       addFiles,
       removeFile,

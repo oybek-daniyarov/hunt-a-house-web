@@ -9,7 +9,7 @@ import UserItem from '@/app/dashboard/chat/_components/user-item';
 import { useDebounce } from '@/hooks/use-debounce';
 
 const ChatUserList = () => {
-  const { users, selectedUser } = useChat();
+  const { leads, selectedLead } = useChat();
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
@@ -44,12 +44,12 @@ const ChatUserList = () => {
   };
 
   const filteredUsers = query
-    ? users?.filter(
-        (user) =>
-          user.name?.toLowerCase().includes(query.toLowerCase()) ||
-          user.email?.toLowerCase().includes(query.toLowerCase())
+    ? leads?.filter(
+        (lead) =>
+          lead.user?.name?.toLowerCase().includes(query.toLowerCase()) ||
+          lead.user?.email?.toLowerCase().includes(query.toLowerCase())
       )
-    : users;
+    : leads;
 
   return (
     <div className="flex flex-col border-e border-border bg-card/50 dark:bg-card/30">
@@ -57,7 +57,7 @@ const ChatUserList = () => {
         <div className="flex items-center justify-between">
           <h2 className="text-base font-medium">Messages</h2>
           <div className="flex h-5 items-center rounded-full bg-primary/10 dark:bg-primary/20 px-3 text-xs font-medium text-primary dark:text-primary-foreground">
-            {users?.length} Online
+            {leads?.length} Online
           </div>
         </div>
 
@@ -79,11 +79,11 @@ const ChatUserList = () => {
       <div className="h-full overflow-y-auto">
         {filteredUsers?.length && filteredUsers.length > 0 ? (
           <div className="space-y-1 p-3">
-            {filteredUsers.map((chatUser) => (
+            {filteredUsers.map((lead) => (
               <UserItem
-                key={chatUser.id}
-                chatUser={chatUser}
-                isActive={selectedUser?.id === chatUser.id}
+                key={lead.id}
+                lead={lead}
+                isActive={selectedLead?.id === lead.id}
               />
             ))}
           </div>

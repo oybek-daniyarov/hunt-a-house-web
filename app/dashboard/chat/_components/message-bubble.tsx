@@ -27,7 +27,7 @@ const MessageBubble = ({
 
         {hasAttachments && (
           <div className="flex flex-wrap gap-2 mt-1">
-            {message.attachments.map((attachment, index) => {
+            {message.attachments?.map((attachment, index) => {
               const isImage = attachment.mimTeype?.startsWith('image/');
               const isVideo = attachment.mimTeype?.startsWith('video/');
               const isPdf = attachment.mimTeype === 'application/pdf';
