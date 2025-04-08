@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 
 import ChatArea from '@/app/dashboard/chat/_components/chat-area';
 import ChatUserList from '@/app/dashboard/chat/_components/chat-user-list';
+import { ViewLead } from '@/components/ui/view-lead';
 import { getLeads, getMessages } from '@/lib/data/laravel/chat/chat.api';
 import { ChatProvider } from './_components/chat-context';
 
@@ -12,11 +13,12 @@ type ChatPageProps = {
 const ChatPage = async (params: ChatPageProps) => {
   const searchParams = await params.searchParams;
   const id = searchParams.id;
-
+  const view = searchParams.view;
   const leads = await getLeads();
   const activeLead = id ? leads.find((lead) => lead.id === id) : null;
 
   if (leads.length > 0 && (!id || !activeLead)) {
+    // redirect to the first lead
     return redirect(`/dashboard/chat?id=${leads[0].id}`);
   }
 
@@ -34,6 +36,7 @@ const ChatPage = async (params: ChatPageProps) => {
           <ChatArea />
         </div>
       </ChatProvider>
+      {view === 'lead' && activeLead && <ViewLead leadId={activeLead.id} />}
     </div>
   );
 };

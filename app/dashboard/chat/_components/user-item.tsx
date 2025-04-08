@@ -34,7 +34,6 @@ const UserItem = ({ lead, isActive }: UserItemProps) => {
         <span className="font-medium text-sm text-ellipsis overflow-hidden whitespace-nowrap">
           {lead.lead?.name}
         </span>
-        <span className="text-xs text-muted-foreground">View lead</span>
         {lead?.user?.unreadCount && lead?.user?.unreadCount > 0 && (
           <span className="absolute end-0 top-0 min-w-[20px] h-5 flex items-center justify-center rounded-full bg-green-500 px-1.5">
             <span className="text-[11px] text-white font-medium">

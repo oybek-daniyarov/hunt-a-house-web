@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   FileText,
   Image as ImageIcon,
@@ -16,6 +17,7 @@ import { useChat } from '@/app/dashboard/chat/_components/chat-context';
 import MessageBubble from '@/app/dashboard/chat/_components/message-bubble';
 import { ChatMessageList } from '@/components/chat/chat-message-list';
 import { useAuth } from '@/components/providers/auth-provider';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const FilePreview = ({
@@ -103,7 +105,7 @@ const ChatArea = () => {
           </div>
         ) : (
           <>
-            <div className="border-b border-border bg-background/80 backdrop-blur-sm px-4 py-3 flex items-center">
+            <div className="border-b border-border bg-background/80 backdrop-blur-sm px-4 py-3 flex items-center justify-between">
               <div className="flex items-center">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 dark:bg-primary/20 text-primary">
                   <User size={18} />
@@ -127,6 +129,14 @@ const ChatArea = () => {
                   </div>
                 </div>
               </div>
+
+              <Button variant="outline" size="sm" asChild>
+                <Link
+                  href={`/dashboard/chat?id=${selectedLead.lead?.id}&view=lead`}
+                >
+                  View lead
+                </Link>
+              </Button>
             </div>
 
             <div className="flex-1 h-auto overflow-y-auto relative">

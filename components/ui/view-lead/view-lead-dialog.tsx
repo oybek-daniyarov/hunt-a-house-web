@@ -35,7 +35,19 @@ export function ViewLeadDialog({ lead, open, onClose }: ViewLeadDialogProps) {
     if (onClose) {
       onClose();
     } else {
-      router.push(pathname);
+      const url = new URL(window.location.href);
+      const params = new URLSearchParams(url.search);
+
+      // Remove only the lead-related parameters
+      params.delete('leadId');
+      params.delete('listingId');
+      params.delete('view');
+
+      const newPath = params.toString()
+        ? `${pathname}?${params.toString()}`
+        : pathname;
+
+      router.push(newPath);
     }
   };
 
