@@ -53,7 +53,7 @@ export async function LeadsTable({ page, editLeadId }: LeadsTableProps) {
             {leads.data.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={9} className="text-center py-6">
-                  No leads found
+                  No listings found
                 </TableCell>
               </TableRow>
             ) : (
@@ -127,7 +127,7 @@ export async function LeadsTable({ page, editLeadId }: LeadsTableProps) {
                     <Button variant="ghost" size="icon" asChild>
                       <a href={`?page=${page}&edit=${lead.id}`}>
                         <Pencil className="h-4 w-4" />
-                        <span className="sr-only">Edit lead</span>
+                        <span className="sr-only">Edit Listing</span>
                       </a>
                     </Button>
                   </TableCell>
