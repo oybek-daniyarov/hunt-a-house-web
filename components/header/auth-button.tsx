@@ -21,7 +21,7 @@ export default function AuthButton() {
     );
   }
 
-  // If user is an agent, show credits badge
+  // If user is an agent, show unlocks badge
   if (isAuthenticated && isAgent) {
     return (
       <div className="flex items-center gap-2">

@@ -19,8 +19,8 @@ export function AuthenticatedView({ listing }: CreditViewProps) {
 
   const { user } = useAuth();
 
-  const hasCredits = user?.credits && user.credits >= listing.creditCost;
-  const credits = user?.credits || 0;
+  const hasUnlocks = user?.credits && user.credits >= listing.creditCost;
+  const unlocks = user?.credits || 0;
 
   const handlePurchaseLead = () => {
     if (!user || !listing.id || isPurchased) return;
@@ -61,13 +61,13 @@ export function AuthenticatedView({ listing }: CreditViewProps) {
               <div
                 className={cn(
                   'rounded-full p-2.5',
-                  hasCredits ? 'bg-primary/5' : 'bg-destructive/5'
+                  hasUnlocks ? 'bg-primary/5' : 'bg-destructive/5'
                 )}
               >
                 <IoCash
                   className={cn(
                     'h-5 w-5',
-                    hasCredits ? 'text-primary' : 'text-destructive'
+                    hasUnlocks ? 'text-primary' : 'text-destructive'
                   )}
                 />
               </div>
@@ -75,7 +75,7 @@ export function AuthenticatedView({ listing }: CreditViewProps) {
                 <div className="flex flex-col">
                   <p className="text-sm font-medium">Your Unlocks</p>
                   <p className="text-xs text-muted-foreground">
-                    {credits} unlock{credits !== 1 ? 's' : ''} available
+                    {unlocks} unlock{unlocks !== 1 ? 's' : ''} available
                   </p>
                 </div>
               </div>
@@ -91,7 +91,7 @@ export function AuthenticatedView({ listing }: CreditViewProps) {
         )}
 
         <div className="space-y-3">
-          {hasCredits ? (
+          {hasUnlocks ? (
             <Button
               size="lg"
               className="relative w-full h-12 bg-primary hover:bg-primary/90 transition-colors"
@@ -135,11 +135,11 @@ export function AuthenticatedView({ listing }: CreditViewProps) {
             <>
               <div className="flex items-center justify-center w-full h-12 rounded-md bg-[#ff444422] text-[#ff6b6b] dark:bg-[#ff444410] dark:text-[#ff8f8f]">
                 <span className="text-sm font-medium">
-                  Insufficient Credits
+                  Insufficient Unlocks
                 </span>
               </div>
               <Button variant="outline" asChild>
-                <Link href="/dashboard/agent/unlocks">
+                <Link href="/dashboard/agent/unlocks" className="w-full">
                   <span className="flex items-center gap-2">
                     <Coins className="h-4 w-4" />
                     Buy Unlocks

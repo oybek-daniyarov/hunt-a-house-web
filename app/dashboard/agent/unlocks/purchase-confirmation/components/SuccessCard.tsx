@@ -27,7 +27,7 @@ export function SuccessCard({ paymentData }: SuccessCardProps) {
             Payment Successful
           </CardTitle>
           <CardDescription>
-            Your tokens have been added to your account
+            Your unlocks have been added to your account
           </CardDescription>
         </CardHeader>
 
