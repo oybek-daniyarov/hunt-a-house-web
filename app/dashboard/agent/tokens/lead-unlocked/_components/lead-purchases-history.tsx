@@ -64,7 +64,7 @@ export default async function LeadPurchasesHistory({
       return (
         <Card>
           <CardHeader>
-            <CardTitle>Lead Purchases</CardTitle>
+            <CardTitle>Lead Unlocked</CardTitle>
             <CardDescription>
               You haven&apos;t purchased any leads yet.
             </CardDescription>
@@ -82,8 +82,8 @@ export default async function LeadPurchasesHistory({
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Lead Purchases</CardTitle>
-          <CardDescription>Your lead purchase history</CardDescription>
+          <CardTitle>Lead Unlocked</CardTitle>
+          <CardDescription>Your lead unlocked history</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto -mx-4 sm:mx-0">
@@ -152,13 +152,13 @@ export default async function LeadPurchasesHistory({
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Lead Purchases</CardTitle>
-          <CardDescription>Your lead purchase history</CardDescription>
+          <CardTitle>Lead Unlocked</CardTitle>
+          <CardDescription>Your lead unlocked history</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="py-8 text-center">
             <p className="text-destructive">
-              Failed to load lead purchase history. Please try again later.
+              Failed to load lead unlocked history. Please try again later.
             </p>
           </div>
         </CardContent>

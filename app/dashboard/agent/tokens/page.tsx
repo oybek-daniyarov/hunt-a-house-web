@@ -41,8 +41,8 @@ export default async function ProductsPage({
         title="Purchase History"
         headerRight={
           <Button variant="outline" asChild>
-            <Link href="/dashboard/agent/tokens/lead-purchases">
-              View View Purchases
+            <Link href="/dashboard/agent/tokens/lead-unlocked">
+              View Unlocked Leads
             </Link>
           </Button>
         }
