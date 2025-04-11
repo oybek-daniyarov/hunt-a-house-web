@@ -12,8 +12,8 @@ const ProductsList = dynamic(() => import('./components/products-list'), {
 });
 
 export const metadata: Metadata = {
-  title: 'Buy Tokens | HuntAHouse',
-  description: 'Purchase tokens to access leads and grow your business',
+  title: 'Buy Views | HuntAHouse',
+  description: 'Purchase views to access leads and grow your business',
 };
 
 export default async function ProductsPage({
@@ -28,8 +28,8 @@ export default async function ProductsPage({
   return (
     <PageContainer className="max-w-3xl" centered={false}>
       <PageHeader
-        title="Buy Tokens"
-        description="Purchase tokens to access leads and grow your business"
+        title="Buy Views"
+        description="Purchase views to access leads and grow your business"
         textAlign="start"
       />
 
@@ -42,7 +42,7 @@ export default async function ProductsPage({
         headerRight={
           <Button variant="outline" asChild>
             <Link href="/dashboard/agent/tokens/lead-purchases">
-              View Listing Purchases
+              View View Purchases
             </Link>
           </Button>
         }

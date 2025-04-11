@@ -28,8 +28,8 @@ import PurchaseVerification from './purchase-verification';
 const CREDIT_PRICE = 2; // AED per credit
 const CURRENCY = 'AED';
 
-// Preset token packages
-const TOKEN_PACKAGES = [
+// Preset view packages
+const VIEW_PACKAGES = [
   { amount: 10, label: 'Basic', description: 'View up to 10 properties' },
   {
     amount: 25,
@@ -50,11 +50,11 @@ export default function ProductsList() {
   // Get the quantity based on selection
   const quantity = isCustom
     ? parseInt(customAmount) || 0
-    : TOKEN_PACKAGES[selectedPackage]?.amount || 10;
+    : VIEW_PACKAGES[selectedPackage]?.amount || 10;
 
   const handlePurchase = async () => {
     if (quantity <= 0) {
-      toast.error('Please select a valid number of tokens');
+      toast.error('Please select a valid number of views');
       return;
     }
 
@@ -96,7 +96,7 @@ export default function ProductsList() {
 
   const openVerification = () => {
     if (quantity <= 0) {
-      toast.error('Please select a valid number of tokens');
+      toast.error('Please select a valid number of views');
       return;
     }
     setShowVerification(true);
@@ -105,7 +105,7 @@ export default function ProductsList() {
   // Get the package name based on selection
   const packageName = isCustom
     ? 'Custom Amount'
-    : TOKEN_PACKAGES[selectedPackage]?.label || 'Basic';
+    : VIEW_PACKAGES[selectedPackage]?.label || 'Basic';
 
   return (
     <>
@@ -114,11 +114,10 @@ export default function ProductsList() {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="text-2xl">
-                Purchase Property Tokens
+                Purchase Property Views
               </CardTitle>
               <CardDescription className="mt-2">
-                Tokens allow you to view property details and contact
-                information
+                Views allow you to view property details and contact information
               </CardDescription>
             </div>
             <Coins className="h-10 w-10 text-primary" />
@@ -127,7 +126,7 @@ export default function ProductsList() {
         <CardContent className="space-y-6">
           {/* Package selection */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {TOKEN_PACKAGES.map((pkg, index) => (
+            {VIEW_PACKAGES.map((pkg, index) => (
               <div
                 key={index}
                 className={cn(
@@ -150,7 +149,7 @@ export default function ProductsList() {
                 <div className="mb-2 font-medium">{pkg.label}</div>
                 <div className="text-2xl font-bold">
                   {pkg.amount}{' '}
-                  <span className="text-sm font-normal">tokens</span>
+                  <span className="text-sm font-normal">views</span>
                 </div>
                 <div className="mt-1 text-sm text-muted-foreground">
                   {pkg.description}
@@ -185,7 +184,7 @@ export default function ProductsList() {
                 placeholder="Enter amount"
                 className="w-32"
               />
-              <span className="text-sm text-muted-foreground">tokens</span>
+              <span className="text-sm text-muted-foreground">views</span>
             </div>
             {isCustom && customAmount && (
               <div className="mt-2 font-medium text-primary">
@@ -211,7 +210,7 @@ export default function ProductsList() {
                       <Info className="h-4 w-4 text-muted-foreground" />
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Each token allows you to view one property</p>
+                      <p>Each view allows you to view one property</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>

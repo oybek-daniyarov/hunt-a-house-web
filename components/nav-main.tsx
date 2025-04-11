@@ -38,13 +38,13 @@ export async function NavMain() {
       userTypes: ['agent'],
     },
     {
-      title: 'Buy Tokens',
+      title: 'Buy Views',
       url: '/dashboard/agent/tokens',
       icon: CreditCard,
       userTypes: ['agent'],
     },
     {
-      title: 'Lead Purchases',
+      title: 'View Purchases',
       url: '/dashboard/agent/tokens/lead-purchases',
       icon: FileText,
       userTypes: ['agent'],
