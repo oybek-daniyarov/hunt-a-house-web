@@ -40,7 +40,9 @@ export function LeadFormStep({ filters }: LeadFormStepProps) {
     defaultValues: {
       location: [],
       propertyType: filters.propertyTypes[0].id.toString(),
-      activityType: filters.activityTypes[0].id.toString(),
+      activityType: filters.activityTypes
+        ?.find((type) => type.name.includes('Rent'))
+        ?.id.toString(),
       bedrooms: filters.bedrooms[0].id.toString(),
       bathrooms: filters.bathrooms[0].id.toString(),
       minSize: '',
@@ -51,6 +53,14 @@ export function LeadFormStep({ filters }: LeadFormStepProps) {
       budgetFrequency: filters.budgetFrequency[0].id.toString(),
     },
   });
+
+  const activityType = form.watch('activityType');
+  const isBuyActivity =
+    activityType &&
+    filters.activityTypes
+      .find((type) => type.id.toString() === activityType)
+      ?.name.toLowerCase()
+      .includes('buy');
 
   const propertyTypeOptions = convertToOptions(filters.propertyTypes);
   const activityTypeOptions = convertToOptions(filters.activityTypes);
@@ -117,13 +127,15 @@ export function LeadFormStep({ filters }: LeadFormStepProps) {
 
           <NumberInputField name="maxBudget" label="Max Budget" prefix="AED" />
 
-          <div className="col-span-2">
-            <SelectField
-              name="budgetFrequency"
-              label="Budget Frequency"
-              options={budgetFrequencyOptions}
-            />
-          </div>
+          {!isBuyActivity && (
+            <div className="col-span-2">
+              <SelectField
+                name="budgetFrequency"
+                label="Budget Frequency"
+                options={budgetFrequencyOptions}
+              />
+            </div>
+          )}
 
           <div className="col-span-2">
             <TextareaField name="description" label="Description" />

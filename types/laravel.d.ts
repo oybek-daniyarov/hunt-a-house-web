@@ -191,9 +191,7 @@ declare namespace App.Data.Lead {
     minBudget: number | null;
     maxBudget: number | null;
     budgetFrequency: App.Enums.BudgetFrequency | null;
-    agent: App.Data.User.UserData | null;
     createdAt: string;
-    isAuthenticated: boolean;
     isUserHadPurchasedLead: boolean;
     creditCost: number;
     contactMethods: Array<App.Data.ContactMethodData>;
@@ -235,6 +233,7 @@ declare namespace App.Data.Lead.Payload {
     description: string;
     contact: Array<any>;
     email: string | null;
+    name: string | null;
     maxViews: number | null;
   };
   export type UpdateLeadPayloadData = {
@@ -326,8 +325,11 @@ declare namespace App.Data.User.Payload {
   };
 }
 declare namespace App.Enums {
-  export type ActivityType = 'buy' | 'long_term_rent' | 'short_term_rent';
-  export type BudgetFrequency = 'per_year' | 'per_month' | 'per_day';
+  export type BudgetFrequency =
+    | 'per_year'
+    | 'per_month'
+    | 'per_day'
+    | 'one_time';
   export type CompanyType = 'real_estate' | 'holiday_homes';
   export type ContactMethod =
     | 'phone'

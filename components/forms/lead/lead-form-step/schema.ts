@@ -12,7 +12,7 @@ export const leadFormStepSchema = z
       .min(1, 'Location is required'),
     propertyType: z.string().min(1, 'Property type is required'),
     activityType: z.string().min(1, 'Activity type is required'),
-    budgetFrequency: z.string().min(1, 'Budget frequency is required'),
+    budgetFrequency: z.string(),
     bedrooms: z.string(),
     bathrooms: z.string(),
     minSize: z.string().min(1, 'Min size is required'),
@@ -34,6 +34,17 @@ export const leadFormStepSchema = z
         code: z.ZodIssueCode.custom,
         path: ['minBudget'],
         message: 'Min budget must be less than max budget',
+      });
+    }
+    // Only validate budgetFrequency if activity type is not buy
+    if (
+      !data.activityType.toLowerCase().includes('buy') &&
+      !data.budgetFrequency
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['budgetFrequency'],
+        message: 'Budget frequency is required for non-buy activities',
       });
     }
   });

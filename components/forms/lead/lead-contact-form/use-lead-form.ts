@@ -46,6 +46,7 @@ export const useLeadForm = () => {
     if (user) {
       form.setValue('email', user.email);
       form.setValue('contact.phone', user.phone || '');
+      form.setValue('name', user.name || '');
       if (user.contactMethods && user.contactMethods.length > 0) {
         const whatsappContactMethod = findContactMethod('whatsapp');
         if (whatsappContactMethod) {
@@ -83,32 +84,27 @@ export const useLeadForm = () => {
   const onSubmit = async (data: LeadContactFormData) => {
     updateStepData({ data });
     setError(null);
+    const payload = {
+      locations: stepData.lead.location,
+      propertyType: Number(stepData.lead.propertyType),
+      activityType: Number(stepData.lead.activityType),
+      bedrooms: stepData.lead.bedrooms ? Number(stepData.lead.bedrooms) : 0,
+      bathrooms: stepData.lead.bathrooms ? Number(stepData.lead.bathrooms) : 0,
+      minSize: stepData.lead.minSize ? Number(stepData.lead.minSize) : 0,
+      maxSize: stepData.lead.maxSize ? Number(stepData.lead.maxSize) : 0,
+      minBudget: stepData.lead.minBudget ? Number(stepData.lead.minBudget) : 0,
+      maxBudget: stepData.lead.maxBudget ? Number(stepData.lead.maxBudget) : 0,
+      budgetFrequency: stepData.lead
+        .budgetFrequency as App.Enums.BudgetFrequency,
+      description: stepData.lead.description,
+      contact: data.contact,
+      email: data.email,
+      name: data.name,
+      maxViews: Number(data.maxViews),
+    };
     try {
-      const result = await createLeadAction({
-        locations: stepData.lead.location,
-        propertyType: Number(stepData.lead.propertyType),
-        activityType: Number(stepData.lead.activityType),
-        bedrooms: stepData.lead.bedrooms ? Number(stepData.lead.bedrooms) : 0,
-        bathrooms: stepData.lead.bathrooms
-          ? Number(stepData.lead.bathrooms)
-          : 0,
-        minSize: stepData.lead.minSize ? Number(stepData.lead.minSize) : 0,
-        maxSize: stepData.lead.maxSize ? Number(stepData.lead.maxSize) : 0,
-        minBudget: stepData.lead.minBudget
-          ? Number(stepData.lead.minBudget)
-          : 0,
-        maxBudget: stepData.lead.maxBudget
-          ? Number(stepData.lead.maxBudget)
-          : 0,
-        budgetFrequency: stepData.lead
-          .budgetFrequency as App.Enums.BudgetFrequency,
-        description: stepData.lead.description,
-        // @ts-expect-error - contact is optional
-        contact: data.contact,
-        email: data.email,
-        name: data.name,
-        maxViews: Number(data.maxViews),
-      });
+      // @ts-expect-error - contact is optional
+      const result = await createLeadAction(payload);
 
       if (result.success) {
         handleFormSuccess(SUCCESS_MESSAGE);
