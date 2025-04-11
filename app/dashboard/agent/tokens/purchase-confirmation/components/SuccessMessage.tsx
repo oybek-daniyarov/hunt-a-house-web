@@ -12,8 +12,8 @@ export function SuccessMessage({ credits }: SuccessMessageProps) {
         <div>
           <p className="font-medium text-green-800">Transaction Complete</p>
           <p className="text-sm text-green-700 mt-1">
-            Your payment has been processed successfully. {credits} tokens have
-            been added to your account. You can now use these tokens to view
+            Your payment has been processed successfully. {credits} unlocks have
+            been added to your account. You can now use these unlocks to view
             property details.
           </p>
         </div>

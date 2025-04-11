@@ -44,7 +44,7 @@ export default function PurchaseVerification({
             Verify Your Purchase
           </DialogTitle>
           <DialogDescription>
-            Please review your token purchase details before proceeding to
+            Please review your unlock purchase details before proceeding to
             payment.
           </DialogDescription>
         </DialogHeader>
@@ -56,17 +56,17 @@ export default function PurchaseVerification({
             </div>
 
             <div className="flex justify-between items-center mb-2">
-              <span>Token Package:</span>
+              <span>Package:</span>
               <span className="font-medium">{packageName}</span>
             </div>
 
             <div className="flex justify-between items-center mb-2">
-              <span>Number of Tokens:</span>
+              <span>Number of Unlocks:</span>
               <span className="font-medium">{quantity}</span>
             </div>
 
             <div className="flex justify-between items-center mb-2">
-              <span>Price per Token:</span>
+              <span>Price per Unlock:</span>
               <span className="font-medium">
                 {currency} {price}
               </span>
@@ -90,10 +90,10 @@ export default function PurchaseVerification({
                   Important Information
                 </p>
                 <p className="text-sm text-yellow-700 mt-1">
-                  By proceeding, you agree to purchase {quantity} tokens for a
+                  By proceeding, you agree to purchase {quantity} unlocks for a
                   total of {currency} {totalAmount.toLocaleString()}. These
-                  tokens will be added to your account immediately after payment
-                  and can be used to view property details.
+                  unlocks will be added to your account immediately after
+                  payment and can be used to view property details.
                 </p>
               </div>
             </div>

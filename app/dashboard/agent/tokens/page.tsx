@@ -12,8 +12,8 @@ const ProductsList = dynamic(() => import('./components/products-list'), {
 });
 
 export const metadata: Metadata = {
-  title: 'Buy Views | HuntAHouse',
-  description: 'Purchase views to access leads and grow your business',
+  title: 'Unlocks | HuntAHouse',
+  description: 'Purchase unlocks to access leads and grow your business',
 };
 
 export default async function ProductsPage({
@@ -28,8 +28,8 @@ export default async function ProductsPage({
   return (
     <PageContainer className="max-w-3xl" centered={false}>
       <PageHeader
-        title="Buy Views"
-        description="Purchase views to access leads and grow your business"
+        title="Unlocks"
+        description="Purchase unlocks to access leads and grow your business"
         textAlign="start"
       />
 

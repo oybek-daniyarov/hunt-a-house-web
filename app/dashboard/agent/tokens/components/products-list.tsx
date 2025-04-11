@@ -30,14 +30,14 @@ const CURRENCY = 'AED';
 
 // Preset view packages
 const VIEW_PACKAGES = [
-  { amount: 10, label: 'Basic', description: 'View up to 10 properties' },
+  { amount: 10, label: 'Basic', description: 'Unlock up to 10 properties' },
   {
     amount: 25,
     label: 'Standard',
-    description: 'View up to 25 properties',
+    description: 'Unlock up to 25 properties',
     popular: true,
   },
-  { amount: 50, label: 'Premium', description: 'View up to 50 properties' },
+  { amount: 50, label: 'Premium', description: 'Unlock up to 50 properties' },
 ];
 
 export default function ProductsList() {
@@ -54,7 +54,7 @@ export default function ProductsList() {
 
   const handlePurchase = async () => {
     if (quantity <= 0) {
-      toast.error('Please select a valid number of views');
+      toast.error('Please select a valid number of unlocks');
       return;
     }
 
@@ -96,7 +96,7 @@ export default function ProductsList() {
 
   const openVerification = () => {
     if (quantity <= 0) {
-      toast.error('Please select a valid number of views');
+      toast.error('Please select a valid number of unlocks');
       return;
     }
     setShowVerification(true);
@@ -113,11 +113,10 @@ export default function ProductsList() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-2xl">
-                Purchase Property Views
-              </CardTitle>
+              <CardTitle className="text-2xl">Purchase Unlocks</CardTitle>
               <CardDescription className="mt-2">
-                Views allow you to view property details and contact information
+                Unlocks allow you to view property details and contact
+                information
               </CardDescription>
             </div>
             <Coins className="h-10 w-10 text-primary" />
@@ -149,7 +148,7 @@ export default function ProductsList() {
                 <div className="mb-2 font-medium">{pkg.label}</div>
                 <div className="text-2xl font-bold">
                   {pkg.amount}{' '}
-                  <span className="text-sm font-normal">views</span>
+                  <span className="text-sm font-normal">unlocks</span>
                 </div>
                 <div className="mt-1 text-sm text-muted-foreground">
                   {pkg.description}
@@ -184,7 +183,7 @@ export default function ProductsList() {
                 placeholder="Enter amount"
                 className="w-32"
               />
-              <span className="text-sm text-muted-foreground">views</span>
+              <span className="text-sm text-muted-foreground">unlocks</span>
             </div>
             {isCustom && customAmount && (
               <div className="mt-2 font-medium text-primary">
@@ -210,7 +209,7 @@ export default function ProductsList() {
                       <Info className="h-4 w-4 text-muted-foreground" />
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Each view allows you to view one property</p>
+                      <p>Each unlock allows you to view one property</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>

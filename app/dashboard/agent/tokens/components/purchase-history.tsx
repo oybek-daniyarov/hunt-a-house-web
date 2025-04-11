@@ -143,7 +143,8 @@ async function PurchaseHistoryContent({ page = 1 }: PurchaseHistoryProps) {
                   <TableRow>
                     <TableHead>Date</TableHead>
                     <TableHead>Amount</TableHead>
-                    <TableHead>Credits</TableHead>
+                    <TableHead>Unlocks</TableHead>
+                    <TableHead>Invoice</TableHead>
                     <TableHead>Status</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -158,6 +159,20 @@ async function PurchaseHistoryContent({ page = 1 }: PurchaseHistoryProps) {
                         )}
                       </TableCell>
                       <TableCell>{payment.credits}</TableCell>
+                      <TableCell>
+                        {payment.receiptUrl ? (
+                          <a
+                            href={payment.receiptUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:text-blue-600 underline"
+                          >
+                            View Invoice
+                          </a>
+                        ) : (
+                          'N/A'
+                        )}
+                      </TableCell>
                       <TableCell>
                         <StatusBadge status={payment.status} />
                       </TableCell>
