@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 
-import LeadPurchasesHistory from '@/app/dashboard/agent/tokens/lead-unlocked/_components/lead-purchases-history';
-import { LeadPurchasesHistorySkeleton } from '@/app/dashboard/agent/tokens/lead-unlocked/_components/lead-purchases-history-skeleton';
+import LeadPurchasesHistory from '@/app/dashboard/agent/unlocks/lead-unlocked/_components/lead-purchases-history';
+import { LeadPurchasesHistorySkeleton } from '@/app/dashboard/agent/unlocks/lead-unlocked/_components/lead-purchases-history-skeleton';
 import { PageContainer, PageHeader, Section } from '../../../_components';
 
 export const metadata: Metadata = {

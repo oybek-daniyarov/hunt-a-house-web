@@ -44,7 +44,7 @@ export async function NavUser() {
             >
               <span className="flex items-center gap-1.5">
                 <Coins className="h-3.5 w-3.5 text-primary" />
-                <span className="text-xs font-medium">Available Tokens</span>
+                <span className="text-xs font-medium">Available Unlocks</span>
               </span>
               <span className="font-bold text-primary">
                 {user.credits || 0}
@@ -96,7 +96,7 @@ export async function NavUser() {
                   <DropdownMenuItem className="flex justify-between items-center">
                     <span className="flex items-center gap-2">
                       <Coins className="h-4 w-4 text-primary" />
-                      Available Tokens
+                      Available Unlocks
                     </span>
                     <Badge variant="outline" className="ml-2 font-bold">
                       {user.credits || 0}

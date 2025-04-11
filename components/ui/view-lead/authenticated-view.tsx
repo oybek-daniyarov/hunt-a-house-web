@@ -1,11 +1,7 @@
 import { useTransition } from 'react';
 import Link from 'next/link';
-import {
-  IoCardOutline,
-  IoCash,
-  IoCheckmarkCircle,
-  IoLockClosed,
-} from 'react-icons/io5';
+import { Coins } from 'lucide-react';
+import { IoCash, IoCheckmarkCircle, IoLockClosed } from 'react-icons/io5';
 import { toast } from 'sonner';
 
 import { useAuth } from '@/components/providers/auth-provider';
@@ -76,16 +72,19 @@ export function AuthenticatedView({ listing }: CreditViewProps) {
                 />
               </div>
               <div>
-                <p className="text-sm font-medium">Your Tokens</p>
-                <p className="text-sm text-muted-foreground">
-                  {credits} token{credits !== 1 ? 's' : ''} available
-                </p>
+                <div className="flex flex-col">
+                  <p className="text-sm font-medium">Your Unlocks</p>
+                  <p className="text-xs text-muted-foreground">
+                    {credits} unlock{credits !== 1 ? 's' : ''} available
+                  </p>
+                </div>
               </div>
             </div>
             <div className="text-right">
               <p className="text-sm font-medium">Cost</p>
               <p className="text-sm text-muted-foreground">
-                {listing?.creditCost}
+                {listing?.creditCost} unlock
+                {listing.creditCost !== 1 ? 's' : ''}
               </p>
             </div>
           </div>
@@ -139,15 +138,12 @@ export function AuthenticatedView({ listing }: CreditViewProps) {
                   Insufficient Credits
                 </span>
               </div>
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full h-12 hover:bg-muted/5 transition-colors"
-                asChild
-              >
-                <Link href="/dashboard/agent/tokens">
-                  <IoCardOutline className="mr-2 h-4 w-4" />
-                  <span className="text-sm font-medium">Purchase Credits</span>
+              <Button variant="outline" asChild>
+                <Link href="/dashboard/agent/unlocks">
+                  <span className="flex items-center gap-2">
+                    <Coins className="h-4 w-4" />
+                    Buy Unlocks
+                  </span>
                 </Link>
               </Button>
             </>
@@ -158,7 +154,7 @@ export function AuthenticatedView({ listing }: CreditViewProps) {
       {!isPurchased && (
         <p className="text-center text-xs text-muted-foreground">
           Contact details will be instantly revealed after using{' '}
-          {listing.creditCost} token{listing.creditCost !== 1 ? 's' : ''}
+          {listing.creditCost} unlock{listing.creditCost !== 1 ? 's' : ''}
         </p>
       )}
     </div>

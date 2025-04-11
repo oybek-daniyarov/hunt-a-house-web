@@ -1,6 +1,6 @@
 import { headers } from 'next/headers';
 import Link from 'next/link';
-import { CreditCard, FileText, Lock, MessageSquare } from 'lucide-react';
+import { Coins, FileText, Lock, MessageSquare } from 'lucide-react';
 
 import {
   SidebarGroup,
@@ -38,14 +38,14 @@ export async function NavMain() {
       userTypes: ['agent'],
     },
     {
-      title: 'Buy Views',
-      url: '/dashboard/agent/tokens',
-      icon: CreditCard,
+      title: 'Buy Unlocks',
+      url: '/dashboard/agent/unlocks',
+      icon: Coins,
       userTypes: ['agent'],
     },
     {
       title: 'Unlocked Leads',
-      url: '/dashboard/agent/tokens/lead-unlocked',
+      url: '/dashboard/agent/unlocks/lead-unlocked',
       icon: Lock,
       userTypes: ['agent'],
     },
