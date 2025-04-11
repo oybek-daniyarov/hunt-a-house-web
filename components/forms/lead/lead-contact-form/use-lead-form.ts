@@ -31,6 +31,7 @@ export const useLeadForm = () => {
         telegram: '',
       },
       email: '',
+      name: '',
       maxViews: '10',
       terms: false,
     },
@@ -105,6 +106,7 @@ export const useLeadForm = () => {
         // @ts-expect-error - contact is optional
         contact: data.contact,
         email: data.email,
+        name: data.name,
         maxViews: Number(data.maxViews),
       });
 

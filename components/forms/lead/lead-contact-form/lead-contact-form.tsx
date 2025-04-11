@@ -37,11 +37,18 @@ const LeadContactForm = () => {
             </div>
           )}
           {!isAuthenticated && (
-            <InputField
-              name="email"
-              label="Email"
-              description="Your email address will be used to send you a lead activation link and create an account if you don't have one"
-            />
+            <>
+              <InputField
+                name="name"
+                label="Name"
+                description="Your name will be used to identify you in the system"
+              />
+              <InputField
+                name="email"
+                label="Email"
+                description="Your email address will be used to send you a lead activation link and create an account if you don't have one"
+              />
+            </>
           )}
 
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
