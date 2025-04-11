@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Coins, Loader2 } from 'lucide-react';
+import { RiUserLine, RiUserSettingsLine } from 'react-icons/ri';
 
 import { useAuth } from '@/components/providers/auth-provider';
 import { Badge } from '@/components/ui/badge';
@@ -32,7 +33,10 @@ export default function AuthButton() {
           <span className="font-bold text-primary">{user?.credits || 0}</span>
         </Badge>
         <Button variant="outline" size="sm" asChild>
-          <Link href="/dashboard">Dashboard</Link>
+          <Link href="/dashboard">
+            <RiUserSettingsLine className="h-4 w-4 md:hidden" />
+            <span className="hidden md:inline">Dashboard</span>
+          </Link>
         </Button>
       </div>
     );
@@ -42,7 +46,17 @@ export default function AuthButton() {
   return (
     <Button variant="outline" size="sm" asChild>
       <Link href={isAuthenticated ? '/dashboard' : '/auth/login'}>
-        {isAuthenticated ? 'Dashboard' : 'Login'}
+        {isAuthenticated ? (
+          <>
+            <RiUserSettingsLine className="h-4 w-4 md:hidden" />
+            <span className="hidden md:inline">Dashboard</span>
+          </>
+        ) : (
+          <>
+            <RiUserLine className="h-4 w-4 md:hidden" />
+            <span className="hidden md:inline">Login</span>
+          </>
+        )}
       </Link>
     </Button>
   );

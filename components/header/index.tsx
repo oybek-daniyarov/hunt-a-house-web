@@ -7,6 +7,13 @@ import DesktopNavigation from '@/components/header/navigation';
 import { ModeToggle } from '@/components/menu-toggle';
 import AuthButton from './auth-button';
 
+const HeaderActions = () => (
+  <div className="flex items-center gap-2">
+    <AuthButton />
+    <ModeToggle />
+  </div>
+);
+
 export default async function Header() {
   const data = await fetchSanitySite();
 
@@ -18,13 +25,10 @@ export default async function Header() {
         </Link>
         <div className="hidden xl:flex gap-7 items-center justify-between">
           <DesktopNavigation navItems={data.headerMenu} />
-          <div className="flex items-center gap-4">
-            <AuthButton />
-            <ModeToggle />
-          </div>
+          <HeaderActions />
         </div>
         <div className="flex items-center xl:hidden">
-          <ModeToggle />
+          <HeaderActions />
           <MobileNav navItems={data.headerMenu} logo={data.logo} />
         </div>
       </div>
