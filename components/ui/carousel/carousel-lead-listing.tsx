@@ -4,7 +4,6 @@ import { SearchParams } from 'nuqs/server';
 
 import { CarouselLeadListingRow } from '@/components/ui/carousel/carousel-lead-listing-row';
 import SectionContainer from '@/components/ui/section-container';
-import { ViewLead } from '@/components/ui/view-lead';
 import { getLeads } from '@/lib/data/laravel/lead/lead.api';
 
 interface CarouselLeadListingProps {
@@ -47,9 +46,6 @@ export default async function CarouselLeadListing({
         <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background"></div>
         <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background"></div>
       </div>
-      {searchParams?.leadId && (
-        <ViewLead leadId={searchParams.leadId as string} />
-      )}
     </SectionContainer>
   );
 }
