@@ -4,9 +4,17 @@ import Link from 'next/link';
 import { Coins, Loader2 } from 'lucide-react';
 import { RiUserLine, RiUserSettingsLine } from 'react-icons/ri';
 
+import { LogoutMenuItem } from '@/components/logout-menu-item';
 import { useAuth } from '@/components/providers/auth-provider';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 export default function AuthButton() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -21,10 +29,22 @@ export default function AuthButton() {
     );
   }
 
-  // If user is an agent, show unlocks badge
-  if (isAuthenticated && isAgent) {
+  // If not authenticated, show login button
+  if (!isAuthenticated) {
     return (
-      <div className="flex items-center gap-2">
+      <Button variant="outline" size="sm" asChild>
+        <Link href="/auth/login">
+          <RiUserLine className="h-4 w-4 md:hidden" />
+          <span className="hidden md:inline">Login</span>
+        </Link>
+      </Button>
+    );
+  }
+
+  // If authenticated, show dropdown with credits badge for agents
+  return (
+    <div className="flex items-center gap-2">
+      {isAgent && (
         <Badge
           variant="outline"
           className="flex items-center gap-1.5 py-1.5 px-2.5"
@@ -32,32 +52,25 @@ export default function AuthButton() {
           <Coins className="h-3.5 w-3.5 text-primary" />
           <span className="font-bold text-primary">{user?.credits || 0}</span>
         </Badge>
-        <Button variant="outline" size="sm" asChild>
-          <Link href="/dashboard">
-            <RiUserSettingsLine className="h-4 w-4 md:hidden" />
+      )}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="sm">
+            <RiUserSettingsLine className="h-4 w-4 md:mr-2" />
             <span className="hidden md:inline">Dashboard</span>
-          </Link>
-        </Button>
-      </div>
-    );
-  }
-
-  // Default button for non-agents or not authenticated
-  return (
-    <Button variant="outline" size="sm" asChild>
-      <Link href={isAuthenticated ? '/dashboard' : '/auth/login'}>
-        {isAuthenticated ? (
-          <>
-            <RiUserSettingsLine className="h-4 w-4 md:hidden" />
-            <span className="hidden md:inline">Dashboard</span>
-          </>
-        ) : (
-          <>
-            <RiUserLine className="h-4 w-4 md:hidden" />
-            <span className="hidden md:inline">Login</span>
-          </>
-        )}
-      </Link>
-    </Button>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard">
+              <RiUserSettingsLine className="mr-2 h-4 w-4" />
+              Dashboard
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <LogoutMenuItem />
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }

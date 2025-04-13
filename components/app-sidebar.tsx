@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { headers } from 'next/headers';
 import Link from 'next/link';
 import { Command } from 'lucide-react';
 
@@ -13,10 +14,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { getSession } from '@/lib/client/laravel/auth';
+import { AvailableUnlocks } from './available-unlocks';
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar>;
 
-export function AppSidebar(props: AppSidebarProps) {
+export async function AppSidebar(props: AppSidebarProps) {
+  const { user } = await getSession({
+    headers: await headers(),
+  });
+
+  const isAgent = user?.userType === 'agent';
+
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -37,6 +46,7 @@ export function AppSidebar(props: AppSidebarProps) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        {isAgent && <AvailableUnlocks credits={user.credits || 0} />}
         <NavMain />
       </SidebarContent>
       <SidebarFooter>
