@@ -45,6 +45,7 @@ type LocationSearchFieldProps = {
   label: React.ReactNode;
   placeholder?: string;
   maxSelected?: number;
+  description?: string;
 };
 
 export const LocationSearchField = ({
@@ -52,9 +53,10 @@ export const LocationSearchField = ({
   label,
   placeholder = 'Enter a community, area or Emirate',
   maxSelected = 3,
+  description,
 }: LocationSearchFieldProps) => {
   return (
-    <FormFieldWrapper name={name} label={label}>
+    <FormFieldWrapper name={name} label={label} description={description}>
       {(field) => (
         <LocationSearch
           value={field.value}

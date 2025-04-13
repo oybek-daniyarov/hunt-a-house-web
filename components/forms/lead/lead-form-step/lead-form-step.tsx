@@ -92,7 +92,11 @@ export function LeadFormStep({ filters }: LeadFormStepProps) {
         />
         <div className="grid grid-cols-2 gap-3">
           <div className="col-span-2">
-            <LocationSearchField name="location" label="Location*" />
+            <LocationSearchField
+              name="location"
+              label="Location*"
+              description="Select up to 3 communities, areas or Emirates"
+            />
           </div>
 
           <SelectField
@@ -119,26 +123,26 @@ export function LeadFormStep({ filters }: LeadFormStepProps) {
             options={bathroomOptions}
           />
 
-          <NumberInputField name="minSize" label="Min Size" prefix="sqft" />
+          <NumberInputField name="minSize" label="Min Size*" prefix="sqft" />
 
-          <NumberInputField name="maxSize" label="Max Size" prefix="sqft" />
+          <NumberInputField name="maxSize" label="Max Size*" prefix="sqft" />
 
-          <NumberInputField name="minBudget" label="Min Budget" prefix="AED" />
+          <NumberInputField name="minBudget" label="Min Budget*" prefix="AED" />
 
-          <NumberInputField name="maxBudget" label="Max Budget" prefix="AED" />
+          <NumberInputField name="maxBudget" label="Max Budget*" prefix="AED" />
 
           {!isBuyActivity && (
             <div className="col-span-2">
               <SelectField
                 name="budgetFrequency"
-                label="Budget Frequency"
+                label="Budget Frequency*"
                 options={budgetFrequencyOptions}
               />
             </div>
           )}
 
           <div className="col-span-2">
-            <TextareaField name="description" label="Description" />
+            <TextareaField name="description" label="Description*" />
           </div>
 
           {form.formState.errors.root && (

@@ -1,7 +1,4 @@
-'use client';
-
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import { LocationDisplay } from '@/components/listing/card/location-display';
 import { PriceDisplay } from '@/components/listing/card/price-display';
@@ -13,12 +10,10 @@ interface ShortListingCardProps {
 }
 
 export function ShortListingCard({ listing }: ShortListingCardProps) {
-  const pathname = usePathname();
-
   return (
     <Link href={`/uae-property-listings/?listingId=${listing.id}`}>
       <Card className="rounded-xl shadow-none border bg-card text-card-foreground justify-center h-full w-[23rem]">
-        <CardContent className="flex h-full flex-col  p-4">
+        <CardContent className="flex h-full flex-col p-3 lg:p-4">
           <div className="space-y-2">
             <PropertyBadges
               propertyTypeName={listing.propertyTypeName}

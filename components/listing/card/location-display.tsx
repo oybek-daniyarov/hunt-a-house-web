@@ -15,7 +15,7 @@ export function LocationDisplay({
   return (
     <div
       className={cn(
-        'flex items-center flex-wrap gap-1 text-sm text-muted-foreground',
+        'flex items-center flex-wrap pb-px lg:pb-0 gap-1 text-sm text-muted-foreground',
         className
       )}
     >

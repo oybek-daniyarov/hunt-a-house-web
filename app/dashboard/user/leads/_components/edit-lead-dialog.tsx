@@ -97,9 +97,9 @@ export function EditLeadDialog({ lead, open, returnUrl }: EditLeadDialogProps) {
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Edit Lead</DialogTitle>
+          <DialogTitle>Edit Listing</DialogTitle>
           <DialogDescription>
-            Update the status and maximum views for this lead.
+            Update the status and maximum views for this listing.
           </DialogDescription>
         </DialogHeader>
 

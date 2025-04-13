@@ -40,12 +40,12 @@ const LeadContactForm = () => {
             <>
               <InputField
                 name="name"
-                label="Name"
+                label="Name*"
                 description="Your name will be used to identify you in the system"
               />
               <InputField
                 name="email"
-                label="Email"
+                label="Email*"
                 description="Your email address will be used to send you a lead activation link and create an account if you don't have one"
               />
             </>
@@ -62,7 +62,7 @@ const LeadContactForm = () => {
           </div>
           <SelectField
             name="maxViews"
-            label="Max Views"
+            label="Max Views*"
             description="Control your lead's visibility by setting how many agents can view it. More views means more potential matches, but you may receive more contacts. Choose between 1-10 agents."
             options={maxViewsOptions}
           />
