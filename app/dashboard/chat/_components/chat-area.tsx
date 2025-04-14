@@ -236,7 +236,7 @@ const ChatArea = () => {
                   onChange={(e) => setMessage(e.target.value)}
                   onKeyDown={handleKeyPress}
                   className="flex-1 bg-transparent outline-none py-3 text-sm ms-2"
-                  placeholder={`Message ${selectedLead.lead?.name}...`}
+                  placeholder={`Message ${selectedLead.user?.name}...`}
                 />
                 <button
                   onClick={sendMessageHandler}

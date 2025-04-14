@@ -43,8 +43,7 @@ export const sendMessage = async (
 
 export const getMessages = async (leadId: string) =>
   get<App.Data.Chat.ChatMessageData[]>(
-    createUrl(routes['chat.messages'], { leadId }),
-    CHAT_TAGS
+    createUrl(routes['chat.messages'], { leadId })
   );
 
 export const getLeads = async () => {

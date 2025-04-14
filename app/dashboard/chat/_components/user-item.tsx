@@ -29,10 +29,12 @@ const UserItem = ({ lead, isActive }: UserItemProps) => {
           )}
         />
       </div>
-
       <div className="flex flex-1 flex-col text-start relative overflow-hidden">
-        <span className="font-medium text-sm text-ellipsis overflow-hidden whitespace-nowrap">
-          {lead.lead?.name}
+        <span className="font-medium text-sm text-ellipsis overflow-hidden whitespace-nowrap flex flex-col">
+          <span>{lead.user?.name}</span>
+          <span className="text-xs text-muted-foreground">
+            {lead.lead?.name}
+          </span>
         </span>
         {lead?.user?.unreadCount && lead?.user?.unreadCount > 0 && (
           <span className="absolute end-0 top-0 min-w-[20px] h-5 flex items-center justify-center rounded-full bg-green-500 px-1.5">
