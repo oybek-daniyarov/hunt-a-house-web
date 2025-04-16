@@ -2,10 +2,15 @@
 
 import { headers } from 'next/headers';
 
-import { createErrorResponse } from '@/lib/client/laravel';
+import { createErrorResponse, revalidateTagsAsync } from '@/lib/client/laravel';
 import { setSession } from '@/lib/client/laravel/auth';
 import { createSuccessResponse } from '@/lib/client/laravel/helpers';
-import { activateLead, createLead, purchaseLead } from './lead.api';
+import {
+  activateLead,
+  createLead,
+  purchaseLead,
+  updateMineLead,
+} from './lead.api';
 
 export async function createLeadAction(
   data: App.Data.Lead.Payload.CreateLeadPayloadData
@@ -66,13 +71,6 @@ export async function activateLeadAction(
 export async function purchaseLeadAction(leadId: string) {
   try {
     const response = await purchaseLead(leadId);
-
-    if (!response) {
-      return createErrorResponse('Failed to purchase lead', 422);
-    }
-
-    // Return success response with no redirect
-    // This allows the client to handle the response and potentially refresh the auth state
     return createSuccessResponse(response);
   } catch (error) {
     console.error('Lead purchase API error:', error);
@@ -80,5 +78,19 @@ export async function purchaseLeadAction(leadId: string) {
       error instanceof Error ? error.message : 'Purchase lead failed',
       500
     );
+  }
+}
+
+export async function updateMineLeadAction(
+  leadId: string,
+  data: App.Data.Lead.Payload.UpdateLeadPayloadData
+) {
+  try {
+    const response = await updateMineLead(leadId, data);
+    await revalidateTagsAsync(['leads']);
+    return createSuccessResponse(response);
+  } catch (error) {
+    console.error('Update lead failed:', error);
+    return createErrorResponse('An unexpected error occurred', 500);
   }
 }

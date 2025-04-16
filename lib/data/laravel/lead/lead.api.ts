@@ -6,6 +6,7 @@ import {
   get,
   list,
   post,
+  put,
   revalidateTagsAsync,
 } from '@/lib/client/laravel/client';
 import { ApiResult, handleApiResponse } from '@/lib/client/laravel/helpers/api';
@@ -89,7 +90,6 @@ export async function getPurchasedLeads(
     page: params.page ? parseInt(params.page.toString()) : 1,
     ...params,
   });
-  console.log(url);
   return await list<App.Data.Lead.LeadData>(url, LEAD_TAGS);
 }
 
@@ -140,4 +140,17 @@ export async function purchaseLead(leadId: string) {
   revalidatePath('/dashboard/agent/leads'); // Revalidate the agent leads page
 
   return response;
+}
+
+export async function updateMineLead(
+  leadId: string,
+  data: App.Data.Lead.Payload.UpdateLeadPayloadData
+) {
+  try {
+    const url = createUrl(routes['leads.mine.update'], { lead: leadId });
+    const response = await put(url, data, LEAD_TAGS);
+    return handleApiResponse(() => Promise.resolve(response));
+  } catch (error) {
+    return handleApiResponse(() => Promise.reject(error));
+  }
 }

@@ -1,100 +1,44 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { InputField, SelectField } from '@/components/forms/fields';
 import { LocationDisplay } from '@/components/listing/card/location-display';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Form } from '@/components/ui/form';
 import { formatSize, formatToThousands } from '@/lib/utils/format-number';
-
-// Replace the toast import with a simple alert for now
-// import { toast } from '@/components/ui/use-toast';
-// Import the API function to update leads (you'll need to create this)
-// import { updateLead } from '@/lib/data/laravel/lead/lead.api';
-
-// Define the form schema
-const formSchema = z.object({
-  status: z.string(), // Use string instead of enum to match any status type
-  maxViews: z.coerce.number().int().min(1).optional(),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+import { LeadEditForm } from './lead-edit-form';
 
 interface EditLeadDialogProps {
   lead: App.Data.Lead.LeadData;
   open: boolean;
-  returnUrl: string;
 }
 
-export function EditLeadDialog({ lead, open, returnUrl }: EditLeadDialogProps) {
+export function EditLeadDialog({ lead, open }: EditLeadDialogProps) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
-  const [isPending, setIsPending] = useState(false);
+  const page = searchParams.get('page');
+  const returnUrl = `${pathname}${page ? `?page=${page}` : ''}`;
 
-  // Initialize form with current lead values
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      status: lead.status || 'active',
-      maxViews: undefined, // You might want to fetch this from the lead if available
-    },
-  });
-
-  // Handle form submission
-  async function onSubmit(data: FormValues) {
-    setIsPending(true);
-
-    try {
-      // Call your API to update the lead
-      // await updateLead(lead.id, data);
-
-      // For now, just log the data and show a success message
-      console.log('Updating lead with data:', data);
-
-      // Use alert instead of toast for now
-      alert('Lead updated successfully');
-
-      // Navigate back to the leads list
-      router.push(returnUrl);
-      router.refresh();
-    } catch (error) {
-      console.error('Failed to update lead:', error);
-      alert('Failed to update the lead. Please try again.');
-    } finally {
-      setIsPending(false);
+  const onOpenChange = (open: boolean) => {
+    if (!open) {
+      onSuccess();
     }
-  }
+  };
 
-  // Handle dialog close
-  function handleClose() {
-    if (!isPending) {
-      router.push(returnUrl);
-    }
-  }
-
-  const statusOptions = [
-    { label: 'Active', value: 'active' },
-    { label: 'Inactive', value: 'inactive' },
-    { label: 'Closed', value: 'closed' },
-    { label: 'Pending', value: 'pending' },
-  ];
+  const onSuccess = () => {
+    router.push(returnUrl);
+  };
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Edit Listing</DialogTitle>
@@ -162,38 +106,7 @@ export function EditLeadDialog({ lead, open, returnUrl }: EditLeadDialogProps) {
           </CardContent>
         </Card>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <SelectField
-              name="status"
-              label="Status"
-              description="The current status of this listing."
-              options={statusOptions}
-            />
-            <InputField
-              name="maxViews"
-              type="number"
-              label="Maximum Views"
-              description="The maximum number of times this listing can be viewed."
-              min={1}
-              max={10}
-            />
-
-            <DialogFooter>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleClose}
-                disabled={isPending}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isPending}>
-                {isPending ? 'Saving...' : 'Save Changes'}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+        <LeadEditForm lead={lead} onSuccess={onSuccess} />
       </DialogContent>
     </Dialog>
   );

@@ -98,7 +98,7 @@ declare namespace App.Data.Chat {
     createdAt: string | null;
   };
   export type ChatUserData = {
-    id: any;
+    id: number;
     name: string;
     email: string;
     avatarUrl: string | null;
@@ -157,6 +157,8 @@ declare namespace App.Data.Lead {
     description: string;
     bedrooms: number | null;
     bathrooms: number | null;
+    maxViews: number | null;
+    currentViews: number | null;
     minSize: number | null;
     maxSize: number | null;
     minBudget: number | null;
@@ -345,12 +347,7 @@ declare namespace App.Enums {
     | 'offer_made'
     | 'closed_won'
     | 'closed_lost';
-  export type LeadStatus =
-    | 'active'
-    | 'pending'
-    | 'on_hold'
-    | 'closed'
-    | 'expired';
+  export type LeadStatus = 'active' | 'pending' | 'closed' | 'expired';
   export type LeadViewEnum = 'guest' | 'purchased' | 'authenticated';
   export type PaymentMethod = 'stripe' | 'bank_transfer' | 'crypto';
   export type PaymentMethodType =

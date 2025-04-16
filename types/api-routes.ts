@@ -176,7 +176,7 @@ export const routes = {
     method: 'get',
   },
   'leads.mine.update': {
-    path: 'api/v1/leads/mine/{ulid}',
+    path: 'api/v1/leads/mine/{lead}',
     method: 'patch',
   },
   'leads.purchase': {
