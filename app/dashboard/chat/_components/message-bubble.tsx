@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { Download, FileText } from 'lucide-react';
 
+import { formatDate } from '@/lib/utils/format-date';
+
 const MessageBubble = ({
   message,
   isCurrentUser,
@@ -22,7 +24,7 @@ const MessageBubble = ({
         }`}
       >
         {message.message && (
-          <p className="break-words text-sm mb-2">{message.message}</p>
+          <p className="break-words text-sm">{message.message}</p>
         )}
 
         {hasAttachments && (
@@ -96,12 +98,7 @@ const MessageBubble = ({
         )}
       </div>
       <div className="mt-0.5 text-[10px] text-muted-foreground">
-        {message.createdAt
-          ? new Date(message.createdAt).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-            })
-          : ''}
+        {message.createdAt ? formatDate(message.createdAt, true) : ''}
       </div>
     </div>
   );
