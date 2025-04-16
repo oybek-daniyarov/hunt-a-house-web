@@ -1,4 +1,7 @@
+import { BiMoney } from 'react-icons/bi';
 import {
+  FaBath,
+  FaBed,
   FaEnvelope,
   FaFacebook,
   FaPhone,
@@ -6,13 +9,13 @@ import {
   FaWhatsapp,
 } from 'react-icons/fa';
 import { IoLockClosed, IoLockOpen } from 'react-icons/io5';
+import { TbRulerMeasure } from 'react-icons/tb';
 
 import { LocationDisplay } from '@/components/listing/card/location-display';
 import { PriceDisplay } from '@/components/listing/card/price-display';
 import { PropertyBadges } from '@/components/listing/card/property-badges';
 import { Card, CardContent } from '@/components/ui/card';
 import { ContactButton } from '@/components/ui/grid-property-listing/contact-button';
-import { PropertyFeaturesGrid } from './property-features-grid';
 
 type PropertyListingCardProps = {
   listing: App.Data.Lead.LeadListData;
@@ -31,8 +34,8 @@ type ContactMethod = keyof typeof contactMethodIcons;
 export function PropertyListingCard({ listing }: PropertyListingCardProps) {
   return (
     <Card className="rounded-xl shadow-none border bg-card text-card-foreground  bg-gradient-to-b from-muted/20 to-muted/10 transition-all dark:from-muted/20 dark:to-muted/10 dark:hover:from-muted/30 dark:hover:to-muted/20">
-      <CardContent className="flex h-full flex-col p-4 gap-4">
-        <div className="flex justify-between items-start gap-2">
+      <CardContent className="flex h-full flex-col p-4 gap-3">
+        <div className="flex justify-between items-start">
           <PropertyBadges
             propertyTypeName={listing.propertyTypeName}
             activityTypeName={listing.activityTypeName}
@@ -48,28 +51,51 @@ export function PropertyListingCard({ listing }: PropertyListingCardProps) {
             </div>
           )}
         </div>
-        <div className="space-y-2">
+
+        <div className="space-y-1.5">
           {listing.description && (
             <p className="text-muted-foreground text-sm">
               {listing.description}
             </p>
           )}
-
           <LocationDisplay locations={listing.locations} />
         </div>
 
-        <div className="flex flex-col gap-5 justify-end flex-1">
-          <PriceDisplay
-            minBudget={listing.minBudget}
-            maxBudget={listing.maxBudget}
-            budgetFrequency={listing.budgetFrequency}
-          />
-          <PropertyFeaturesGrid
-            bedrooms={listing.bedrooms}
-            bathrooms={listing.bathrooms}
-            minSize={listing.minSize}
-            maxSize={listing.maxSize}
-          />
+        <div className="flex flex-col gap-3 mt-auto">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <FaBed className="h-4 w-4 text-muted-foreground" />
+              <span className="font-medium">
+                {listing.bedrooms === 0 ? 'Studio' : listing.bedrooms || 'N/A'}
+              </span>
+              <span className="text-xs text-muted-foreground ml-0.5">bed</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <FaBath className="h-4 w-4 text-muted-foreground" />
+              <span className="font-medium">{listing.bathrooms || 'N/A'}</span>
+              <span className="text-xs text-muted-foreground ml-0.5">bath</span>
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-1.5">
+              <BiMoney className="h-4 w-4 text-muted-foreground" />
+              <PriceDisplay
+                minBudget={listing.minBudget}
+                maxBudget={listing.maxBudget}
+                budgetFrequency={listing.budgetFrequency}
+              />
+            </div>
+            <div className="flex items-center gap-1.5">
+              <TbRulerMeasure className="h-4 w-4 text-muted-foreground" />
+              <span className="font-medium">
+                {listing.minSize
+                  ? `${listing.minSize}${listing.maxSize ? `-${listing.maxSize}` : ''}`
+                  : 'N/A'}
+              </span>
+              <span className="text-xs text-muted-foreground ml-0.5">ft²</span>
+            </div>
+          </div>
 
           {listing.contactMethods && listing.contactMethods.length > 0 && (
             <div className="flex gap-2 justify-between">
@@ -95,7 +121,7 @@ export function PropertyListingCard({ listing }: PropertyListingCardProps) {
           )}
 
           <ContactButton
-            className="w-full bg-foreground text-background hover:bg-foreground/90"
+            className="w-full bg-foreground text-background hover:bg-foreground/90 mt-1"
             listing={listing}
           />
         </div>
