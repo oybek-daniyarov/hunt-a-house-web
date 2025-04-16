@@ -167,14 +167,14 @@ export function EditLeadDialog({ lead, open, returnUrl }: EditLeadDialogProps) {
             <SelectField
               name="status"
               label="Status"
-              description="The current status of this lead."
+              description="The current status of this listing."
               options={statusOptions}
             />
             <InputField
               name="maxViews"
               type="number"
               label="Maximum Views"
-              description="The maximum number of times this lead can be viewed."
+              description="The maximum number of times this listing can be viewed."
               min={1}
               max={10}
             />
