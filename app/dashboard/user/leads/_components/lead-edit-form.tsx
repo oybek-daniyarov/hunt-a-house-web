@@ -51,7 +51,7 @@ export function LeadEditForm({ lead, onSuccess }: LeadEditFormProps) {
       status: data.status,
       maxViews: Number(data.maxViews),
     });
-    console.log(result);
+
     if (!result.success) {
       handleFormError(form, result.error, 'Update lead failed');
       return;

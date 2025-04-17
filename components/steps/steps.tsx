@@ -84,7 +84,7 @@ export const Steps = <T extends Record<string, unknown>>({
       onComplete={onComplete}
     >
       <div className="space-y-4 p-4">
-        <StepProgress />
+        {/* <StepProgress /> */}
         <StepContent />
       </div>
     </StepProvider>

@@ -3,6 +3,7 @@ import { Inter as FontSans } from 'next/font/google';
 
 import './globals.css';
 
+import LaravelLive from '@/components/LaravelLive';
 import WithProviders from '@/components/providers/with-providers';
 import { Toaster } from '@/components/ui/sonner';
 import { cn } from '@/lib/utils';
@@ -49,7 +50,10 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <WithProviders>{children}</WithProviders>
+        <WithProviders>
+          <LaravelLive />
+          {children}
+        </WithProviders>
         <Toaster position="top-center" richColors closeButton />
       </body>
     </html>

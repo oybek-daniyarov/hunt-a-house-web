@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
@@ -14,11 +14,10 @@ const SUCCESS_MESSAGE = 'Agent profile created successfully';
 const ERROR_MESSAGE = 'Failed to create agent profile';
 const ERROR_MESSAGE_UNEXPECTED =
   'An unexpected error occurred while creating the agent profile';
-const SUCCESS_REDIRECT_PATH = '/dashboard/agent';
 
 export const useAgentForm = () => {
   const { stepData } = useSteps();
-  const router = useRouter();
+  const [isDone, setIsDone] = useState(false);
 
   const form = useForm<AgentDetailsStepData>({
     resolver: zodResolver(agentDetailsStepSchema),
@@ -50,8 +49,8 @@ export const useAgentForm = () => {
       });
 
       if (result.success) {
+        setIsDone(true);
         handleFormSuccess(SUCCESS_MESSAGE);
-        router.push(SUCCESS_REDIRECT_PATH);
       } else {
         handleFormError(form, result.error, ERROR_MESSAGE);
       }
@@ -64,5 +63,6 @@ export const useAgentForm = () => {
   return {
     form,
     onSubmit,
+    isDone,
   };
 };

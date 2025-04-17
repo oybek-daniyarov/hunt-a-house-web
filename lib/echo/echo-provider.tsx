@@ -68,3 +68,27 @@ export const useEcho = () => {
   }
   return context;
 };
+
+export const useModelUpdates = () => {
+  const { echo } = useEcho();
+
+  const [modelUpdates, setModelUpdates] = useState<{
+    type: string;
+    id: string;
+  }>();
+
+  useEffect(() => {
+    if (!echo) return;
+
+    const channel = echo.channel('model');
+    channel.listen('.model.updated', (e: { type: string; id: string }) => {
+      setModelUpdates(e);
+    });
+
+    return () => {
+      channel.stopListening('.model.updated');
+    };
+  }, [echo]);
+
+  return modelUpdates;
+};
