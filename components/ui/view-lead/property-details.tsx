@@ -3,25 +3,25 @@ import { BanknoteIcon, Bath, BedSingle, Ruler } from 'lucide-react';
 import { formatCurrency, formatSize } from '@/lib/utils/format-number';
 
 interface PropertyDetailsProps {
-  listing: App.Data.Lead.LeadListData;
+  listing: App.Data.Lead.LeadData;
 }
 
 const propertyDetails = [
   {
     icon: BedSingle,
     label: 'Bedrooms',
-    value: (listing: App.Data.Lead.LeadListData) =>
+    value: (listing: App.Data.Lead.LeadData) =>
       listing.bedrooms === 0 ? 'Studio' : listing.bedrooms || 'N/A',
   },
   {
     icon: Bath,
     label: 'Bathrooms',
-    value: (listing: App.Data.Lead.LeadListData) => listing.bathrooms || 'N/A',
+    value: (listing: App.Data.Lead.LeadData) => listing.bathrooms || 'N/A',
   },
   {
     icon: Ruler,
     label: 'Size',
-    value: (listing: App.Data.Lead.LeadListData) =>
+    value: (listing: App.Data.Lead.LeadData) =>
       listing.minSize && listing.maxSize
         ? `${formatSize(listing.minSize)} - ${formatSize(listing.maxSize)}`
         : listing.minSize
@@ -31,13 +31,13 @@ const propertyDetails = [
   {
     icon: BanknoteIcon,
     label: 'Budget',
-    value: (listing: App.Data.Lead.LeadListData) =>
+    value: (listing: App.Data.Lead.LeadData) =>
       listing.minBudget && listing.maxBudget
         ? `${formatCurrency(listing.minBudget)} - ${formatCurrency(listing.maxBudget)}`
         : listing.minBudget
           ? formatCurrency(listing.minBudget)
           : 'Not specified',
-    suffix: (listing: App.Data.Lead.LeadListData) =>
+    suffix: (listing: App.Data.Lead.LeadData) =>
       listing.budgetFrequency
         ? ` ${listing.budgetFrequency.replace('_', ' ')}`
         : '',

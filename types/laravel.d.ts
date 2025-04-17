@@ -159,6 +159,7 @@ declare namespace App.Data.Lead {
     bathrooms: number | null;
     maxViews: number | null;
     currentViews: number | null;
+    creditCost: number;
     minSize: number | null;
     maxSize: number | null;
     minBudget: number | null;
@@ -166,7 +167,6 @@ declare namespace App.Data.Lead {
     budgetFrequency: App.Enums.BudgetFrequency | null;
     createdAt: string;
     status: App.Enums.LeadStatus;
-    isActive: boolean;
     activatedAt: string | null;
     expiresAt: string | null;
     closedAt: string | null;
@@ -184,6 +184,7 @@ declare namespace App.Data.Lead {
     id: string;
     propertyTypeName: string;
     activityTypeName: string;
+    status: App.Enums.LeadStatus;
     locations: Array<App.Services.Location.Data.LocationData>;
     description: string;
     bedrooms: number | null;
@@ -194,10 +195,8 @@ declare namespace App.Data.Lead {
     maxBudget: number | null;
     budgetFrequency: App.Enums.BudgetFrequency | null;
     createdAt: string;
-    isUserHadPurchasedLead: boolean;
-    creditCost: number;
+    isPurchased: boolean;
     contactMethods: Array<App.Data.ContactMethodData>;
-    owner: { id: string; name: string; email: string };
   };
   export type OptionData = {
     id: string | number;
@@ -245,7 +244,7 @@ declare namespace App.Data.Lead.Payload {
 }
 declare namespace App.Data.Lead.Response {
   export type ShowLeadResponseData = {
-    data: App.Data.Lead.LeadListData;
+    data: App.Data.Lead.LeadData;
     access: App.Enums.LeadViewEnum;
   };
 }

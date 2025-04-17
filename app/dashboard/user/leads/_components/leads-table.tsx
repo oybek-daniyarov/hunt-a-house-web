@@ -13,8 +13,8 @@ import {
 } from '@/components/ui/table';
 import { getMineLeads } from '@/lib/data/laravel/lead/lead.api';
 import { formatCurrency, formatToThousands } from '@/lib/utils/format-number';
+import { LeadStatus } from '../../../../../components/lead-status';
 import { EditLeadDialog } from './edit-lead-dialog';
-import { LeadStatus } from './lead-status';
 
 interface LeadsTableProps {
   page: number;
@@ -72,11 +72,7 @@ export async function LeadsTable({ page, editLeadId }: LeadsTableProps) {
                       ` (${lead.budgetFrequency.replace('_', ' ')})`}
                   </TableCell>
                   <TableCell>
-                    <LeadStatus
-                      status={lead.status}
-                      isActive={lead.isActive}
-                      activatedAt={lead.activatedAt}
-                    />
+                    <LeadStatus status={lead.status} />
                   </TableCell>
                   <TableCell>
                     <div className="space-y-1">
@@ -84,12 +80,12 @@ export async function LeadsTable({ page, editLeadId }: LeadsTableProps) {
                         {lead.currentViews || 0} / {lead.maxViews || 0}
                       </span>
                       {lead.maxViews &&
-                        lead.currentViews &&
-                        lead.currentViews >= lead.maxViews && (
-                          <p className="text-xs text-amber-600">
-                            Max views reached
-                          </p>
-                        )}
+                      lead.currentViews &&
+                      lead.currentViews >= lead.maxViews ? (
+                        <p className="text-xs text-amber-600">
+                          Max views reached
+                        </p>
+                      ) : null}
                     </div>
                   </TableCell>
                   <TableCell>

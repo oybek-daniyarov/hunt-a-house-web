@@ -41,7 +41,7 @@ export function PropertyListingCard({ listing }: PropertyListingCardProps) {
             activityTypeName={listing.activityTypeName}
           />
 
-          {listing.isUserHadPurchasedLead ? (
+          {listing.isPurchased ? (
             <div className="flex items-center text-green-500">
               <IoLockOpen className="h-5 w-5" />
             </div>

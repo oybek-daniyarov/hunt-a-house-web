@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Eye } from 'lucide-react';
 
 import LaravelPagination from '@/components/laravel/pagination/pagination';
+import { LeadStatus } from '@/components/lead-status';
 import { LocationDisplay } from '@/components/listing/card/location-display';
 import { Button } from '@/components/ui/button';
 import {
@@ -95,22 +96,7 @@ export function LeadsTableClient({ leads, page }: LeadsTableClientProps) {
                       ` (${lead.budgetFrequency.replace('_', ' ')})`}
                   </TableCell>
                   <TableCell>
-                    <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                        lead.isActive && lead.activatedAt
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-gray-100 text-gray-800'
-                      }`}
-                    >
-                      {lead.activatedAt && lead.isActive
-                        ? 'Active'
-                        : 'Inactive'}
-                    </span>
-                    {lead.activatedAt && (
-                      <p className="mt-1 text-xs text-gray-500">
-                        Since {new Date(lead.activatedAt).toLocaleDateString()}
-                      </p>
-                    )}
+                    <LeadStatus status={lead.status} />
                   </TableCell>
                   <TableCell>
                     {lead.contactMethods && lead.contactMethods.length > 0 ? (

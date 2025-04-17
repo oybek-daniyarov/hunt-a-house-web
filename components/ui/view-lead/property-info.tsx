@@ -3,7 +3,7 @@ import { Building2, MapPin } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface PropertyInfoProps {
-  listing: App.Data.Lead.LeadListData;
+  listing: App.Data.Lead.LeadData;
 }
 
 export function PropertyInfo({ listing }: PropertyInfoProps) {

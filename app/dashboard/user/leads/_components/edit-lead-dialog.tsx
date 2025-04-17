@@ -2,8 +2,8 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
+import { LeadStatus } from '@/components/lead-status';
 import { LocationDisplay } from '@/components/listing/card/location-display';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Dialog,
@@ -47,7 +47,6 @@ export function EditLeadDialog({ lead, open }: EditLeadDialogProps) {
           </DialogDescription>
         </DialogHeader>
 
-        {/* Lead Summary Card */}
         <Card className="bg-muted/50">
           <CardContent className="p-4 space-y-3">
             <div className="flex justify-between items-start">
@@ -57,9 +56,7 @@ export function EditLeadDialog({ lead, open }: EditLeadDialogProps) {
                   {lead.activityTypeName}
                 </p>
               </div>
-              <Badge variant={lead.isActive ? 'default' : 'secondary'}>
-                {lead.status || (lead.isActive ? 'Active' : 'Inactive')}
-              </Badge>
+              <LeadStatus status={lead.status} />
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-sm">
