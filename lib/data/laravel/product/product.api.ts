@@ -5,7 +5,7 @@ import { get, list, post } from '@/lib/client/laravel/client';
 import { ApiResult, handleApiResponse } from '@/lib/client/laravel/helpers/api';
 import { createUrl, routes } from '@/types/api-routes';
 
-const PRODUCT_TAGS = ['products'] as string[];
+const PRODUCT_TAGS = ['leads'] as string[];
 
 /**
  * Purchase a product (credits)
@@ -24,21 +24,15 @@ export async function purchaseProduct(
   }
 }
 
-/**
- * Verify a payment after purchase
- */
 export async function verifyPayment(
   sessionId: string
 ): Promise<App.Data.Product.Dto.PaymentSuccessData> {
   const url = createUrl(routes['products.verify-payment'], {
     session_id: sessionId,
   });
-  return get<App.Data.Product.Dto.PaymentSuccessData>(url, PRODUCT_TAGS);
+  return await get<App.Data.Product.Dto.PaymentSuccessData>(url, PRODUCT_TAGS);
 }
 
-/**
- * Cancel a payment/purchase
- */
 export async function cancelPurchase(): Promise<
   ApiResult<{ success: boolean }>
 > {

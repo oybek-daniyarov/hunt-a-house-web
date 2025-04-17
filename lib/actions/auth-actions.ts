@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidateTag } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 /**
  * Server action to revalidate the auth tag
@@ -9,6 +9,7 @@ import { revalidateTag } from 'next/cache';
 export async function revalidateAuthTag() {
   try {
     revalidateTag('auth');
+    revalidatePath('/', 'layout');
     return { success: true };
   } catch (error) {
     console.error('Error revalidating auth tag:', error);

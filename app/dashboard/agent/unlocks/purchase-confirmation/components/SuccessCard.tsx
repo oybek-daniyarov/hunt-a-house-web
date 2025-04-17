@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 
@@ -10,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { revalidateAuthTag } from '@/lib/actions/auth-actions';
 import { PaymentDetails } from './PaymentDetails';
 import { SuccessMessage } from './SuccessMessage';
 
@@ -18,6 +22,10 @@ interface SuccessCardProps {
 }
 
 export function SuccessCard({ paymentData }: SuccessCardProps) {
+  useEffect(() => {
+    revalidateAuthTag();
+  }, []);
+
   return (
     <div className="container max-w-2xl py-12">
       <Card className="w-full">

@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
-import { ErrorCard, LoadingState, VerifyPayment } from './components';
+import { verifyPayment } from '@/lib/data/laravel/product/product.api';
+import { ErrorCard, LoadingState, SuccessCard } from './components';
 
 // This is a Server Component that fetches data on the server
 export default async function PurchaseConfirmation({
@@ -18,10 +19,17 @@ export default async function PurchaseConfirmation({
     );
   }
 
-  // Wrap the data fetching in a try/catch block and use Suspense for loading state
+  const response = await verifyPayment(sessionId);
+
   return (
     <Suspense fallback={<LoadingState />}>
-      <VerifyPayment sessionId={sessionId} />
+      {response.success && response.success ? (
+        <SuccessCard paymentData={response} />
+      ) : response.success === false && response.error ? (
+        <ErrorCard errorMessage={response.error} />
+      ) : (
+        <ErrorCard errorMessage="Unable to verify payment." />
+      )}
     </Suspense>
   );
 }

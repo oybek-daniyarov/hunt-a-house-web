@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidateTag } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 import { getToken } from './cookies';
 import type {
@@ -76,6 +76,7 @@ export async function revalidateTagsAsync(tags?: Tags): Promise<void> {
   for (const tag of tagArray) {
     revalidateTag(tag);
   }
+  revalidatePath('/', 'layout');
 }
 
 export async function get<T>(path: string, tags?: string[]): Promise<T> {

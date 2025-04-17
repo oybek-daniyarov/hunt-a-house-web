@@ -71,6 +71,7 @@ export async function activateLeadAction(
 export async function purchaseLeadAction(leadId: string) {
   try {
     const response = await purchaseLead(leadId);
+    await revalidateTagsAsync(['leads', 'auth', 'user']);
     return createSuccessResponse(response);
   } catch (error) {
     console.error('Lead purchase API error:', error);

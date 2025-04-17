@@ -48,9 +48,6 @@ export async function verifyPaymentAction(sessionId: string) {
       );
     }
 
-    // Revalidate auth tag to update user data (credits)
-    await revalidateAuthTag();
-
     return createSuccessResponse(response, '/dashboard/products');
   } catch (error) {
     console.error('Payment verification API error:', error);

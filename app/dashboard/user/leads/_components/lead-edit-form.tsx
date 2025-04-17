@@ -37,7 +37,6 @@ export function LeadEditForm({ lead, onSuccess }: LeadEditFormProps) {
   'use no memo';
   const [isLoading, setIsLoading] = useState(false);
 
-  // Initialize form with current lead values
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,6 +51,7 @@ export function LeadEditForm({ lead, onSuccess }: LeadEditFormProps) {
       status: data.status,
       maxViews: Number(data.maxViews),
     });
+    console.log(result);
     if (!result.success) {
       handleFormError(form, result.error, 'Update lead failed');
       return;
@@ -83,9 +83,9 @@ export function LeadEditForm({ lead, onSuccess }: LeadEditFormProps) {
           type="number"
           label="Maximum Views"
           description="The maximum number of times this listing can be viewed."
-          min={
-            lead.currentViews && lead.currentViews > 0 ? lead.currentViews : 1
-          }
+          // min={
+          //   lead.currentViews && lead.currentViews > 0 ? lead.currentViews : 1
+          // }
           max={10}
         />
 
