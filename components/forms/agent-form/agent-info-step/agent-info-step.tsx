@@ -41,6 +41,7 @@ export function AgentInfoStep({ locations }: AgentInfoStepProps) {
       companyType: companyTypes[0],
       companySize: '1',
       locationId: '',
+      dtcmNumber: '',
     },
   });
 
@@ -104,11 +105,21 @@ export function AgentInfoStep({ locations }: AgentInfoStepProps) {
             placeholder="https://example.com"
           />
 
-          <InputField
-            name="reraNumber"
-            label="RERA Number"
-            description="Your Real Estate Regulatory Agency registration number"
-          />
+          {form.watch('companyType') === 'real_estate' && (
+            <InputField
+              name="reraNumber"
+              label="RERA Number*"
+              description="Your Real Estate Regulatory Agency registration number"
+            />
+          )}
+
+          {form.watch('companyType') === 'holiday_homes' && (
+            <InputField
+              name="dtcmNumber"
+              label="DTCM Number*"
+              description="Your DTCM registration number"
+            />
+          )}
 
           <InputField
             name="tradeLicense"

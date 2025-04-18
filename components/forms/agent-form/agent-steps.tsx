@@ -28,12 +28,15 @@ const AgentSteps = ({ locations }: AgentStepsProps) => {
       website: '',
       reraNumber: '',
       tradeLicense: '',
+      dtcmNumber: '',
     },
     agentDetails: {
       name: '',
       email: '',
       phone: '',
       additionalInfo: '',
+      position: '',
+      landline: '',
       terms: false,
     },
   };

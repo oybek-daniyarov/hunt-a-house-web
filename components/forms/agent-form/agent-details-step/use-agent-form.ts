@@ -25,6 +25,8 @@ export const useAgentForm = () => {
       name: '',
       email: '',
       phone: '',
+      landline: '',
+      position: '',
       additionalInfo: '',
       terms: false,
     },
@@ -42,10 +44,13 @@ export const useAgentForm = () => {
         companyType: stepData.agentInfo.companyType as App.Enums.CompanyType,
         companySize: stepData.agentInfo.companySize,
         locationId: stepData.agentInfo.locationId,
+        dtcmNumber: stepData.agentInfo.dtcmNumber || null,
         address: stepData.agentInfo.address || null,
         website: stepData.agentInfo.website || null,
         reraNumber: stepData.agentInfo.reraNumber || null,
         tradeLicense: stepData.agentInfo.tradeLicense || null,
+        position: data.position || null,
+        landline: data.landline || null,
       });
 
       if (result.success) {

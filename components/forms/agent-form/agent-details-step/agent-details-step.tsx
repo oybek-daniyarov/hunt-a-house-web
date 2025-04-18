@@ -52,6 +52,12 @@ export function AgentDetailsStep() {
                 label="Phone*"
                 defaultCountry="AE"
               />
+              <PhoneInputField
+                name="landline"
+                label="Landline"
+                defaultCountry="AE"
+              />
+              <InputField name="position" label="Position*" />
               <TextareaField
                 name="additionalInfo"
                 label="Additional Information"

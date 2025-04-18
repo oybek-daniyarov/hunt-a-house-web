@@ -4,6 +4,8 @@ export const agentDetailsStepSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.string().email('Please enter a valid email'),
   phone: z.string().min(1, 'Phone number is required'),
+  landline: z.string().optional().nullable(),
+  position: z.string().min(1, 'Position is required'),
   additionalInfo: z.string().optional().nullable(),
   terms: z
     .boolean()

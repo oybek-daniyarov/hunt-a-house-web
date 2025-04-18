@@ -12,10 +12,13 @@ declare namespace App.Data.Agent.Payload {
     companyName: string;
     companyType: App.Enums.CompanyType;
     companySize: number;
+    position: string | null;
     locationId: string;
     address: string | null;
     website: string | null;
+    landline: string | null;
     reraNumber: string | null;
+    dtcmNumber: string | null;
     tradeLicense: string | null;
     additionalInfo: string | null;
   };
@@ -86,6 +89,7 @@ declare namespace App.Data.Chat {
   export type ChatLeadData = {
     id: string;
     name: string;
+    status: App.Enums.LeadStatus;
   };
   export type ChatMessageData = {
     id: number | null;
