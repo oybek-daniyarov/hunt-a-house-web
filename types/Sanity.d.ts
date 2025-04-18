@@ -20,6 +20,15 @@ declare global {
       headerMenu?: Navigation;
       footerMenu?: Navigation;
       social?: Navigation;
+      // listing
+      listingGuestDialog?: {
+        title: string;
+        subtitle: string;
+        features: Array<{
+          title: string;
+          description: string;
+        }>;
+      };
     }
 
     interface Navigation extends SanityDocument {

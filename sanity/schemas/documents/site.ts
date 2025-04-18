@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 export default defineType({
   name: 'site',
@@ -8,6 +8,7 @@ export default defineType({
     { name: 'branding', default: true },
     { name: 'info' },
     { name: 'navigation' },
+    { name: 'listing', title: 'Listing Management' },
   ],
   fields: [
     defineField({
@@ -69,6 +70,50 @@ export default defineType({
       type: 'reference',
       to: [{ type: 'navigation' }],
       group: 'navigation',
+    }),
+    defineField({
+      name: 'listingGuestDialog',
+      title: 'Listing Guest Dialog',
+      type: 'object',
+      group: 'listing',
+      fields: [
+        defineField({
+          name: 'title',
+          type: 'string',
+          title: 'Dialog Title',
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'subtitle',
+          type: 'text',
+          title: 'Dialog Subtitle',
+          validation: (Rule) => Rule.required(),
+          rows: 3,
+        }),
+        defineField({
+          name: 'features',
+          type: 'array',
+          title: 'Features',
+          validation: (Rule) => Rule.required().max(4).min(1),
+          of: [
+            defineArrayMember({
+              type: 'object',
+              fields: [
+                defineField({
+                  name: 'title',
+                  type: 'string',
+                  title: 'Feature Title',
+                }),
+                defineField({
+                  name: 'description',
+                  type: 'string',
+                  title: 'Feature Description',
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
     }),
   ],
   preview: {

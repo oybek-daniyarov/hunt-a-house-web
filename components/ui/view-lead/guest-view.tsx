@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import Link from 'next/link';
 import {
   IoArrowForward,
@@ -7,64 +8,50 @@ import {
   IoStar,
 } from 'react-icons/io5';
 
+import { fetchSanitySite } from '@/app/(main)/actions';
 import { Button } from '@/components/ui/button';
 import { DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
-const benefits = [
-  {
-    icon: IoShield,
-    title: 'Direct Owner Access',
-    description: 'Connect directly with verified property owners',
-  },
-  {
-    icon: IoFlash,
-    title: 'Exclusive Listings',
-    description: 'Access off-market properties before others',
-  },
-  {
-    icon: IoNotifications,
-    title: 'Lead Notifications',
-    description: 'Get instant alerts for new owner listings',
-  },
-  {
-    icon: IoStar,
-    title: 'Quality Leads',
-    description: 'Genuine property owners with intent to sell',
-  },
-];
+const icons = [IoShield, IoFlash, IoNotifications, IoStar];
 
-export function GuestView() {
+const GuestView = cache(async () => {
+  const settings = await fetchSanitySite();
+
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <DialogTitle>Connect with Property Owners</DialogTitle>
+        <DialogTitle>{settings.listingGuestDialog?.title}</DialogTitle>
         <DialogDescription>
-          Join UAE&apos;s premier agent platform for direct access to verified
-          property owners and exclusive listings.
+          {settings.listingGuestDialog?.subtitle}
         </DialogDescription>
       </div>
 
       <div className="grid gap-2.5">
-        {benefits.map(({ icon: Icon, title, description }) => (
-          <div
-            key={title}
-            className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-background to-muted/50 p-2 transition-all hover:from-muted/5 hover:to-muted/10"
-          >
-            <div className="flex gap-3">
-              <div>
-                <div className="rounded-full bg-primary/5 p-2 group-hover:bg-primary/10 transition-colors">
-                  <Icon className="h-4 w-4 text-primary" />
+        {settings.listingGuestDialog?.features.map((feature, index) => {
+          const Icon = icons[index];
+          return (
+            <div
+              key={feature.title}
+              className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-background to-muted/50 p-2 transition-all hover:from-muted/5 hover:to-muted/10"
+            >
+              <div className="flex gap-3">
+                <div>
+                  <div className="rounded-full bg-primary/5 p-2 group-hover:bg-primary/10 transition-colors">
+                    <Icon className="h-4 w-4 text-primary" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium leading-none">
+                    {feature.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {feature.description}
+                  </p>
                 </div>
               </div>
-              <div>
-                <h3 className="text-sm font-medium leading-none">{title}</h3>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {description}
-                </p>
-              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="space-y-4">
@@ -94,4 +81,6 @@ export function GuestView() {
       </div>
     </div>
   );
-}
+});
+
+export default GuestView;

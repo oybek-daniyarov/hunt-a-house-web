@@ -6,6 +6,8 @@ import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { SanityLive } from '@/sanity/lib/live';
 
+export const fetchCache = 'force-cache';
+
 export default async function MainLayout({
   children,
 }: {

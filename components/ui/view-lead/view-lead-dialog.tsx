@@ -8,9 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { AuthenticatedView } from '@/components/ui/view-lead/authenticated-view';
-import { ContactMethods } from '@/components/ui/view-lead/contact-methods';
-import { GuestView } from '@/components/ui/view-lead/guest-view';
 import { PropertyDetails } from '@/components/ui/view-lead/property-details';
 import { PropertyInfo } from '@/components/ui/view-lead/property-info';
 
@@ -18,15 +15,15 @@ interface ViewLeadDialogProps {
   lead: App.Data.Lead.Response.ShowLeadResponseData;
   open: boolean;
   onClose?: () => void;
+  children: React.ReactNode;
 }
 
-const components: Record<App.Enums.LeadViewEnum, React.ComponentType<any>> = {
-  guest: GuestView,
-  purchased: ContactMethods,
-  authenticated: AuthenticatedView,
-};
-
-export function ViewLeadDialog({ lead, open, onClose }: ViewLeadDialogProps) {
+export function ViewLeadDialog({
+  lead,
+  open,
+  onClose,
+  children,
+}: ViewLeadDialogProps) {
   const router = useRouter();
   const pathname = usePathname();
   //remove the leadId from the url
@@ -50,10 +47,6 @@ export function ViewLeadDialog({ lead, open, onClose }: ViewLeadDialogProps) {
       router.push(newPath);
     }
   };
-
-  const access = lead.access ? lead.access : 'guest';
-
-  const Component = components[access];
 
   return (
     <Dialog open={open} onOpenChange={(open) => !open && handleClose()}>
@@ -80,9 +73,7 @@ export function ViewLeadDialog({ lead, open, onClose }: ViewLeadDialogProps) {
           </div>
 
           {/* Quick Actions - Right Side */}
-          <div className="px-6 col-span-1 lg:col-span-5">
-            <Component listing={lead.data} />
-          </div>
+          <div className="px-6 col-span-1 lg:col-span-5">{children}</div>
         </div>
       </DialogContent>
     </Dialog>

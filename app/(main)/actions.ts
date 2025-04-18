@@ -20,6 +20,7 @@ export const fetchSanityPageBySlug = async ({
 export const fetchSanitySite = async (): Promise<Sanity.Site> => {
   const { data } = await sanityFetch({
     query: SITE_QUERY,
+    tags: ['site'],
   });
 
   if (!data)
